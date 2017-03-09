@@ -4,7 +4,14 @@
 #   tests
 
 
-
+#' Interpretation set for equivalence tests
+#'
+#' An \code{\link{interpretation_set}} object used for conducting equivalence
+#' tests. A convenient wrapper function, \code{\link{interpret_equivalence}},
+#' is provided, making use of this object.
+#'
+#' @export
+#'
 interpretations_equivalence <- structure(list(
   boundary_names = c("lower_equivalence",
                      "upper_equivalence"),
@@ -51,6 +58,45 @@ interpretations_equivalence <- structure(list(
 
 #' Equivalence test interpretations of confidence intervals.
 #'
+#' Conduct equivalence tests on confidence intervals using a standard set of
+#' interpretations. Takes a confidence interval around an effect size measure,
+#' for example from the results from a randomised controlled trial comparing
+#' the outcome for an intervention group to a control group.
+#'
+#' Equivalence tests can be specified in analysis plans when the aim is to
+#' check whether a new intervention performs the same as an old one.
+#' The test is most appropriate
+#' where the aim is not to result in a better or worse outcome, but the same as
+#' under the previous intervention. One
+#' particular use is for testing new versions of medicines, such as generic
+#' versions of drugs after the branded version's patent protection has ended.
+#' In this situation, if the generic manufacturer is correctly producing the
+#' medicine it should result in neither better nor worse outcomes than the
+#' branded medicine.
+#'
+#' When conducting equivalence tests, an equivalence margin is specified. This
+#' is the region around a true null (i.e., no difference) result that is deemed
+#' to be within a reasonable range. It is commonly selected to include the
+#' range of differences that would be of no practical significance.
+#'
+#' You are able to supply descriptive names of the interventions being
+#' compared, and these will be inserted into the resultant interpretation.
+#' If the comparison / baseline intervention does not have a convenient name
+#' (such as "Placebo"), some of these might be suitable:
+#' \itemize{
+#'  \item{"Business as usual"}
+#'  \item{"Treatment as usual"}
+#'  \item{"No intervention"}
+#' }
+#' (Whislt these may work well as short descriptions for outputting from
+#' this function, in your reporting you will still normally want to provide
+#' information about what exactly those in a comparison group got.)
+#'
+#' This function is provided in the form of a convenience wrapper for
+#' \code{\link{confinterpret}}, using
+#' \code{\link{interpretations_superiority}} as its
+#' \code{\link{interpretation_set}}.
+#'
 #' @param eq_margin Numerical value specifying the equivalence margin
 #'   to be used.
 #' @param actual_null The value that precisely zero difference would have in
@@ -58,6 +104,8 @@ interpretations_equivalence <- structure(list(
 #'   be 0. For a relative measure it will typically be 1. This is the starting
 #'   point that the ni_margin is applied to in order to establish the point /
 #'   region for comparison.
+#' @inheritParams confinterpret
+#' @inheritParams interpret_superiority
 #' @export
 #'
 interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,

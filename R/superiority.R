@@ -3,9 +3,14 @@
 # interpretation_set and confinterpret wrapper function to conduct superiority tests
 
 
-# TODO: Do I want to @export these?
-# I think yes. Make them available for printing and plotting.
-# @export
+#' Interpretation set for superiority tests
+#'
+#' An \code{\link{interpretation_set}} object used for conducting superiority
+#' tests. A convenient wrapper function, \code{\link{interpret_superiority}},
+#' is provided, making use of this object.
+#'
+#' @export
+#'
 interpretations_superiority <- structure(list(
   boundary_names = c("null_value"),
   # region_names   = c("inferiority",
@@ -34,10 +39,43 @@ interpretations_superiority <- structure(list(
 
 #' Superiority test interpretations of confidence intervals.
 #'
-#' @param null_value The value that precisely zero difference would have in
+#' Conduct superiority tests on confidence intervals using a standard set of
+#' interpretations. Takes a confidence interval around an effect size measure,
+#' for example from the results from a randomised controlled trial comparing
+#' the outcome for an intervention group to a control group.
+#'
+#' You are able to supply descriptive names of the interventions being
+#' compared, and these will be inserted into the resultant interpretation.
+#' If the comparison / baseline intervention does not have a convenient name
+#' (such as "Placebo"), some of these might be suitable:
+#' \itemize{
+#'  \item{"Business as usual"}
+#'  \item{"Treatment as usual"}
+#'  \item{"No intervention"}
+#' }
+#' (Whislt these may work well as short descriptions for outputting from
+#' this function, in your reporting you will still normally want to provide
+#' information about what exactly those in a comparison group got.)
+#'
+#' This function is provided in the form of a convenience wrapper for
+#' \code{\link{confinterpret}}, using
+#' \code{\link{interpretations_superiority}} as its
+#' \code{\link{interpretation_set}}.
+#'
+#' @param null_value
+#'   The value that precisely zero difference would have in
 #'   the parameter being examined. For an absolute measure this will typically
 #'   be 0. For a relative measure it will typically be 1. For superiority tests
 #'   this is the point value that the confidence interval is compared at.
+#' @param groups
+#'   A character vector of length 2 containing short descriptive names of the
+#'   groups being compared, such as the names of the interventions being
+#'   compared if the confidence interval is derived from an outcome effect
+#'   size measure in a randomised controlled trial. Give the name of the
+#'   intervention given to the comparison or control group first and the new
+#'   or tested intervention second.
+#'
+#' @inheritParams confinterpret
 #' @export
 #'
 interpret_superiority <- function(ci, null_value = 0,

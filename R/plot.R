@@ -117,8 +117,6 @@ plot.interpretation_set <- function(interpretation_set,
 
 
 
-
-
   # Draw some background boxes
 
   rect(xleft = c(boundaries[1] - 2 * boundary_spacing, boundaries),
@@ -145,19 +143,21 @@ plot.interpretation_set <- function(interpretation_set,
   text(x=rowMeans(ci_perms), y=(last:1),
        rownames(ci_perms))
 
-  # TODO: Label the boundaries.
+  # Label the boundaries.
   Axis(side = 1,
-       at = c(-margin, actual_null),
-       labels = c("non-inferiority boundary","actual null"),
-       las = 0)
+       at = boundaries,
+       labels = interpretation_set$boundary_names,
+       las = 2,  # Label text perpendicular to axis
+       lwd = 0)
 
-  # Label the interpretations
+  # Label with the interpretations
   # Uses lapply and `[[` to extract the interpretation_short values.
   Axis(side = 4,
        at = 1 : last,
        labels = lapply(interpretation_set$interpretations,
                        `[[`,"interpretation_short"),
-       las = 2)
+       las = 2,  # Label text perpendicular to axis
+       lwd = 0)  # Line width - 0 supresses line.
 
 }
 

@@ -22,10 +22,19 @@
 #' Descriptive interpretations of confidence intervals.
 #'
 #' Produces descriptive interpretations of confidence intervals, depending
-#' on the type of test specified by an interpretation_set.
+#' on the type of test specified by an \code{\link{interpretation_set}}.
+#'
+#' Helpful wrapper functions are provided for some commonly used types of
+#' test:
+#'
+#' \describe{
+#'   \item{Superiority tests}{\code{\link{interpret_superiority}}}
+#'   \item{Non-inferiority tests}{\code{\link{interpret_noninferiority}}}
+#'   \item{Equivalence tests}{\code{\link{interpret_equivalence}}}
+#' }
 #'
 #' @param ci
-#'   A single row from a matrix of the type returned by confint(),
+#'   A single row from a matrix of the type returned by \code{confint()},
 #'   containing the confidence interval for the parameter estimate. The two
 #'   columns provide the lower and upper confidence limits.
 #' @param interpretation_set
@@ -33,8 +42,14 @@
 #'   of the confidence limits can fill in, and the interpretations to be
 #'   returned in each of the cases.
 #' @param boundaries
+#'   Vector of numbers specifying the values for each of the boundaries defined
+#'   in the \code{interpretation_set}.
+#' @param comparison_labels
+#'   Character vector specifying the labels to be used within the
+#'   interpretation to describe the comparison. Required if the
+#'   \code{interpretation_set} includes a $placeholders entry. Null otherwise.
 #'
-#' @return A list object with elements stating the conclusion in different
+#' @return A list object with elements stating the interpretation in different
 #'   formats.
 #' @examples
 #' # Establish a test confidence interval
@@ -50,7 +65,7 @@
 confinterpret <- function(ci,
                           interpretation_set,
                           boundaries,
-                          comparison_labels, ...) {
+                          comparison_labels = NULL) {
 
 
   # TODO: Implement some sort of equivalent to beneficial_outcome
@@ -61,8 +76,11 @@ confinterpret <- function(ci,
   #   outcome is superior)?
 
 
+  # Validation checks =========================================================
+
   # Checker: validate interpretation_set
   validate_interpretation_set(interpretation_set)
+
 
   # Checker: Length of comparison_labels same as length of
   #          interpretation_set$placeholders
@@ -71,13 +89,28 @@ confinterpret <- function(ci,
                "number needed for this interpretation_set."))
   }
 
+  # Check: no duplicate names in comparison_labels
+  if (anyDuplicated(names(comparison_labels)) > 0) {
+    stop(paste("One or more duplicate names found in comparison_labels.",
+               "All elements should have unique names."))
+  }
+
+  # Check: are the names of the labels the same as those expected?
+  # (setequal should be fine here as long as we are also checking for
+  # duplicates in each of the things being compared.)
+  if (!setequal(names(interpretation_set$placeholders),
+                names(comparison_labels))) {
+    stop(paste("The comparison_labels provided are not named the same as",
+               "expected for this interpretation_set. Expected:",
+               names(interpretation_set$placeholders)))
+  }
+
+
   # Checker: Are boundaries in increasing order?
 
   if (is.unsorted(boundaries)) {
     stop(paste("The boundaries provided are not in increasing order."))
   }
-
-  # TODO: Check ci length 2
 
 
   # Checker: Length of boundaries same as length of
@@ -87,7 +120,9 @@ confinterpret <- function(ci,
                "for this interpretation_set."))
   }
 
-  ci_lower <- ci[[1]]
+  # TODO: Check ci length 2
+
+    ci_lower <- ci[[1]]
   ci_upper <- ci[[2]]
 
   # Checker: Are lower and upper ends of CI the right way round?
@@ -97,6 +132,9 @@ confinterpret <- function(ci,
   }
 
 
+
+  # Prepare regions ===========================================================
+
   # Establish a list of the top ends of each region. The same as the
   # boundaries, plus Inf to make a top end for the last boundary.
   # Needed for the min(which()) approach used below to find which region
@@ -104,51 +142,37 @@ confinterpret <- function(ci,
   region_tops <- c(boundaries, Inf)
   number_regions <- length(region_tops)
 
+
+
+  # Establish the interpretation ==============================================
+
   # Find the region by looking for the first boundary that it is lower than.
   region_lower <- min(which(ci_lower < region_tops))
   region_upper <- min(which(ci_upper < region_tops))
 
+  # Calculate the interpretation that relates to this pair of regions.
   interpretation_number <- region_upper +
     sum(0 : (number_regions - 1)) -
     sum(0 : (number_regions - region_lower))
 
+  # Extract the relevant interpretation fromt the interpretation_set.
   interpretation <- interpretation_set$interpretations[[interpretation_number]]
-
 
 
   # Perform replacements on labelled text -------------------------------------
 
-  # Check: no duplicate names in comparison_labels
-  if (anyDuplicated(names(comparison_labels)) > 0) {
-    stop(paste("One or more duplicate names found in comparison_labels.",
-               "All elements should have unique names."))
+  # Only necessary if there are comparison_labels. (It is possible to have
+  #   interpretation_set objects with no placeholders, which don't need
+  #   replacements.)
+  if(!is.null(comparison_labels)) {
+    for (label_name in names(comparison_labels)){
+      interpretation <- gsub(interpretation_set$placeholders[[label_name]],
+                             comparison_labels[[label_name]],
+                             interpretation, fixed = TRUE)
+    }
   }
 
-  # Check: no duplicates values in comparison_labels
-  if (anyDuplicated(comparison_labels) > 0) {
-    stop(paste("One or more duplicate values found in comparison_labels.",
-               "All elements should have unique values."))
-  }
-
-
-
-  # Check: are the names of the labels the same as those expected?
-  # (setequal should be fine here as long as we are checking for duplicates
-  # in each of the things being compared.)
-  if (!setequal(names(interpretation_set$placeholders),
-                names(comparison_labels))) {
-    stop(paste("The comparison_labels provided are not named the same as",
-               "expected for this interpretation_set. Expected:",
-               names(interpretation_set$placeholders)))
-  }
-
-  # TODO: Perhaps make this optional if there are possibilities for no
-  #       replacements. (I.e., wrap it all in an if.)
-  for (label_name in names(comparison_labels)){
-    interpretation <- gsub(interpretation_set$placeholders[[label_name]],
-                           comparison_labels[[label_name]],
-                           interpretation, fixed = TRUE)
-  }
+  # Done ----------------------------------------------------------------------
 
   return(interpretation)
 }
