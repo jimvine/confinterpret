@@ -2,6 +2,40 @@
 # Author: Jim Vine
 # plot method for interpretation_set objects.
 
+#' Plot a diagram of the valid options for an interpretation_set object
+#'
+#' Produces a diagram that illustrates the set of pairs of lower and upper
+#' confidence limits that are valid for a given
+#' \code{\link{interpretation_set}} object. The output is presented as a set of
+#' regions in different colours with boxes either within regions or spanning
+#' them to illustrate where the lower and upper confidence limits sit. The
+#' options are labelled alphabetically, and presented in the order in which
+#' their associated interpretations should be provided in the
+#' \code{interpretation_set}.
+#'
+#' Additional boundaries can be displayed using the \code{extra_boundaries}
+#' parameter. This can be helpful if you want to show a position that is
+#' of some practical relevance, but is not defined as a boundary for the
+#' purposes of the \code{interpretation_set}. The boundaries specified by the
+#' \code{interpretation_set} are plotted with spacing 1 and are centred about
+#' 0: for an even number of boundaries the central pair of boundaries will be
+#' at -0.5 and +0.5; for an odd number of boundaries the central one will be
+#' at 0, and the next ones (if any) will be at -1 and +1, and so on.
+#'
+#' @param interpretation_set
+#'   An \code{interpretation_set} object for plotting.
+#' @param extra_boundaries
+#'   A vector of numerical values specifying the position for displaying
+#'   additional boundaries, not specified in the \code{interpretation_set}.
+#'   See Details.
+#'
+#' @examples
+#' # Plot the pre-defined interpretations_equivalence object with an additional
+#' # central boundary to illustrate where the actual null point is.
+#' plot(interpretations_equivalence, extra_boundaries = 0)
+#'
+#'@export
+#'
 plot.interpretation_set <- function(interpretation_set,
                                     extra_boundaries = NULL, ...) {
 
@@ -9,7 +43,7 @@ plot.interpretation_set <- function(interpretation_set,
 
   # Definitions ---------------------------------------------------------------
 
-  boundary_spacing <- 0.1
+  boundary_spacing <- 1
 
   number_boundaries <- length(interpretation_set$boundary_names)
   number_regions    <- number_boundaries + 1
@@ -21,8 +55,6 @@ plot.interpretation_set <- function(interpretation_set,
   # colour_set <- terrain.colors(number_regions)
   colour_set <- colours_tol_sunset(number_regions)
   colour_set <- rev(colour_set)
-
-
 
 
   # Create a set of boundaries ------------------------------------------------

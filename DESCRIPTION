@@ -4,8 +4,8 @@ Title: Descriptive Interpretations of Confidence Intervals
 Version: 0.1.0
 Authors@R: person("Jim", "Vine", email = "code@jimvine.co.uk", 
     role = c("aut", "cre"))
-Description: Produces descriptive interpretations of confidence intervals. 
-    Includes (extensible) support for various test types, specified as sets 
+Description: Produces descriptive interpretations of confidence intervals.
+    Includes (extensible) support for various test types, specified as sets
     of interpretations dependent on where the lower and upper confidence limits
     sit.
 License: AGPL-3
