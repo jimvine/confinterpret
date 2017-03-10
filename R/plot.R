@@ -22,12 +22,14 @@
 #' at -0.5 and +0.5; for an odd number of boundaries the central one will be
 #' at 0, and the next ones (if any) will be at -1 and +1, and so on.
 #'
-#' @param interpretation_set
-#'   An \code{interpretation_set} object for plotting.
+#' @param x
+#'   An \code{interpretation_set} object.
 #' @param extra_boundaries
 #'   A vector of numerical values specifying the position for displaying
 #'   additional boundaries, not specified in the \code{interpretation_set}.
 #'   See Details.
+#' @param ...
+#'   Further arguments passed to and from methods.
 #'
 #' @examples
 #' # Plot the pre-defined interpretations_equivalence object with an additional
@@ -39,16 +41,15 @@
 #' @importFrom grDevices rgb
 #' @importFrom graphics Axis abline boxplot.matrix rect text
 #'
-plot.interpretation_set <- function(interpretation_set,
-                                    extra_boundaries = NULL, ...) {
+plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
-  validate_interpretation_set(interpretation_set)
+  validate_interpretation_set(x)
 
   # Definitions ---------------------------------------------------------------
 
   boundary_spacing <- 1
 
-  number_boundaries <- length(interpretation_set$boundary_names)
+  number_boundaries <- length(x$boundary_names)
   number_regions    <- number_boundaries + 1
 
 
@@ -181,7 +182,7 @@ plot.interpretation_set <- function(interpretation_set,
   # Label the boundaries.
   Axis(side = 1,
        at = boundaries,
-       labels = interpretation_set$boundary_names,
+       labels = x$boundary_names,
        las = 2,  # Label text perpendicular to axis
        lwd = 0)
 
@@ -189,7 +190,7 @@ plot.interpretation_set <- function(interpretation_set,
   # Uses lapply and `[[` to extract the interpretation_short values.
   Axis(side = 4,
        at = 1 : last,
-       labels = lapply(interpretation_set$interpretations,
+       labels = lapply(x$interpretations,
                        `[[`,"interpretation_short"),
        las = 2,  # Label text perpendicular to axis
        lwd = 0)  # Line width - 0 supresses line.
