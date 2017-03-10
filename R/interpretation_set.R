@@ -116,7 +116,7 @@ validate_interpretation_set <- function(interpretation_set) {
 
   # Checker: has class been set?
 
-  if (!is(interpretation_set, "interpretation_set")) {
+  if (!inherits(interpretation_set, "interpretation_set")) {
     stop(paste("Invalid interpretation_set. The object is not of class",
                "interpretation_set."))
   }
