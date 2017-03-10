@@ -34,7 +34,10 @@
 #' # central boundary to illustrate where the actual null point is.
 #' plot(interpretations_equivalence, extra_boundaries = 0)
 #'
-#'@export
+#' @export
+#'
+#' @importFrom grDevices rgb
+#' @importFrom graphics Axis abline boxplot.matrix rect text
 #'
 plot.interpretation_set <- function(interpretation_set,
                                     extra_boundaries = NULL, ...) {
