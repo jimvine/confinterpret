@@ -1,5 +1,5 @@
 
-
+#' @importFrom grDevices rgb
 colours_tol_sunset <- function(n) {
 
   # Translating P Tol's IDL code into R from

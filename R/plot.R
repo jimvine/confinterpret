@@ -38,7 +38,6 @@
 #'
 #' @export
 #'
-#' @importFrom grDevices rgb
 #' @importFrom graphics Axis abline boxplot.matrix rect text
 #'
 plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
