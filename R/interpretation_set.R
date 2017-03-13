@@ -132,23 +132,6 @@ validate_interpretation_set <- function(interpretation_set) {
 
 
 
-
-
-
-
-
-  # TODO: Perhaps check that the number of boundaries is reasonable.
-  #       By 5 boundaries (6 regions) already have 21 interpretations.
-  #       6 boundaries is 28 interpretations,
-  #       7 boundaries is 36 interpretations,
-  #       15 is 120
-  #       25 is 325
-  #       37 is 703, and that will break the plot method since you're
-  #         out of letters for labelling (A..Z, AA..ZZ).
-  #       Though plotting more than maybe, say, 36 interpretations
-  #         might be daft anyway.
-
-
   # Checker: Number of interpretations correct for number of boundaries
   # Valid interpretation_set object should have:
   #   number of regions = number boundaries + 1

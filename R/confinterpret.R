@@ -160,20 +160,20 @@ confinterpret <- function(ci,
   interpretation <- interpretation_set$interpretations[[interpretation_number]]
 
 
-  # Perform replacements on labelled text -------------------------------------
+  # Perform replacements on labelled text =====================================
 
   # Only necessary if there are comparison_labels. (It is possible to have
   #   interpretation_set objects with no placeholders, which don't need
   #   replacements.)
   if(!is.null(comparison_labels)) {
-    for (label_name in names(comparison_labels)){
+    for (label_name in names(comparison_labels)) {
       interpretation <- gsub(interpretation_set$placeholders[[label_name]],
                              comparison_labels[[label_name]],
                              interpretation, fixed = TRUE)
     }
   }
 
-  # Done ----------------------------------------------------------------------
+  # Done ======================================================================
 
   return(interpretation)
 }
