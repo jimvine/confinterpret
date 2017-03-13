@@ -13,8 +13,8 @@
 #' @export
 #'
 interpretations_equivalence <- structure(list(
-  boundary_names = c("Lower equivalence",
-                     "Upper equivalence"),
+  boundary_names = c("Equivalence / inferiority",
+                     "Equivalence / superiority"),
   # region_names   = c("Inferiority",
   #                    "Equivalence",
   #                    "Superiority"),

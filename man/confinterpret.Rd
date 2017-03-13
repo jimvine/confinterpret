@@ -4,7 +4,8 @@
 \alias{confinterpret}
 \title{Descriptive interpretations of confidence intervals.}
 \usage{
-confinterpret(ci, interpretation_set, boundaries, comparison_labels = NULL)
+confinterpret(ci, interpretation_set, boundaries, comparison_labels = NULL,
+  low_to_high = TRUE)
 }
 \arguments{
 \item{ci}{A single row from a matrix of the type returned by \code{confint()},
@@ -16,11 +17,16 @@ of the confidence limits can fill in, and the interpretations to be
 returned in each of the cases.}
 
 \item{boundaries}{Vector of numbers specifying the values for each of the boundaries defined
-in the \code{interpretation_set}.}
+in the \code{interpretation_set}. Normally provided in low-to-high order, but
+see the \code{low_to_high} parameter for options.}
 
 \item{comparison_labels}{Character vector specifying the labels to be used within the
 interpretation to describe the comparison. Required if the
 \code{interpretation_set} includes a $placeholders entry. Null otherwise.}
+
+\item{low_to_high}{Are the boundaries ordered low-to-high (TRUE) or high-to-low (FALSE)?
+This can be used to reverse the assessment, including in the cases where
+only one boundary is supplied. See Details.}
 }
 \value{
 A list object with elements stating the interpretation in different
@@ -39,6 +45,24 @@ test:
   \item{Non-inferiority tests}{\code{\link{interpret_noninferiority}}}
   \item{Equivalence tests}{\code{\link{interpret_equivalence}}}
 }
+
+The low_to_high parameter can be set to FALSE to facilitate the situation
+where the boundaries are ordered high-to-low. This enables the same
+\code{interpretation_set} object to be used for both beneficial and harmful
+outcomes. For an \code{interpretation_set} that has been defined as if
+higher numbers are better (for example, proportion of participants
+recovering from a particular illness after treatment) then the inferiority
+interpretations will be listed first and the superiority ones last. To use
+this with a negative outcome (for example, proportion of particiants
+catching an illness after a preventative measure), provide the boundaries
+in high-to-low order and use \code{low_to_high = FALSE}. This will also
+work where a single boundary is specified, and will act to 'reverse' the
+interpretations.
+
+The use of low_to_high only affects the order of the boundaries (and
+the regions these implicitly define). It does \strong{not} affect the
+ordering of the condidence interval: the numerically lower confidence limit
+should be listed first either way.
 }
 \examples{
 # Establish a test confidence interval

@@ -24,6 +24,24 @@
 #'   \item{Equivalence tests}{\code{\link{interpret_equivalence}}}
 #' }
 #'
+#' The low_to_high parameter can be set to FALSE to facilitate the situation
+#' where the boundaries are ordered high-to-low. This enables the same
+#' \code{interpretation_set} object to be used for both beneficial and harmful
+#' outcomes. For an \code{interpretation_set} that has been defined as if
+#' higher numbers are better (for example, proportion of participants
+#' recovering from a particular illness after treatment) then the inferiority
+#' interpretations will be listed first and the superiority ones last. To use
+#' this with a negative outcome (for example, proportion of particiants
+#' catching an illness after a preventative measure), provide the boundaries
+#' in high-to-low order and use \code{low_to_high = FALSE}. This will also
+#' work where a single boundary is specified, and will act to 'reverse' the
+#' interpretations.
+#'
+#' The use of low_to_high only affects the order of the boundaries (and
+#' the regions these implicitly define). It does \strong{not} affect the
+#' ordering of the condidence interval: the numerically lower confidence limit
+#' should be listed first either way.
+#'
 #' @param ci
 #'   A single row from a matrix of the type returned by \code{confint()},
 #'   containing the confidence interval for the parameter estimate. The two
@@ -34,11 +52,16 @@
 #'   returned in each of the cases.
 #' @param boundaries
 #'   Vector of numbers specifying the values for each of the boundaries defined
-#'   in the \code{interpretation_set}.
+#'   in the \code{interpretation_set}. Normally provided in low-to-high order, but
+#'   see the \code{low_to_high} parameter for options.
 #' @param comparison_labels
 #'   Character vector specifying the labels to be used within the
 #'   interpretation to describe the comparison. Required if the
 #'   \code{interpretation_set} includes a $placeholders entry. Null otherwise.
+#' @param low_to_high
+#'   Are the boundaries ordered low-to-high (TRUE) or high-to-low (FALSE)?
+#'   This can be used to reverse the assessment, including in the cases where
+#'   only one boundary is supplied. See Details.
 #'
 #' @return A list object with elements stating the interpretation in different
 #'   formats.
@@ -56,7 +79,8 @@
 confinterpret <- function(ci,
                           interpretation_set,
                           boundaries,
-                          comparison_labels = NULL) {
+                          comparison_labels = NULL,
+                          low_to_high = TRUE) {
 
 
   # Validation checks =========================================================
@@ -88,11 +112,23 @@ confinterpret <- function(ci,
                names(interpretation_set$placeholders)))
   }
 
+  if (!is.logical(low_to_high)) {
+    stop("low_to_high must be a logical (TRUE or FALSE).")
+  }
 
   # Checker: Are boundaries in increasing order?
+  # (Or decreasing if low_to_high is FALSE)
 
-  if (is.unsorted(boundaries)) {
-    stop(paste("The boundaries provided are not in increasing order."))
+  if (low_to_high) {
+    if (is.unsorted(boundaries)) {
+      stop(paste("If low_to_high is TRUE the boundaries must be",
+                 "provided in increasing order."))
+    }
+  } else {
+    if (is.unsorted(rev(boundaries))) {
+      stop(paste("If low_to_high is FALSE the boundaries must be",
+                 "provided in decreasing order."))
+    }
   }
 
 
@@ -134,29 +170,44 @@ confinterpret <- function(ci,
 
 
 
+
   # Prepare regions ===========================================================
 
-  # Establish a list of the top ends of each region. The same as the
+  # Establish a list of the ends of each region. The same as the
   # boundaries, plus Inf to make a top end for the last boundary.
+  # (Or -Inf for low_to_high = FALSE)
   # Needed for the min(which()) approach used below to find which region
   # each of the two CI ends are in.
-  region_tops <- c(boundaries, Inf)
-  number_regions <- length(region_tops)
+
+  if (low_to_high) {
+    region_ends <- c(boundaries, Inf)
+  } else {
+    region_ends <- c(boundaries, -Inf)
+  }
+
+  number_regions <- length(region_ends)
 
 
 
   # Establish the interpretation ==============================================
 
-  # Find the region by looking for the first boundary that it is lower than.
-  region_lower <- min(which(ci_lower < region_tops))
-  region_upper <- min(which(ci_upper < region_tops))
+
+  if (low_to_high) {
+    # Find the region by looking for the first boundary that it is lower than.
+    region_lower <- min(which(ci_lower < region_ends))
+    region_upper <- min(which(ci_upper < region_ends))
+  } else {
+    # Find the region by looking for the first boundary that it is higher than.
+    region_upper <- min(which(ci_lower > region_ends))
+    region_lower <- min(which(ci_upper > region_ends))
+  }
 
   # Calculate the interpretation that relates to this pair of regions.
   interpretation_number <- region_upper +
     sum(0 : (number_regions - 1)) -
     sum(0 : (number_regions - region_lower))
 
-  # Extract the relevant interpretation fromt the interpretation_set.
+  # Extract the relevant interpretation from the interpretation_set.
   interpretation <- interpretation_set$interpretations[[interpretation_number]]
 
 
