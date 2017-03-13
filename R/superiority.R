@@ -12,9 +12,9 @@
 #' @export
 #'
 interpretations_superiority <- structure(list(
-  boundary_names = c("null_value"),
-  # region_names   = c("inferiority",
-  #                  "superiority"),
+  boundary_names = c("Null value"),
+  # region_names   = c("Inferiority",
+  #                    "Superiority"),
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
   # Don't think the list version adds anything much.

@@ -37,9 +37,9 @@
 #'
 #' @examples
 #' # Set a nice colour scheme
-#' palette(c("#99C7EC", "#FFFAD2", "#F5A275"))
+#' palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
 #' # Plot the pre-defined interpretations_equivalence object with an additional
-#' # central boundary to illustrate where the actual null point is.
+#' #   central boundary to illustrate where the actual null point is.
 #' plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))
 #'
 #' @export

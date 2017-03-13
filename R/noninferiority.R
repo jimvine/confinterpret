@@ -13,11 +13,11 @@
 #' @export
 #'
 interpretations_noninferiority <- structure(list(
-  boundary_names = c("noninf_margin",
-                     "actual_null"),
-  # region_names   = c("inferiority",
-  #                    "non-inferiority",
-  #                    "superiority"),
+  boundary_names = c("Non-inferiority margin",
+                     "Actual null"),
+  # region_names   = c("Inferiority",
+  #                    "Non-inferiority",
+  #                    "Superiority"),
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
   interpretations = list(
