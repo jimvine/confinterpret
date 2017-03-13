@@ -27,14 +27,15 @@
 #' @param extra_boundaries
 #'   A vector of numerical values specifying the position for displaying
 #'   additional boundaries, not specified in the \code{interpretation_set}.
-#'   See Details.
+#'   May optionally be named values; if named, the names will be labelled
+#'   on the plot axis. See Details for information on specifying locations.
 #' @param ...
 #'   Further arguments passed to and from methods.
 #'
 #' @examples
 #' # Plot the pre-defined interpretations_equivalence object with an additional
 #' # central boundary to illustrate where the actual null point is.
-#' plot(interpretations_equivalence, extra_boundaries = 0)
+#' plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))
 #'
 #' @export
 #'
@@ -184,6 +185,17 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
        labels = x$boundary_names,
        las = 2,  # Label text perpendicular to axis
        lwd = 0)
+
+
+  # Label the extra_boundaries, if at least one name exists.
+  if(!is.null(names(extra_boundaries))) {
+    Axis(side = 1,
+         at = extra_boundaries,
+         labels = names(extra_boundaries),
+         las = 2,  # Label text perpendicular to axis
+         lwd = 0)
+  }
+
 
   # Label with the interpretations
   # Uses lapply and `[[` to extract the interpretation_short values.
