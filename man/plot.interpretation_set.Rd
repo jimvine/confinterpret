@@ -35,8 +35,13 @@ purposes of the \code{interpretation_set}. The boundaries specified by the
 0: for an even number of boundaries the central pair of boundaries will be
 at -0.5 and +0.5; for an odd number of boundaries the central one will be
 at 0, and the next ones (if any) will be at -1 and +1, and so on.
+
+Plots use the current R Graphics Palette, so you may wish to set that to
+something attractive before plotting. See ?palette.
 }
 \examples{
+# Set a nice colour scheme
+palette(c("#99C7EC", "#FFFAD2", "#F5A275"))
 # Plot the pre-defined interpretations_equivalence object with an additional
 # central boundary to illustrate where the actual null point is.
 plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))

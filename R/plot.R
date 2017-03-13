@@ -22,6 +22,9 @@
 #' at -0.5 and +0.5; for an odd number of boundaries the central one will be
 #' at 0, and the next ones (if any) will be at -1 and +1, and so on.
 #'
+#' Plots use the current R Graphics Palette, so you may wish to set that to
+#' something attractive before plotting. See ?palette.
+#'
 #' @param x
 #'   An \code{interpretation_set} object.
 #' @param extra_boundaries
@@ -33,6 +36,8 @@
 #'   Further arguments passed to and from methods.
 #'
 #' @examples
+#' # Set a nice colour scheme
+#' palette(c("#99C7EC", "#FFFAD2", "#F5A275"))
 #' # Plot the pre-defined interpretations_equivalence object with an additional
 #' # central boundary to illustrate where the actual null point is.
 #' plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))
@@ -41,6 +46,7 @@
 #'
 #' @importFrom graphics Axis abline boxplot.matrix rect text
 #' @importFrom graphics par plot.new plot.window polygon
+#' @importFrom grDevices palette
 #'
 plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
@@ -52,15 +58,6 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
   number_boundaries <- length(x$boundary_names)
   number_regions    <- number_boundaries + 1
-
-
-  # TODO: Rework to allow users to pass alternative colour sets if they want.
-
-  # Define a colour_set to use for the backgrounds of the regions
-  # colour_set <- terrain.colors(number_regions)
-  colour_set <- colours_tol_sunset(number_regions)
-  colour_set <- rev(colour_set)
-
 
   # Create a set of boundaries ------------------------------------------------
 
@@ -173,7 +170,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
        ybottom = 0,
        xright = c(boundaries, box_edge_right),
        ytop = top,
-       col = colour_set,
+       col = palette(),
        border = NA)
 
   # How many zigzags on each edge.
@@ -187,7 +184,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
               box_edge_left, box_edge_left)
 
   polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA, col = colour_set[1], lty = par("lty"),
+          border = NA, col = palette()[1], lty = par("lty"),
           fillOddEven = FALSE)
 
 
@@ -196,7 +193,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
               box_edge_right, box_edge_right)
 
   polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA, col = colour_set[length(colour_set)], lty = par("lty"),
+          border = NA, col = palette()[number_regions], lty = par("lty"),
           fillOddEven = FALSE)
 
   # Extra 'boundaries': a dotted line if anything is passed as extra_boundaries
