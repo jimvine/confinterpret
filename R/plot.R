@@ -231,7 +231,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
   # Label with the interpretations
   Axis(side = 4, # 4=right
-       at = 1 : last,
+       at = last : 1,
        labels = interpretation_labels,
        las = 2,  # Label text perpendicular to axis
        lwd = 0)  # Line width - 0 supresses line.
