@@ -5,15 +5,6 @@
 
 
 
-# Need to think about different CIs.
-# Not all are comparing 2 groups.
-# So 'groups' might not make sense.
-# Might be comparing one population to a particular value.
-#
-# Possibly make S3.
-# For htest objects, look inside to find the ci
-
-
 # =============================================================================
 # Interpret Confidence Intervals
 # =============================================================================
@@ -68,14 +59,6 @@ confinterpret <- function(ci,
                           comparison_labels = NULL) {
 
 
-  # TODO: Implement some sort of equivalent to beneficial_outcome
-  #       (If so, ensure it's flagged in the example, or uses a default.)
-  #       ? Also in the boundaries increasing order checker.
-  # @param beneficial_outcome
-  #   Is the outcome to be treated as beneficial (i.e., a higher value of the
-  #   outcome is superior)?
-
-
   # Validation checks =========================================================
 
   # Checker: validate interpretation_set
@@ -122,7 +105,7 @@ confinterpret <- function(ci,
 
   # TODO: Check ci length 2
 
-    ci_lower <- ci[[1]]
+  ci_lower <- ci[[1]]
   ci_upper <- ci[[2]]
 
   # Checker: Are lower and upper ends of CI the right way round?
