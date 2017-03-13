@@ -143,31 +143,65 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   last <- nrow(ci_perms)
   top <- last + 1
 
+  # Define width of the main background boxes.
+  box_edge_left <- boundaries[1] - 1.5 * boundary_spacing
+  box_edge_right <- boundaries[length(boundaries)] + 1.5 * boundary_spacing
 
+  # Define width of the edge ragged boundary.
+  edging_size <- 0.02 * (box_edge_right - box_edge_left)
+  pic_edge_left <- box_edge_left - edging_size
+  pic_edge_right <- box_edge_right + edging_size
 
-  boxplot.matrix(ci_perms[last : 1,],
-                 use.cols = FALSE,
-                 horizontal = TRUE,
-                 medlty = "blank", las=2,
-                 axes=FALSE)
+  xlim <- c(pic_edge_left, pic_edge_right)
+  ylim <- c(0,top)
 
+  # Uses lapply and `[[` to extract the interpretation_short values.
+  # (Used for calculating size of margin and for displaying these.)
+  interpretation_labels <- lapply(x$interpretations, `[[`,
+                                  "interpretation_short")
 
+  # Margins that should be big enough for the labels.
+  par(mar=c(max(nchar(x$boundary_names)) * 0.6, 1, 1,
+            max(nchar(interpretation_labels)) * 0.6))
 
-  # Draw some background boxes
+  plot.new()
+  plot.window(xlim, ylim, xaxs = "r")
 
-  rect(xleft = c(boundaries[1] - 2 * boundary_spacing, boundaries),
+  # Draw the background boxes.
+  rect(xleft = c(box_edge_left, boundaries),
        ybottom = 0,
-       xright = c(boundaries, boundaries[length(boundaries)] + 2 * boundary_spacing),
+       xright = c(boundaries, box_edge_right),
        ytop = top,
-       col = colour_set)
+       col = colour_set,
+       border = NA)
+
+  # How many zigzags on each edge.
+  edging_number <- 40
+
+  # Polygons to plot the filled zigzags. Filled in same colours as edge
+  # background boxes to extend them.
+  poly_y <- c(seq(0, top, length.out = 1 + edging_number * 2), top, 0)
+  poly_x <- c(pic_edge_left,
+              rep(c(box_edge_left, pic_edge_left), edging_number),
+              box_edge_left, box_edge_left)
+
+  polygon(poly_x, poly_y, density = NULL, angle = 45,
+          border = NA, col = colour_set[1], lty = par("lty"),
+          fillOddEven = FALSE)
+
+
+  poly_x <- c(pic_edge_right,
+              rep(c(box_edge_right, pic_edge_right), edging_number),
+              box_edge_right, box_edge_right)
+
+  polygon(poly_x, poly_y, density = NULL, angle = 45,
+          border = NA, col = colour_set[length(colour_set)], lty = par("lty"),
+          fillOddEven = FALSE)
 
   # Extra 'boundaries': a dotted line if anything is passed as extra_boundaries
-  # Useful for equivalence: want to show actual_null but not treat it as a
-  #   boundary. E.g.:
-  # plot(interpretations_equivalence, extra_boundaries = 0)
   abline(v=extra_boundaries, lty="15151555")
-  # TODO: Extract and display names / labels for these if present.
 
+  # Plot the options.
   boxplot.matrix(ci_perms[last:1,],
                  use.cols = FALSE,
                  horizontal = TRUE,
@@ -175,17 +209,16 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
                  add=TRUE,
                  axes=FALSE)
 
-  # Label the boxes
+  # Label the options.
   text(x=rowMeans(ci_perms), y=(last:1),
        rownames(ci_perms))
 
   # Label the boundaries.
-  Axis(side = 1,
+  Axis(side = 1, # 1=below
        at = boundaries,
        labels = x$boundary_names,
        las = 2,  # Label text perpendicular to axis
        lwd = 0)
-
 
   # Label the extra_boundaries, if at least one name exists.
   if(!is.null(names(extra_boundaries))) {
@@ -196,13 +229,10 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
          lwd = 0)
   }
 
-
   # Label with the interpretations
-  # Uses lapply and `[[` to extract the interpretation_short values.
-  Axis(side = 4,
+  Axis(side = 4, # 4=right
        at = 1 : last,
-       labels = lapply(x$interpretations,
-                       `[[`,"interpretation_short"),
+       labels = interpretation_labels,
        las = 2,  # Label text perpendicular to axis
        lwd = 0)  # Line width - 0 supresses line.
 
