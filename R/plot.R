@@ -40,6 +40,7 @@
 #' @export
 #'
 #' @importFrom graphics Axis abline boxplot.matrix rect text
+#' @importFrom graphics par plot.new plot.window polygon
 #'
 plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 

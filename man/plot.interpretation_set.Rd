@@ -11,7 +11,8 @@
 
 \item{extra_boundaries}{A vector of numerical values specifying the position for displaying
 additional boundaries, not specified in the \code{interpretation_set}.
-See Details.}
+May optionally be named values; if named, the names will be labelled
+on the plot axis. See Details for information on specifying locations.}
 
 \item{...}{Further arguments passed to and from methods.}
 }
@@ -38,6 +39,6 @@ at 0, and the next ones (if any) will be at -1 and +1, and so on.
 \examples{
 # Plot the pre-defined interpretations_equivalence object with an additional
 # central boundary to illustrate where the actual null point is.
-plot(interpretations_equivalence, extra_boundaries = 0)
+plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))
 
 }
