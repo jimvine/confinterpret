@@ -103,7 +103,25 @@ confinterpret <- function(ci,
                "for this interpretation_set."))
   }
 
-  # TODO: Check ci length 2
+  # Check that ci is specified
+  if(is.null(ci)) {
+    stop(paste("The ci argument must be provided."))
+  }
+
+  # Check exactly two elements in the ci argument.
+  if(length(ci) != 2) {
+    stop(paste("Exactly 2 elements required in ci, one for the lower",
+               "confidence limit, the other for the upper confidence limit.",
+               "The object received had too",
+               ifelse(length(ci) > 2, "many", "few"), "elements."))
+  }
+
+  # Check no duplicated elements in the ci argument.
+  if(ci[1] == ci[2]) {
+    stop(paste0("The two elements in ci must be unique. Both contain: ",
+                ci[1]))
+  }
+
 
   ci_lower <- ci[[1]]
   ci_upper <- ci[[2]]
