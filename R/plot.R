@@ -121,7 +121,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
                                           boundary_spacing
 
   # Drop the extra top boundary
-  boundaries <- boundaries[1:length(boundaries)-1]
+  boundaries <- boundaries[1 : length(boundaries) - 1]
 
   # Lose un-needed precision
   lower_value <- round(lower_value, 6)
@@ -151,7 +151,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   pic_edge_right <- box_edge_right + edging_size
 
   xlim <- c(pic_edge_left, pic_edge_right)
-  ylim <- c(0,top)
+  ylim <- c(0, top)
 
   # Uses lapply and `[[` to extract the interpretation_short values.
   # (Used for calculating size of margin and for displaying these.)
@@ -197,18 +197,19 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
           fillOddEven = FALSE)
 
   # Extra 'boundaries': a dotted line if anything is passed as extra_boundaries
-  abline(v=extra_boundaries, lty="15151555")
+  abline(v = extra_boundaries, lty="15151555")
 
   # Plot the options.
-  boxplot.matrix(ci_perms[last:1,],
+  boxplot.matrix(ci_perms[last : 1, ],
                  use.cols = FALSE,
                  horizontal = TRUE,
-                 medlty = "blank", las=2,
-                 add=TRUE,
-                 axes=FALSE)
+                 medlty = "blank", las = 2,
+                 add = TRUE,
+                 axes = FALSE)
 
   # Label the options.
-  text(x=rowMeans(ci_perms), y=(last:1),
+  text(x = rowMeans(ci_perms),
+       y = (last : 1),
        rownames(ci_perms))
 
   # Label the boundaries.
