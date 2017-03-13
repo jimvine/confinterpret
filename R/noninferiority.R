@@ -21,17 +21,17 @@ interpretations_noninferiority <- structure(list(
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
   interpretations = list(
-    #F
+    # A
     list(interpretation_short = "Inferior",
          interpretation       = "$test inferior to $comp",
          interpretation_md    = "$test **inferior** to $comp"),
-    #E
+    # B
     list(interpretation_short = "Inconclusive",
          interpretation       = paste("Inconclusive:",
                                       "$test not shown to be non-inferior to $comp"),
          interpretation_md    = paste("**Inconclusive**:",
                                       "$test not shown to be non-inferior to $comp")),
-    #C
+    # C
     list(interpretation_short = "Inconclusive",
          interpretation       = paste("Inconclusive:",
                                       "$test not shown to be superior or",
@@ -39,17 +39,17 @@ interpretations_noninferiority <- structure(list(
          interpretation_md    = paste("**Inconclusive**:",
                                       "$test not shown to be superior or",
                                       "non-inferior to $comp")),
-    #D
+    # D
     list(interpretation_short = "Non-inferior",
          interpretation       = "$test non-inferior to $comp",
          interpretation_md    = "$test **non-inferior** to $comp"),
-    #B
+    # E
     list(interpretation_short = "Non-inferior",
          interpretation       = paste("$test non-inferior to $comp",
                                       "but not shown to be superior"),
          interpretation_md    = paste("$test **non-inferior** to $comp",
                                       "but not shown to be superior")),
-    #A
+    # F
     list(interpretation_short = "Superior",
          interpretation       = "$test superior to $comp",
          interpretation_md    = "$test **superior** to $comp")

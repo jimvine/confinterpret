@@ -21,33 +21,33 @@ interpretations_equivalence <- structure(list(
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
   interpretations = list(
-    #F
+    # A
     list(interpretation_short = "Non-equivalent",
          interpretation       = "Non-equivalent: $test inferior to $comp",
          interpretation_md    = "**Non-equivalent**: $test inferior to $comp"),
-    #E
+    # B
     list(interpretation_short = "Inconclusive",
          interpretation       = paste("Inconclusive:",
                                       "$test not shown to be equivalent to $comp"),
          interpretation_md    = paste("**Inconclusive**:",
                                       "$test not shown to be equivalent to $comp")),
-    #C
+    # C
     list(interpretation_short = "Inconclusive",
          interpretation       = paste("Inconclusive:",
                                       "$test not shown to be equivalent to $comp"),
          interpretation_md    = paste("**Inconclusive**:",
                                       "$test not shown to be equivalent to $comp")),
-    #D
+    # D
     list(interpretation_short = "Equivalent",
          interpretation       = "$test equivalent to $comp",
          interpretation_md    = "$test **equivalent** to $comp"),
-    #B
+    # E
     list(interpretation_short = "Inconclusive",
          interpretation       = paste("Inconclusive:",
                                       "$test not shown to be equivalent to $comp"),
          interpretation_md    = paste("**Inconclusive**:",
                                       "$test not shown to be equivalent to $comp")),
-    #A
+    # F
     list(interpretation_short = "Non-equivalent",
          interpretation       = "Non-equivalent: $test superior to $comp",
          interpretation_md    = "**Non-equivalent**: $test superior to $comp")
