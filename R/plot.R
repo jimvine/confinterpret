@@ -165,19 +165,21 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
                                   "interpretation_short")
 
   # Margins that should be big enough for the labels.
-  graphics::par(mar=c(max(nchar(x$boundary_names)) * 0.6, 1, 1,
-            max(nchar(interpretation_labels)) * 0.6))
+  graphics::par(mar=c(max(nchar(x$boundary_names)) * 0.6,       # Bottom
+                      1,                                        # Left
+                      1,                                        # Top
+                      max(nchar(interpretation_labels)) * 0.6)) # Right
 
   graphics::plot.new()
   graphics::plot.window(xlim, ylim, xaxs = "r")
 
   # Draw the background boxes.
   graphics::rect(xleft = c(box_edge_left, boundaries),
-       ybottom = 0,
-       xright = c(boundaries, box_edge_right),
-       ytop = top,
-       col = grDevices::palette(),
-       border = NA)
+                 ybottom = 0,
+                 xright = c(boundaries, box_edge_right),
+                 ytop = top,
+                 col = grDevices::palette(),
+                 border = NA)
 
   # How many zigzags on each edge.
   edging_number <- 40
@@ -189,60 +191,66 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
               rep(c(box_edge_left, pic_edge_left), edging_number),
               box_edge_left, box_edge_left)
 
-  graphics::polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA,
-          col = grDevices::palette()[1], lty = graphics::par("lty"),
-          fillOddEven = FALSE)
+  graphics::polygon(poly_x, poly_y,
+                    density = NULL,
+                    angle = 45,
+                    border = NA,
+                    col = grDevices::palette()[1],
+                    lty = graphics::par("lty"),
+                    fillOddEven = FALSE)
 
 
   poly_x <- c(pic_edge_right,
               rep(c(box_edge_right, pic_edge_right), edging_number),
               box_edge_right, box_edge_right)
 
-  graphics::polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA,
-          col = grDevices::palette()[number_regions],
-          lty = graphics::par("lty"),
-          fillOddEven = FALSE)
+  graphics::polygon(poly_x, poly_y,
+                    density = NULL,
+                    angle = 45,
+                    border = NA,
+                    col = grDevices::palette()[number_regions],
+                    lty = graphics::par("lty"),
+                    fillOddEven = FALSE)
 
   # Extra 'boundaries': a dotted line if anything is passed as extra_boundaries
   graphics::abline(v = extra_boundaries, lty="15151555")
 
   # Plot the options.
   graphics::boxplot.matrix(ci_perms[last : 1, ],
-                 use.cols = FALSE,
-                 horizontal = TRUE,
-                 medlty = "blank", las = 2,
-                 add = TRUE,
-                 axes = FALSE)
+                           use.cols = FALSE,
+                           horizontal = TRUE,
+                           medlty = "blank",
+                           las = 2,
+                           add = TRUE,
+                           axes = FALSE)
 
   # Label the options.
   graphics::text(x = rowMeans(ci_perms),
-       y = (last : 1),
-       rownames(ci_perms))
+                 y = (last : 1),
+                 rownames(ci_perms))
 
   # Label the boundaries.
   graphics::Axis(side = 1, # 1=below
-       at = boundaries,
-       labels = x$boundary_names,
-       las = 2,  # Label text perpendicular to axis
-       lwd = 0)
+                 at = boundaries,
+                 labels = x$boundary_names,
+                 las = 2,  # Label text perpendicular to axis
+                 lwd = 0)
 
   # Label the extra_boundaries, if at least one name exists.
   if(!is.null(names(extra_boundaries))) {
     graphics::Axis(side = 1,
-         at = extra_boundaries,
-         labels = names(extra_boundaries),
-         las = 2,  # Label text perpendicular to axis
-         lwd = 0)
+                   at = extra_boundaries,
+                   labels = names(extra_boundaries),
+                   las = 2,  # Label text perpendicular to axis
+                   lwd = 0)
   }
 
   # Label with the interpretations
   graphics::Axis(side = 4, # 4=right
-       at = last : 1,
-       labels = interpretation_labels,
-       las = 2,  # Label text perpendicular to axis
-       lwd = 0)  # Line width - 0 supresses line.
+                 at = last : 1,
+                 labels = interpretation_labels,
+                 las = 2,  # Label text perpendicular to axis
+                 lwd = 0)  # Line width - 0 supresses line.
 
 }
 
