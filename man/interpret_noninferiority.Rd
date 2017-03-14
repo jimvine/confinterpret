@@ -20,7 +20,9 @@ point that the ni_margin is applied to in order to establish the point /
 region for comparison.}
 
 \item{ni_margin}{Numerical value specifying the non-inferiority
-margin to be used. (See Details.)}
+margin to be used. Provided as a positive number; the value of
+\code{beneficial_outcome} defines whether it is added to or subtracted
+from the \code{actual_null} value to position the boundary. See Details.}
 
 \item{groups}{A character vector of length 2 containing short descriptive names of the
 groups being compared, such as the names of the interventions being
@@ -56,6 +58,12 @@ When conducting non-inferiority tests, a non-inferiority margin is defined.
 This is effectively the leeway of small, practically insignificant
 differences by which the new intervention is allowed to under-perform the
 old one and still be considered non-inferior.
+
+The non-inferiority margin is defined as being a small amount on the
+inferior side of an actual null result. If using
+\code{beneficial_outcome = TRUE} (the default), the non-inferiority margin
+will extend below \code{actual_null}; if \code{beneficial_outcome = FALSE}
+it extends above it.
 
 You are able to supply descriptive names of the interventions being
 compared, and these will be inserted into the resultant interpretation.

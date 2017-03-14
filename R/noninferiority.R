@@ -76,6 +76,12 @@ interpretations_noninferiority <- structure(list(
 #' differences by which the new intervention is allowed to under-perform the
 #' old one and still be considered non-inferior.
 #'
+#' The non-inferiority margin is defined as being a small amount on the
+#' inferior side of an actual null result. If using
+#' \code{beneficial_outcome = TRUE} (the default), the non-inferiority margin
+#' will extend below \code{actual_null}; if \code{beneficial_outcome = FALSE}
+#' it extends above it.
+#'
 #' You are able to supply descriptive names of the interventions being
 #' compared, and these will be inserted into the resultant interpretation.
 #' If the comparison / baseline intervention does not have a convenient name
@@ -95,7 +101,9 @@ interpretations_noninferiority <- structure(list(
 #' \code{\link{interpretation_set}}.
 #'
 #' @param ni_margin Numerical value specifying the non-inferiority
-#'    margin to be used. (See Details.)
+#'    margin to be used. Provided as a positive number; the value of
+#'    \code{beneficial_outcome} defines whether it is added to or subtracted
+#'    from the \code{actual_null} value to position the boundary. See Details.
 #' @param actual_null The value that precisely zero difference would have in
 #'   the parameter being examined. For an absolute measure this will typically
 #'   be 0. For a relative measure it will typically be 1. This is the starting
@@ -109,10 +117,14 @@ interpret_noninferiority <- function(ci, actual_null = 0, ni_margin = 0.1,
                                      groups = c("Control intervention",
                                                 "Test intervention"),
                                      beneficial_outcome = TRUE) {
-  # TODO: sort directionality / is_beneficial in here
 
-  noninf_boundary <- actual_null - ni_margin
+  if(beneficial_outcome) {
+    noninf_boundary <- actual_null - ni_margin
+  } else {
+    noninf_boundary <- actual_null + ni_margin
+  }
   boundaries <- c(noninf_boundary, actual_null)
+
 
   comparison_labels <- c(comparison_intervention = groups[1],
                          tested_intervention = groups[2])

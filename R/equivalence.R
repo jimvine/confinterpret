@@ -114,9 +114,15 @@ interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,
                                   beneficial_outcome = TRUE) {
 
   # TODO: Check eq_margin positive
+  if(beneficial_outcome) {
+    lower_equivalence <- actual_null - eq_margin
+    upper_equivalence <- actual_null + eq_margin
+  } else {
+    lower_equivalence <- actual_null + eq_margin
+    upper_equivalence <- actual_null - eq_margin
+  }
 
-  lower_equivalence <- actual_null - eq_margin
-  upper_equivalence <- actual_null + eq_margin
+
   boundaries <- c(lower_equivalence, upper_equivalence)
 
   comparison_labels <- c(comparison_intervention = groups[1],
