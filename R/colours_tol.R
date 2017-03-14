@@ -1,5 +1,5 @@
 
-#' @importFrom grDevices rgb
+
 colours_tol_sunset <- function(n) {
 
   # Translating P Tol's IDL code into R from
@@ -28,7 +28,7 @@ colours_tol_sunset <- function(n) {
   green <- sunsetgreen[x]
   blue  <- sunsetblue[x]
 
-  colour_set <- rgb(red, green, blue, maxColorValue = 255)
+  colour_set <- grDevices::rgb(red, green, blue, maxColorValue = 255)
 
 }
 

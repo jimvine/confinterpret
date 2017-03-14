@@ -37,18 +37,24 @@
 #'
 #' @examples
 #' # Set a nice colour scheme
-#' palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
+#' grDevices::palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
 #' # Plot the pre-defined interpretations_equivalence object with an additional
 #' #   central boundary to illustrate where the actual null point is.
 #' plot(interpretations_equivalence, extra_boundaries = c("Actual null" = 0))
 #'
 #' @export
 #'
-#' @importFrom graphics Axis abline boxplot.matrix rect text
-#' @importFrom graphics par plot.new plot.window polygon
-#' @importFrom grDevices palette
-#'
 plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
+
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
 
   validate_interpretation_set(x)
 
@@ -159,18 +165,18 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
                                   "interpretation_short")
 
   # Margins that should be big enough for the labels.
-  par(mar=c(max(nchar(x$boundary_names)) * 0.6, 1, 1,
+  graphics::par(mar=c(max(nchar(x$boundary_names)) * 0.6, 1, 1,
             max(nchar(interpretation_labels)) * 0.6))
 
-  plot.new()
-  plot.window(xlim, ylim, xaxs = "r")
+  graphics::plot.new()
+  graphics::plot.window(xlim, ylim, xaxs = "r")
 
   # Draw the background boxes.
-  rect(xleft = c(box_edge_left, boundaries),
+  graphics::rect(xleft = c(box_edge_left, boundaries),
        ybottom = 0,
        xright = c(boundaries, box_edge_right),
        ytop = top,
-       col = palette(),
+       col = grDevices::palette(),
        border = NA)
 
   # How many zigzags on each edge.
@@ -183,8 +189,9 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
               rep(c(box_edge_left, pic_edge_left), edging_number),
               box_edge_left, box_edge_left)
 
-  polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA, col = palette()[1], lty = par("lty"),
+  graphics::polygon(poly_x, poly_y, density = NULL, angle = 45,
+          border = NA,
+          col = grDevices::palette()[1], lty = graphics::par("lty"),
           fillOddEven = FALSE)
 
 
@@ -192,15 +199,17 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
               rep(c(box_edge_right, pic_edge_right), edging_number),
               box_edge_right, box_edge_right)
 
-  polygon(poly_x, poly_y, density = NULL, angle = 45,
-          border = NA, col = palette()[number_regions], lty = par("lty"),
+  graphics::polygon(poly_x, poly_y, density = NULL, angle = 45,
+          border = NA,
+          col = grDevices::palette()[number_regions],
+          lty = graphics::par("lty"),
           fillOddEven = FALSE)
 
   # Extra 'boundaries': a dotted line if anything is passed as extra_boundaries
-  abline(v = extra_boundaries, lty="15151555")
+  graphics::abline(v = extra_boundaries, lty="15151555")
 
   # Plot the options.
-  boxplot.matrix(ci_perms[last : 1, ],
+  graphics::boxplot.matrix(ci_perms[last : 1, ],
                  use.cols = FALSE,
                  horizontal = TRUE,
                  medlty = "blank", las = 2,
@@ -208,12 +217,12 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
                  axes = FALSE)
 
   # Label the options.
-  text(x = rowMeans(ci_perms),
+  graphics::text(x = rowMeans(ci_perms),
        y = (last : 1),
        rownames(ci_perms))
 
   # Label the boundaries.
-  Axis(side = 1, # 1=below
+  graphics::Axis(side = 1, # 1=below
        at = boundaries,
        labels = x$boundary_names,
        las = 2,  # Label text perpendicular to axis
@@ -221,7 +230,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
   # Label the extra_boundaries, if at least one name exists.
   if(!is.null(names(extra_boundaries))) {
-    Axis(side = 1,
+    graphics::Axis(side = 1,
          at = extra_boundaries,
          labels = names(extra_boundaries),
          las = 2,  # Label text perpendicular to axis
@@ -229,7 +238,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   }
 
   # Label with the interpretations
-  Axis(side = 4, # 4=right
+  graphics::Axis(side = 4, # 4=right
        at = last : 1,
        labels = interpretation_labels,
        las = 2,  # Label text perpendicular to axis
