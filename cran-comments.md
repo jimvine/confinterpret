@@ -3,9 +3,9 @@
 * ubuntu 12.04 (on travis-ci), R 3.3.2
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs.
 
-This is the first submission of this package.
+There was 1 NOTE because this is the first submission of this package.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
