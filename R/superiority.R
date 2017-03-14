@@ -74,19 +74,28 @@ interpretations_superiority <- structure(list(
 #'   size measure in a randomised controlled trial. Give the name of the
 #'   intervention given to the comparison or control group first and the new
 #'   or tested intervention second.
+#' @param beneficial_outcome Is the outcome to be treated as beneficial
+#'   (i.e., a higher value of the outcome is superior)? For harmful
+#'   outcomes (where lower numbers are better), set this to FALSE. If, for
+#'   example, the outcome is measuring something like prevalence of patients
+#'   recovering from a disease, that is likely to be beneficial; if it is
+#'   measuring the prevalence of patients falling ill with a disease it is
+#'   likely to be \strong{not} beneficial.
 #'
 #' @inheritParams confinterpret
 #' @export
 #'
 interpret_superiority <- function(ci, null_value = 0,
                                   groups = c("Control intervention",
-                                             "Test intervention")) {
+                                             "Test intervention"),
+                                  beneficial_outcome = TRUE) {
   # TODO: Check null_value single finite etc.
 
 
   comparison_labels <- c(comparison_intervention = groups[1],
                          tested_intervention = groups[2])
 
-  confinterpret(ci, interpretations_superiority, null_value, comparison_labels)
+  confinterpret(ci, interpretations_superiority, null_value, comparison_labels,
+                beneficial_outcome)
 }
 

@@ -110,7 +110,8 @@ interpretations_equivalence <- structure(list(
 #'
 interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,
                                   groups = c("Control intervention",
-                                             "Test intervention")) {
+                                             "Test intervention"),
+                                  beneficial_outcome = TRUE) {
 
   # TODO: Check eq_margin positive
 
@@ -121,6 +122,7 @@ interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,
   comparison_labels <- c(comparison_intervention = groups[1],
                          tested_intervention = groups[2])
 
-  confinterpret(ci, interpretations_equivalence, boundaries, comparison_labels)
+  confinterpret(ci, interpretations_equivalence, boundaries, comparison_labels,
+                beneficial_outcome)
 
 }

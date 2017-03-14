@@ -107,7 +107,8 @@ interpretations_noninferiority <- structure(list(
 #'
 interpret_noninferiority <- function(ci, actual_null = 0, ni_margin = 0.1,
                                      groups = c("Control intervention",
-                                                "Test intervention")) {
+                                                "Test intervention"),
+                                     beneficial_outcome = TRUE) {
   # TODO: sort directionality / is_beneficial in here
 
   noninf_boundary <- actual_null - ni_margin
@@ -117,5 +118,5 @@ interpret_noninferiority <- function(ci, actual_null = 0, ni_margin = 0.1,
                          tested_intervention = groups[2])
 
   confinterpret(ci, interpretations_noninferiority, boundaries,
-                comparison_labels)
+                comparison_labels, beneficial_outcome)
 }
