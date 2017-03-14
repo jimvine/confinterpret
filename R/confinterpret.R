@@ -31,7 +31,7 @@
 #' higher numbers are better (for example, proportion of participants
 #' recovering from a particular illness after treatment) then the inferiority
 #' interpretations will be listed first and the superiority ones last. To use
-#' this with a negative outcome (for example, proportion of particiants
+#' this with a negative outcome (for example, proportion of participants
 #' catching an illness after a preventative measure), provide the boundaries
 #' in high-to-low order and use \code{low_to_high = FALSE}. This will also
 #' work where a single boundary is specified, and will act to 'reverse' the
@@ -39,7 +39,7 @@
 #'
 #' The use of low_to_high only affects the order of the boundaries (and
 #' the regions these implicitly define). It does \strong{not} affect the
-#' ordering of the condidence interval: the numerically lower confidence limit
+#' ordering of the confidence interval: the numerically lower confidence limit
 #' should be listed first either way.
 #'
 #' @param ci

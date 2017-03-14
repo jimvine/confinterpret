@@ -26,9 +26,10 @@
 #' each of the regions for the upper confidence limit (again, starting from the
 #' bottom and increasing to the top); next come all of the cases where the
 #' lower confidence limit is in the second-from-bottom region (in this case the
-#' valid regions for the UCL will start at the second-from-bottom and go up to
-#' the top region); and so on. So for a 2 region (1 boundary) situation, the
-#' interpretations should be provided in the following order:
+#' valid regions for the upper confidence limit will start at the
+#' second-from-bottom and go up to the top region); and so on. So for a 2
+#' region (1 boundary) situation, the interpretations should be provided in the
+#' following order:
 #'    \tabular{lll}{
 #'    Order   \tab Lower confidence level   \tab Upper confidence level \cr
 #'    1 \tab Region 1 \tab Region 1 \cr
@@ -66,7 +67,7 @@
 #' @param placeholders
 #'   Vector of named character elements, where each item contains a string
 #'   that is used within the interpretations as a placeholder, enabling a
-#'   specific value to be susbtituted.
+#'   specific value to be substituted.
 #'   Can be null
 #' @param interpretations
 #'   An ordered list of interpretations, one for each valid combination of

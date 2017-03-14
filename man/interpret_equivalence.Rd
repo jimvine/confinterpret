@@ -16,7 +16,7 @@ columns provide the lower and upper confidence limits.}
 \item{actual_null}{The value that precisely zero difference would have in
 the parameter being examined. For an absolute measure this will typically
 be 0. For a relative measure it will typically be 1. This is the starting
-point that the ni_margin is applied to in order to establish the point /
+point that the \code{eq_margin} is applied to in order to establish the
 region for comparison.}
 
 \item{eq_margin}{Numerical value specifying the equivalence margin
@@ -69,7 +69,7 @@ If the comparison / baseline intervention does not have a convenient name
  \item{"Treatment as usual"}
  \item{"No intervention"}
 }
-(Whislt these may work well as short descriptions for outputting from
+(Whilst these may work well as short descriptions for outputting from
 this function, in your reporting you will still normally want to provide
 information about what exactly those in a comparison group got.)
 

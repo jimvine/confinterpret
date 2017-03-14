@@ -91,7 +91,7 @@ interpretations_noninferiority <- structure(list(
 #'  \item{"Treatment as usual"}
 #'  \item{"No intervention"}
 #' }
-#' (Whislt these may work well as short descriptions for outputting from
+#' (Whilst these may work well as short descriptions for outputting from
 #' this function, in your reporting you will still normally want to provide
 #' information about what exactly those in a comparison group got.)
 #'
@@ -107,8 +107,8 @@ interpretations_noninferiority <- structure(list(
 #' @param actual_null The value that precisely zero difference would have in
 #'   the parameter being examined. For an absolute measure this will typically
 #'   be 0. For a relative measure it will typically be 1. This is the starting
-#'   point that the ni_margin is applied to in order to establish the point /
-#'   region for comparison.
+#'   point that the \code{ni_margin} is applied to in order to establish the
+#'   point for comparison.
 #' @inheritParams confinterpret
 #' @inheritParams interpret_superiority
 #' @export

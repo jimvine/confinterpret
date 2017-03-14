@@ -88,7 +88,7 @@ interpretations_equivalence <- structure(list(
 #'  \item{"Treatment as usual"}
 #'  \item{"No intervention"}
 #' }
-#' (Whislt these may work well as short descriptions for outputting from
+#' (Whilst these may work well as short descriptions for outputting from
 #' this function, in your reporting you will still normally want to provide
 #' information about what exactly those in a comparison group got.)
 #'
@@ -102,7 +102,7 @@ interpretations_equivalence <- structure(list(
 #' @param actual_null The value that precisely zero difference would have in
 #'   the parameter being examined. For an absolute measure this will typically
 #'   be 0. For a relative measure it will typically be 1. This is the starting
-#'   point that the ni_margin is applied to in order to establish the point /
+#'   point that the \code{eq_margin} is applied to in order to establish the
 #'   region for comparison.
 #' @inheritParams confinterpret
 #' @inheritParams interpret_superiority
@@ -113,7 +113,7 @@ interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,
                                              "Test intervention"),
                                   beneficial_outcome = TRUE) {
 
-  # TODO: Check eq_margin positive
+
   if(beneficial_outcome) {
     lower_equivalence <- actual_null - eq_margin
     upper_equivalence <- actual_null + eq_margin

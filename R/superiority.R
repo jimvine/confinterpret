@@ -53,7 +53,7 @@ interpretations_superiority <- structure(list(
 #'  \item{"Treatment as usual"}
 #'  \item{"No intervention"}
 #' }
-#' (Whislt these may work well as short descriptions for outputting from
+#' (Whilst these may work well as short descriptions for outputting from
 #' this function, in your reporting you will still normally want to provide
 #' information about what exactly those in a comparison group got.)
 #'
