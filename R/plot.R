@@ -65,6 +65,15 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   number_boundaries <- length(x$boundary_names)
   number_regions    <- number_boundaries + 1
 
+  # Limit the number of regions we will try to plot.
+  # Picked 12 as this comes to 78 regions, which happens to be a multiple of
+  # 26, so 3 complete alphabets for the labelling. Though a more realistic
+  # number to plot is probably much smaller.
+  if (number_regions > 12) {
+    stop(paste("plot.interpretation_set only supports interpretation_set",
+               "objects with up to 11 boundaries (12 regions)."))
+  }
+
   # Create a set of boundaries ------------------------------------------------
 
   # Is there an even number of boundaries?
@@ -136,10 +145,9 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   ci_perms <- cbind(lower_value, upper_value)
 
   # Labelling
-  # stackoverflow: http://stackoverflow.com/a/25877009
-  LETTERS702 <- c(LETTERS, sapply(LETTERS, function(x) paste0(x, LETTERS)))
+  LETTERS78 <- c(LETTERS, paste0("A", LETTERS), paste0("B", LETTERS))
 
-  rownames(ci_perms) <- LETTERS702[1 : nrow(ci_perms)]
+  rownames(ci_perms) <- LETTERS78[1 : nrow(ci_perms)]
 
 
   # Actual plotting -----------------------------------------------------------
