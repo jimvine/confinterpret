@@ -217,10 +217,12 @@ confinterpret <- function(ci,
   #   interpretation_set objects with no placeholders, which don't need
   #   replacements.)
   if(!is.null(comparison_labels)) {
-    for (label_name in names(comparison_labels)) {
-      interpretation <- gsub(interpretation_set$placeholders[[label_name]],
-                             comparison_labels[[label_name]],
-                             interpretation, fixed = TRUE)
+    for (i in 1 : length(interpretation)) {
+      for (label_name in names(comparison_labels)) {
+        interpretation[i] <- gsub(interpretation_set$placeholders[[label_name]],
+                                  comparison_labels[[label_name]],
+                                  interpretation[i], fixed = TRUE)
+      }
     }
   }
 
