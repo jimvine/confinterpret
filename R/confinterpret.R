@@ -64,7 +64,7 @@
 #'   only one boundary is supplied. See Details.
 #'
 #' @return A list object with elements stating the interpretation in different
-#'   formats.
+#'   formats, plus the parameters used to generate the interpretation.
 #' @examples
 #' # Establish a test confidence interval
 #' ci_test <- matrix(c(-0.1,0.1),
@@ -227,6 +227,14 @@ confinterpret <- function(ci,
   }
 
   # Done ======================================================================
+
+  interpretation$parameters <- list(
+    ci = ci,
+    interpretation_set_name = deparse(substitute(interpretation_set)),
+    boundaries = boundaries,
+    comparison_labels = comparison_labels,
+    low_to_high = low_to_high
+  )
 
   return(interpretation)
 }

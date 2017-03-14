@@ -30,7 +30,7 @@ only one boundary is supplied. See Details.}
 }
 \value{
 A list object with elements stating the interpretation in different
-  formats.
+  formats, plus the parameters used to generate the interpretation.
 }
 \description{
 Produces descriptive interpretations of confidence intervals, depending
