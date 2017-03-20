@@ -23,7 +23,13 @@ provided for using each of these:
 
 ## Installation
 
-You can install confinterpret from github with:
+confinterpret is on CRAN, so you can install it in the normal way:
+
+```R
+install.packages("confinterpret")
+```
+
+You can also install the development version of confinterpret from github with:
 
 ```R
 # install.packages("devtools")
