@@ -1,5 +1,7 @@
 # confinterpret
 
+[![Travis-CI Build Status](https://travis-ci.org/jimvine/confinterpret.svg?branch=master)](https://travis-ci.org/jimvine/confinterpret)
+
 The goal of confinterpret is to allow users to produce standardised 
 descriptive interpretations from confidence intervals. The package
 supports researchers to focus more on generating estimates with
