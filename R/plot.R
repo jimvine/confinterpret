@@ -96,8 +96,8 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   lower_regions <- 0
   upper_regions <- 0
 
-  for (region_lower in 1:number_regions) {
-    for (region_upper in region_lower:number_regions) {
+  for (region_lower in 1 : number_regions) {
+    for (region_upper in region_lower : number_regions) {
       n <- n + 1
 
       lower_regions[[n]] <- region_lower
