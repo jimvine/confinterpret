@@ -33,7 +33,7 @@ You can also install the development version of confinterpret from github with:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("confinterpret/jimvine")
+devtools::install_github("jimvine/confinterpret")
 ```
 
 ## Example
