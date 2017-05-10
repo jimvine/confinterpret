@@ -56,7 +56,7 @@
 #' uses \code{gsub} with \code{fixed=TRUE} to do substitutions for
 #' \code{placeholders} entries, so values should be selected that will match
 #' accordingly (and will not match extra items). Use of a non-alphanumeric
-#' character within a placeholder can help to
+#' character within a placeholder can help to reduce accidental matches.
 #'
 #'
 #' @param boundary_names
@@ -68,7 +68,7 @@
 #'   Vector of named character elements, where each item contains a string
 #'   that is used within the interpretations as a placeholder, enabling a
 #'   specific value to be substituted.
-#'   Can be null
+#'   Can be null.
 #' @param interpretations
 #'   An ordered list of interpretations, one for each valid combination of
 #'   confidence limits. See Details for information on the number and expected
