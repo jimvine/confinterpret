@@ -97,7 +97,7 @@ interpretations_noninferiority <- structure(list(
 #'
 #' This function is provided in the form of a convenience wrapper for
 #' \code{\link{confinterpret}}, using
-#' \code{\link{interpretations_superiority}} as its
+#' \code{\link{interpretations_noninferiority}} as its
 #' \code{\link{interpretation_set}}.
 #'
 #' @param ni_margin Numerical value specifying the non-inferiority

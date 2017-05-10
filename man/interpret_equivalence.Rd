@@ -75,6 +75,6 @@ information about what exactly those in a comparison group got.)
 
 This function is provided in the form of a convenience wrapper for
 \code{\link{confinterpret}}, using
-\code{\link{interpretations_superiority}} as its
+\code{\link{interpretations_equivalence}} as its
 \code{\link{interpretation_set}}.
 }
