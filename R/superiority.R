@@ -17,11 +17,6 @@ interpretations_superiority <- structure(list(
   #                    "Superiority"),
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
-  # Don't think the list version adds anything much.
-  # (Would allow $ referencing as well as [ and [[. Not sure that adds.)
-  #
-  # placeholders = list(comparison_intervention = "$comp",
-  #                  tested_intervention = "$test"),
   interpretations = list(
     list(interpretation_short = "Inferior",
          interpretation       = "$test inferior to $comp",
