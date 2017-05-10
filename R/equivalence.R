@@ -106,6 +106,7 @@ interpretations_equivalence <- structure(list(
 #'   region for comparison.
 #' @inheritParams confinterpret
 #' @inheritParams interpret_superiority
+#' @inherit confinterpret return
 #' @export
 #'
 interpret_equivalence <- function(ci, actual_null = 0, eq_margin = 0.1,

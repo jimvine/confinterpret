@@ -111,6 +111,7 @@ interpretations_noninferiority <- structure(list(
 #'   point for comparison.
 #' @inheritParams confinterpret
 #' @inheritParams interpret_superiority
+#' @inherit confinterpret return
 #' @export
 #'
 interpret_noninferiority <- function(ci, actual_null = 0, ni_margin = 0.1,

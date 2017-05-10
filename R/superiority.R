@@ -83,6 +83,7 @@ interpretations_superiority <- structure(list(
 #'   likely to be \strong{not} beneficial.
 #'
 #' @inheritParams confinterpret
+#' @inherit confinterpret return
 #' @export
 #'
 interpret_superiority <- function(ci, null_value = 0,

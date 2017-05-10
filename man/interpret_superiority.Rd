@@ -32,6 +32,10 @@ recovering from a disease, that is likely to be beneficial; if it is
 measuring the prevalence of patients falling ill with a disease it is
 likely to be \strong{not} beneficial.}
 }
+\value{
+A list object with elements stating the interpretation in different
+  formats, plus the parameters used to generate the interpretation.
+}
 \description{
 Conduct superiority tests on confidence intervals using a standard set of
 interpretations. Takes a confidence interval around an effect size measure,
