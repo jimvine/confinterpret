@@ -10,6 +10,8 @@
 #' \code{\link{interpret_noninferiority}}, is provided, making use of
 #' this object.
 #'
+#' @inherit interpretations_superiority details
+#'
 #' @export
 #'
 interpretations_noninferiority <- structure(list(

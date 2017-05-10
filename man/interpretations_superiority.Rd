@@ -13,4 +13,14 @@ An \code{\link{interpretation_set}} object used for conducting superiority
 tests. A convenient wrapper function, \code{\link{interpret_superiority}},
 is provided, making use of this object.
 }
+\details{
+This \code{interpretation_set} object contains \code{placeholders} for
+descriptive names of the comparison intervention and tested intervention.
+When used with \code{\link{confinterpret}} these are provided via the
+\code{comparison_labels} parameter as a named character vector of length 2,
+\code{c(comparison_intervention = "Your control / comparison intervention",
+tested_intervention = "Your new / tested intervention")}. When using the
+convenience wrapper function, this is handled through the \code{groups}
+parameter.
+}
 \keyword{datasets}

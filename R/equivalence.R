@@ -10,6 +10,8 @@
 #' tests. A convenient wrapper function, \code{\link{interpret_equivalence}},
 #' is provided, making use of this object.
 #'
+#' @inherit interpretations_superiority details
+#'
 #' @export
 #'
 interpretations_equivalence <- structure(list(
