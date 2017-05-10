@@ -87,3 +87,12 @@ This function is provided in the form of a convenience wrapper for
 \code{\link{interpretations_noninferiority}} as its
 \code{\link{interpretation_set}}.
 }
+\examples{
+# Establish a test confidence interval
+ci_test <- matrix(c(-0.05, 0.05),
+                  nrow = 1, dimnames = list("estimate",
+                                            c("2.5 \%", "97.5 \%")))
+interpret_noninferiority(ci_test, 0, 0.1, c("Treatment as usual",
+                                            "New treatment"))
+
+}

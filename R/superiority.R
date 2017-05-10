@@ -88,6 +88,13 @@ interpretations_superiority <- structure(list(
 #'
 #' @inheritParams confinterpret
 #' @inherit confinterpret return
+#' @examples
+#' # Establish a test confidence interval
+#' ci_test <- matrix(c(-0.1, 0.1),
+#'                   nrow = 1, dimnames = list("estimate",
+#'                                             c("2.5 %", "97.5 %")))
+#' interpret_superiority(ci_test, 0, c("Treatment as usual", "New treatment"))
+#'
 #' @export
 #'
 interpret_superiority <- function(ci, null_value = 0,

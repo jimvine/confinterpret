@@ -114,6 +114,14 @@ interpretations_noninferiority <- structure(list(
 #' @inheritParams confinterpret
 #' @inheritParams interpret_superiority
 #' @inherit confinterpret return
+#' @examples
+#' # Establish a test confidence interval
+#' ci_test <- matrix(c(-0.05, 0.05),
+#'                   nrow = 1, dimnames = list("estimate",
+#'                                             c("2.5 %", "97.5 %")))
+#' interpret_noninferiority(ci_test, 0, 0.1, c("Treatment as usual",
+#'                                             "New treatment"))
+#'
 #' @export
 #'
 interpret_noninferiority <- function(ci, actual_null = 0, ni_margin = 0.1,
