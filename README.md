@@ -2,8 +2,10 @@
 
 [![Travis-CI Build Status](https://travis-ci.org/jimvine/confinterpret.svg?branch=master)](https://travis-ci.org/jimvine/confinterpret)
 
+An R package for interpreting confidence intervals.
+
 The goal of confinterpret is to allow users to produce standardised 
-descriptive interpretations from confidence intervals. The package
+descriptive interpretations from confidence intervals in R. The package
 supports researchers to focus more on generating estimates with
 associated ranges of uncertainty, rather than on single point-estimates, 
 such as are common when conclusions are drawn from p-values.
@@ -53,6 +55,6 @@ ci_above_sup$interpretation_short
 # Access the full interpretation:
 ci_above_sup$interpretation
 
-# Access the full interpretation, marked up:
+# Access the full interpretation, marked up with markdown:
 ci_above_sup$interpretation_md
 ```
