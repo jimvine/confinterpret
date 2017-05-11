@@ -1,7 +1,17 @@
-# confinterpret 0.1.0.9000
+# confinterpret 0.2.0
 
-* v0.1.0 was accepted on CRAN (2017-03-15): https://CRAN.R-project.org/package=confinterpret
-* Set up (this) development version ready for future developments.
+NB: v0.1.0 was accepted on CRAN (2017-03-15): https://CRAN.R-project.org/package=confinterpret
+
+## Plotting
+
+* Improved `plot.interpretation_set()` function - now takes account of length of `extra_boundaries` names when setting the bottom margin.
+
+## Documentation
+
+* Corrections to help files (including errors in which `interpretation_set` some of the functions use).
+* Added examples to help files for `interpret_superiority()`, `interpret_noninferiority()`, and `interpret_equivalence()`.
+* Added documentation on placeholders in supplied `interpretation_set` objects.
+* Added Value section to help files for `interpret_superiority()`, `interpret_noninferiority()`, and `interpret_equivalence()`.
 
 # confinterpret 0.1.0
 
