@@ -1,6 +1,7 @@
 # confinterpret
 
 [![Travis-CI Build Status](https://travis-ci.org/jimvine/confinterpret.svg?branch=master)](https://travis-ci.org/jimvine/confinterpret)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/confinterpret)](http://cran.r-project.org/package=confinterpret)
 
 An R package for interpreting confidence intervals.
 
