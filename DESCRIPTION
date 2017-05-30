@@ -1,7 +1,7 @@
 Package: confinterpret
 Type: Package
 Title: Descriptive Interpretations of Confidence Intervals
-Version: 0.2.0
+Version: 0.2.0.9000
 Authors@R: person("Jim", "Vine", email = "code@jimvine.co.uk", 
     role = c("aut", "cre"))
 Description: Produces descriptive interpretations of confidence intervals.

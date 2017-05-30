@@ -1,3 +1,7 @@
+# confinterpret 0.2.0.9000
+
+* Development version ready for further developments.
+
 # confinterpret 0.2.0
 
 ## Plotting
