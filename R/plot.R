@@ -92,19 +92,9 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
   # Generate the set of regions -----------------------------------------------
 
-  n <- 0
-  lower_regions <- 0
-  upper_regions <- 0
-
-  for (region_lower in 1 : number_regions) {
-    for (region_upper in region_lower : number_regions) {
-      n <- n + 1
-
-      lower_regions[[n]] <- region_lower
-      upper_regions[[n]] <- region_upper
-
-    }
-  }
+  lower_regions <- rep(1 : number_regions, number_regions : 1)
+  upper_regions <- unlist(mapply(function(x) { x : number_regions },
+                                 1 : number_regions))
 
   region_list <- cbind(lower_regions, upper_regions)
 
