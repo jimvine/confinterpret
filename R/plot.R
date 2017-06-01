@@ -159,18 +159,14 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
 
   # Plot the options.
-  graphics::boxplot.matrix(ci_perms[nrow(ci_perms) : 1, ],
-                           use.cols = FALSE,
-                           horizontal = TRUE,
-                           medlty = "blank",
-                           las = 2,
-                           add = TRUE,
-                           axes = FALSE)
+  plot_intervals(intervals = ci_perms[nrow(ci_perms) : 1, ], ...)
+
 
   # Label the options.
   graphics::text(x = rowMeans(ci_perms),
                  y = (nrow(ci_perms) : 1),
                  rownames(ci_perms))
+
 
 }
 
@@ -204,6 +200,10 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' A pair of extra margins are defined for the purposes of this plot. Both
 #' are technically drawn as part of the plotting area (i.e., not in the area
 #' of the actual margin, which normally contains axes etc.).
+#' Note that the order of edges used in these margins is the same as the
+#' \code{graphics::par} parameters \code{mar} and \code{oma}, but the
+#' scaling / units are not. These parameters are specified proportional to
+#' the area of active plotting, rather than as lines.)
 #'
 #' @param boundaries
 #' Named vector of numerical values of where boundaries should be drawn.
@@ -217,49 +217,47 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' can specify labels.
 #'
 #' @param inner_margin
-#' Numerical vector of the form c(bottom, left, top, right), which gives the
-#' amount of inner margin to be added, expressed as a proportion of the plotted
-#' area. (Note, order of edges is the same as mar and oma graphics parameters,
-#' but scaling is not. Proportional specification rather than as lines.)
+#' Numerical vector of the form \code{c(bottom, left, top, right)}, which
+#' gives the amount of inner margin to be added, expressed as a proportion
+#' of the plotted area. See Details.
 #'
 #' @param edge_margin
-#' Numerical vector of the form c(bottom, left, top, right), which gives the
-#' amount of 'edge margin' to be added, expressed as a proportion of the plotted
-#' width. Currently only implemented for left and right; top and bottom values
-#' are ignored. (Note, order of edges is the same as mar and oma graphics
-#' parameters, but scaling is not. Proportional specification rather than as
-#' lines.)
+#' Numerical vector of the form \code{c(bottom, left, top, right)}, which gives
+#' the amount of 'edge margin' to be added, expressed as a proportion of the
+#' plotted width. Currently only implemented for left and right; top and
+#' bottom values are ignored. See Details.
 #'
 #' @param edge_type
-#' Currently supported options are "gradient" and "zigzag".
+#' Currently supported options are \code{"gradient"} (the default) and
+#' \code{"zigzag"}.
 #'
 #' @param boundary_label_pos
 #' Where to put the boundary labels.
-#' Options are c("below", "above", "on top", "none").
+#' Options are \code{c("below", "above", "on top", "none")}.
 #' If you are planning to plot values on the canvas and want the boundary
 #' labels on top then you may want to choose "none" and make a call to
-#' label_ontop_boundaries() after plotting values.
+#' \code{label_ontop_boundaries()} after plotting values.
 #'
 #' @param boundary_values
 #' A logical value indicating whether the values should be appended to
 #' the boundaries' names.
 #'
 #' @param interpretation_label_pos
-#' Options are c("right", "left", "none")
+#' Options are \code{c("right", "left", "none")}
 #'
 #' @param interpretations
 #' Character vector of interpretations to be used for labelling interpretations
-#' or NULL. If provided, should be the same length as nrow(values).
+#' or \code{NULL}. If provided, should be the same length as
+#' \code{nrow(values)}.
 #'
 #' @param x_axis_pos
 #' Location of a numerical x axis.
-#' Options are c("none", "below", "above").
+#' Options are \code{c("none", "below", "above")}.
 #'
 #' @param y_axis_pos
 #' Location of a numerical y axis. Default "none" will almost always be right.
-#' Options are c("none", "left", "right").
-
-
+#' Options are c\code{("none", "left", "right")}.
+#'
 plot_region_canvas <- function(boundaries,
                                extra_boundaries = NULL,
                                values,
@@ -521,6 +519,173 @@ plot_edge_zigzag <- function(colour,
                     fillOddEven = FALSE)
 
 }
+
+#' Plot intervals
+#'
+#' Plot intervals on a canvas, typically prepared with
+#' \code{plot_region_canvas()}.
+#'
+#' @param intervals
+#' The interval(s) to be plotted. Two column matrix.
+#'
+#' @param estimates
+#' Estimates for each of the intervals (optional).
+#'
+#' @param interval_type
+#' Set the way the interval is presented. Current options are
+#' \code{c("norm", "unif")} for a normal distribution-based curve
+#' and a box, respectively.
+plot_intervals <- function(intervals,
+                           estimates = NULL,
+                           interval_type = "norm",
+                           ...) {
+
+  if(interval_type == "norm") {
+    plot_intervals_norm(intervals = intervals, ...)
+  } else if(interval_type == "unif") {
+    plot_intervals_unif(intervals = intervals, ...)
+  }
+
+
+}
+
+#' Plot intervals as curved (normal distribution) areas
+#'
+plot_intervals_norm <- function(intervals,
+                               estimates = NULL,
+                               y_scale = 1,
+                               interval_value_labels = FALSE,
+                               estimate_value_labels = FALSE,
+                               interval_labels_offset = c(0, 0, 0.2, 0.2),
+                               estimate_labels_offset = c(0, 0.6),
+                               ...) {
+
+  ci_x_band <- mapply(seq, intervals[, 1], intervals[, 2], length.out = 100)
+  sd <- (intervals[, 2] - intervals[, 1]) / 4
+  if(is.null(estimates)) {
+    estimates <- (intervals[, 1] + intervals[, 2]) / 2
+  }
+
+  for(i in 1 : nrow(intervals)) {
+
+    y_mid <- i
+
+
+    # Plot a polygon representing the CI as a normal distribution
+
+    # Simple filled version
+    # graphics::polygon(x = c(ci_x_band[, i], rev(ci_x_band[, i])),
+    #                   y = c(y_mid + (dnorm(ci_x_band[, i], mean = estimate[i], sd[i]) * sd[i] * y_scale),
+    #                         y_mid - rev(dnorm(ci_x_band[, i], mean = estimate[i], sd[i]) * sd[i] * y_scale)),
+    #                   col = "#FFFFFFCC")
+
+
+    n_curve <- function(x) {
+      dnorm(x, mean = estimates[i], sd[i]) * sd[i] * y_scale
+    }
+
+    # graphics::polygon(x = c(ci_x_band[, i], rev(ci_x_band[, i])),
+    #                   y = c(y_mid + (dnorm(ci_x_band[, i], mean = estimate[i], sd[i]) * sd[i] * y_scale),
+    #                         y_mid - rev(dnorm(ci_x_band[, i], mean = estimate[i], sd[i]) * sd[i] * y_scale)),
+    #                   col = NA)
+
+
+    min_end <- (ci_x_band[1, i] - estimates[i]) * 1.2
+    max_end <- (ci_x_band[length(ci_x_band[, i]), i] - estimates[i]) * 1.2
+
+    for(j in 1 : (length(ci_x_band[, i]) - 1)) {
+
+      graphics::polygon(x = c(ci_x_band[j,      i],
+                              ci_x_band[j,      i],
+                              ci_x_band[j + 1L, i],
+                              ci_x_band[j + 1L, i]),
+                        y = c(y_mid - n_curve(ci_x_band[j,      i]),
+                              y_mid + n_curve(ci_x_band[j,      i]),
+                              y_mid + n_curve(ci_x_band[j + 1L, i]),
+                              y_mid - n_curve(ci_x_band[j + 1L, i])),
+                        col = rgb(1, 1, 1,
+                                  1 - max((ci_x_band[j, i] - estimates[i]) / min_end,
+                                          (ci_x_band[j, i] - estimates[i]) / max_end)),
+                        border = NA)
+    }
+
+    graphics::polygon(x = c(ci_x_band[, i], rev(ci_x_band[, i])),
+                      y = c(y_mid + n_curve(ci_x_band[, i]),
+                            y_mid - rev( n_curve(ci_x_band[, i]))),
+                      col = NA)
+
+    # Label the interval bounds
+    if(interval_value_labels) {
+      label_interval_values(intervals, interval_labels_offset, ...)
+    }
+
+    # Label the estimates
+    if(estimate_value_labels) {
+      label_estimate_values(estimates, estimate_labels_offset, ...)
+    }
+  }
+}
+
+#' Plot intervals as uniform (box) areas
+#'
+#' @param interval_labels_offset
+#' Amount to offset interval labels by from the centre of the end
+#' of the interval's plot. \code{c(x1, x2, y1, y2)}.
+#' @param estimate_labels_offset
+#' Amount to offset estimate labels by. \code{c(x, y)}.
+plot_intervals_unif <- function(intervals,
+                                estimates = NULL,
+                                interval_value_labels = FALSE,
+                                estimate_value_labels = FALSE,
+                                interval_labels_offset = c(-0.1, 0.1, 0, 0),
+                                estimate_labels_offset = c(0, 0.6),
+                                ...) {
+
+  if(is.null(estimates)) {
+    estimates <- (intervals[, 1] + intervals[, 2]) / 2
+  }
+
+  graphics::boxplot.matrix(intervals,
+                           use.cols = FALSE,
+                           horizontal = TRUE,
+                           medlty = "blank",
+                           las = 2,
+                           add = TRUE,
+                           axes = FALSE)
+
+  # Label the interval bounds
+  if(interval_value_labels) {
+    label_interval_values(intervals, interval_labels_offset, ...)
+  }
+
+  # Label the estimates
+  if(estimate_value_labels) {
+    label_estimate_values(estimates, estimate_labels_offset, ...)
+  }
+}
+
+label_interval_values <- function(intervals,
+                                  interval_labels_offset = c(0, 0, 0, 0),
+                                  interval_labels_rounding = 3,
+                                  ...) {
+  graphics::text(x = cbind(intervals[, 1] + interval_labels_offset[1],
+                           intervals[, 2] + interval_labels_offset[2]),
+                 y = c((1 : nrow(intervals)) + interval_labels_offset[3],
+                       (1 : nrow(intervals)) + interval_labels_offset[4]),
+                 round(intervals, interval_labels_rounding))
+}
+
+
+label_estimate_values <- function(estimates,
+                                  estimate_labels_offset = c(0, 0),
+                                  estimate_labels_rounding = 3,
+                                  ...) {
+  graphics::text(x = estimates + estimate_labels_offset[1],
+                 y = (1 : length(estimates)) + estimate_labels_offset[2],
+                 round(estimates, estimate_labels_rounding))
+}
+
+
 
 #' Label the boundaries on top of the plot.
 #'
