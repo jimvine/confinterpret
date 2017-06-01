@@ -10,10 +10,20 @@ plot_intervals_unif(intervals, estimates = NULL,
   0.6), ...)
 }
 \arguments{
+\item{intervals}{The interval(s) to be plotted. Two column matrix.}
+
+\item{estimates}{Estimates for each of the intervals (optional).}
+
+\item{interval_value_labels}{Logical value specifying whether interval value labels are to be added.}
+
+\item{estimate_value_labels}{Logical value specifying whether estimate value labels are to be added.}
+
 \item{interval_labels_offset}{Amount to offset interval labels by from the centre of the end
 of the interval's plot. \code{c(x1, x2, y1, y2)}.}
 
 \item{estimate_labels_offset}{Amount to offset estimate labels by. \code{c(x, y)}.}
+
+\item{...}{Further parameters to be passed on.}
 }
 \description{
 Plot intervals as uniform (box) areas

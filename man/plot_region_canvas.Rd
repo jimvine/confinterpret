@@ -51,6 +51,8 @@ bottom values are ignored. See Details.}
 
 \item{edge_type}{Currently supported options are \code{"gradient"} (the default) and
 \code{"zigzag"}.}
+
+\item{...}{Further parameters to be passed on.}
 }
 \description{
 Produces a plot with all the background elements for plotting

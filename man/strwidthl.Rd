@@ -6,6 +6,9 @@
 \usage{
 strwidthl(s)
 }
+\arguments{
+\item{s}{A character vector whose width is to be determined.}
+}
 \description{
 Obtain string widths in (approximate) multiple of lines.
 }

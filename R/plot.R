@@ -46,6 +46,7 @@
 #'
 plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
+  # Check required packages ---------------------------------------------------
   if (!requireNamespace("graphics", quietly = TRUE)) {
     stop(paste("graphics package needed for plot.interpretation_set to work.",
                "Please install it."), call. = FALSE)
@@ -258,6 +259,9 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' Location of a numerical y axis. Default "none" will almost always be right.
 #' Options are c\code{("none", "left", "right")}.
 #'
+#' @param ...
+#' Further parameters to be passed on.
+#'
 plot_region_canvas <- function(boundaries,
                                extra_boundaries = NULL,
                                values,
@@ -272,6 +276,18 @@ plot_region_canvas <- function(boundaries,
                                edge_type = "gradient",
                                ...) {
 
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Definitions ---------------------------------------------------------------
 
   # If boundary_values == TRUE then append them into the relevant names.
   if(boundary_values) {
@@ -395,21 +411,21 @@ plot_region_canvas <- function(boundaries,
   # Add any axes requested ----------------------------------------------------
 
   if(x_axis_pos == "below") {
-    Axis(side = 1)
-    grid(ny = NA)
+    graphics::Axis(side = 1)
+    graphics::grid(ny = NA)
   }
 
   if(x_axis_pos == "above") {
-    Axis(side = 3)
-    grid(ny = NA)
+    graphics::Axis(side = 3)
+    graphics::grid(ny = NA)
   }
 
   if(y_axis_pos == "left") {
-    Axis(side = 2)
+    graphics::Axis(side = 2)
   }
 
   if(y_axis_pos == "right") {
-    Axis(side = 4)
+    graphics::Axis(side = 4)
   }
 
 
@@ -472,15 +488,31 @@ plot_edge_gradient <- function(start_colour,
                                ybottom, ytop,
                                ...) {
 
-  shades <- colorRampPalette(c(start_colour, end_colour),
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plot.interpretation_set to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+
+  # Colours -------------------------------------------------------------------
+
+  shades <- grDevices::colorRampPalette(c(start_colour, end_colour),
                              space = "Lab")(gradient_steps)
 
   # colorRampPalette doesn't preserve alphas. Find it and add it on.
-  alpha <- col2rgb(start_colour, alpha = TRUE)[4,]
-  shades <- rgb(col2rgb(shades)[1,] / 255,
-                col2rgb(shades)[2,] / 255,
-                col2rgb(shades)[3,] / 255,
-                alpha / 255)
+  alpha <- grDevices::col2rgb(start_colour, alpha = TRUE)[4,]
+  shades <- grDevices::rgb(grDevices::col2rgb(shades)[1,] / 255,
+                           grDevices::col2rgb(shades)[2,] / 255,
+                           grDevices::col2rgb(shades)[3,] / 255,
+                           alpha / 255)
+
+  # Definitions ---------------------------------------------------------------
 
   shade_edges <- seq(from = xstart, to = xend, length.out = gradient_steps + 1)
 
@@ -488,6 +520,8 @@ plot_edge_gradient <- function(start_colour,
     shades <- rev(shades)
     shade_edges <- rev(shade_edges)
   }
+
+  # Drawing -------------------------------------------------------------------
 
   graphics::rect(xleft = shade_edges[1 : gradient_steps],
                  ybottom = ybottom,
@@ -535,6 +569,10 @@ plot_edge_zigzag <- function(colour,
 #' Set the way the interval is presented. Current options are
 #' \code{c("norm", "unif")} for a normal distribution-based curve
 #' and a box, respectively.
+#'
+#' @param ...
+#' Further parameters to be passed on.
+#'
 plot_intervals <- function(intervals,
                            estimates = NULL,
                            interval_type = "norm",
@@ -551,6 +589,23 @@ plot_intervals <- function(intervals,
 
 #' Plot intervals as curved (normal distribution) areas
 #'
+#' @param y_scale
+#' How tall the interval plots are to be drawn
+#'
+#' @param interval_value_labels
+#' Logical value specifying whether interval value labels are to be added.
+#'
+#' @param estimate_value_labels
+#' Logical value specifying whether estimate value labels are to be added.
+#'
+#' @param interval_labels_offset
+#' Amount to offset interval labels by from the centre of the end
+#' of the interval's plot. \code{c(x1, x2, y1, y2)}.
+#'
+#' @param estimate_labels_offset
+#' Amount to offset estimate labels by. \code{c(x, y)}.
+#'
+#' @inheritParams plot_intervals
 plot_intervals_norm <- function(intervals,
                                estimates = NULL,
                                y_scale = 1,
@@ -559,6 +614,24 @@ plot_intervals_norm <- function(intervals,
                                interval_labels_offset = c(0, 0, 0.2, 0.2),
                                estimate_labels_offset = c(0, 0.6),
                                ...) {
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plot_intervals_norm to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plot_intervals_norm to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("stats", quietly = TRUE)) {
+    stop(paste("stats package needed for plot_intervals_norm to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
 
   ci_x_band <- mapply(seq, intervals[, 1], intervals[, 2], length.out = 100)
   sd <- (intervals[, 2] - intervals[, 1]) / 4
@@ -581,7 +654,7 @@ plot_intervals_norm <- function(intervals,
 
 
     n_curve <- function(x) {
-      dnorm(x, mean = estimates[i], sd[i]) * sd[i] * y_scale
+      stats::dnorm(x, mean = estimates[i], sd[i]) * sd[i] * y_scale
     }
 
     # graphics::polygon(x = c(ci_x_band[, i], rev(ci_x_band[, i])),
@@ -603,8 +676,8 @@ plot_intervals_norm <- function(intervals,
                               y_mid + n_curve(ci_x_band[j,      i]),
                               y_mid + n_curve(ci_x_band[j + 1L, i]),
                               y_mid - n_curve(ci_x_band[j + 1L, i])),
-                        col = rgb(1, 1, 1,
-                                  1 - max((ci_x_band[j, i] - estimates[i]) / min_end,
+                        col = grDevices::rgb(1, 1, 1, 1 -
+                                               max((ci_x_band[j, i] - estimates[i]) / min_end,
                                           (ci_x_band[j, i] - estimates[i]) / max_end)),
                         border = NA)
     }
@@ -628,11 +701,8 @@ plot_intervals_norm <- function(intervals,
 
 #' Plot intervals as uniform (box) areas
 #'
-#' @param interval_labels_offset
-#' Amount to offset interval labels by from the centre of the end
-#' of the interval's plot. \code{c(x1, x2, y1, y2)}.
-#' @param estimate_labels_offset
-#' Amount to offset estimate labels by. \code{c(x, y)}.
+#' @inheritParams plot_intervals_norm
+#'
 plot_intervals_unif <- function(intervals,
                                 estimates = NULL,
                                 interval_value_labels = FALSE,
@@ -691,6 +761,9 @@ label_estimate_values <- function(estimates,
 #'
 #' If plotting values or ranges may want to call this directly last
 #' to ensure it is on top, and specify no labels in the canvas plotting call.
+#'
+#' @inheritParams plot_region_canvas
+#'
 label_ontop_boundaries <- function(boundaries, extra_boundaries = NULL) {
 
   y_mid <- (graphics::par("usr")[4] + graphics::par("usr")[3]) / 2
@@ -708,6 +781,9 @@ label_ontop_boundaries <- function(boundaries, extra_boundaries = NULL) {
 }
 
 #' Obtain string widths in (approximate) multiple of lines.
+#'
+#' @param s
+#' A character vector whose width is to be determined.
 strwidthl <- function(s) {
   graphics::strwidth(s, units = "inches") /
     graphics::strheight("M", unit = "inches")

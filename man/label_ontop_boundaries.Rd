@@ -6,6 +6,11 @@
 \usage{
 label_ontop_boundaries(boundaries, extra_boundaries = NULL)
 }
+\arguments{
+\item{boundaries}{Named vector of numerical values of where boundaries should be drawn.}
+
+\item{extra_boundaries}{Names optional.}
+}
 \description{
 If plotting values or ranges may want to call this directly last
 to ensure it is on top, and specify no labels in the canvas plotting call.

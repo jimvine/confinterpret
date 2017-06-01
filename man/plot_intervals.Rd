@@ -14,6 +14,8 @@ plot_intervals(intervals, estimates = NULL, interval_type = "norm", ...)
 \item{interval_type}{Set the way the interval is presented. Current options are
 \code{c("norm", "unif")} for a normal distribution-based curve
 and a box, respectively.}
+
+\item{...}{Further parameters to be passed on.}
 }
 \description{
 Plot intervals on a canvas, typically prepared with
