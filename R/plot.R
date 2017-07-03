@@ -220,17 +220,20 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' @param inner_margin
 #' Numerical vector of the form \code{c(bottom, left, top, right)}, which
 #' gives the amount of inner margin to be added, expressed as a proportion
-#' of the plotted area. See Details.
+#' of the plotted area. This is space designed to be past any plotted objects
+#' but before the edging (defined separately via \code{edge_margin}).
+#' See Details.
 #'
 #' @param edge_margin
 #' Numerical vector of the form \code{c(bottom, left, top, right)}, which gives
 #' the amount of 'edge margin' to be added, expressed as a proportion of the
-#' plotted width. Currently only implemented for left and right; top and
-#' bottom values are ignored. See Details.
+#' plotted width. This is the space designed to be occupied by plot edges
+#' (e.g. a gradient fading out). Currently only implemented for left and
+#' right; top and bottom values are ignored. See Details.
 #'
 #' @param edge_type
-#' Currently supported options are \code{"gradient"} (the default) and
-#' \code{"zigzag"}.
+#' What style of edge to draw at the sides of the plot. Currently supported
+#' options are \code{"gradient"} (the default) and \code{"zigzag"}.
 #'
 #' @param boundary_label_pos
 #' Where to put the boundary labels.
@@ -654,6 +657,11 @@ plot_intervals_norm <- function(intervals,
 
 
     n_curve <- function(x) {
+      # Maximum value of normal distribution (where x=mean) is
+      #     1 / (sqrt(2 * pi) * sd)
+      # By multiplying by sd we get maximum of:
+      #     1 / (2 * pi)
+      # Which is about 0.4.
       stats::dnorm(x, mean = estimates[i], sd[i]) * sd[i] * y_scale
     }
 
