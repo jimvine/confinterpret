@@ -350,7 +350,7 @@ plot_region_canvas <- function(boundaries,
            max(0, strwidthl(interpretations)),
            0)
 
-  graphics::par(mar=c(margin_below, margin_left, margin_above, margin_right))
+  graphics::par(mar = c(margin_below, margin_left, margin_above, margin_right))
 
   graphics::plot.new()
   graphics::plot.window(xlim, ylim, xaxs = "r")
