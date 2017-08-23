@@ -42,15 +42,18 @@ Options are c\code{("none", "left", "right")}.}
 
 \item{inner_margin}{Numerical vector of the form \code{c(bottom, left, top, right)}, which
 gives the amount of inner margin to be added, expressed as a proportion
-of the plotted area. See Details.}
+of the plotted area. This is space designed to be past any plotted objects
+but before the edging (defined separately via \code{edge_margin}).
+See Details.}
 
 \item{edge_margin}{Numerical vector of the form \code{c(bottom, left, top, right)}, which gives
 the amount of 'edge margin' to be added, expressed as a proportion of the
-plotted width. Currently only implemented for left and right; top and
-bottom values are ignored. See Details.}
+plotted width. This is the space designed to be occupied by plot edges
+(e.g. a gradient fading out). Currently only implemented for left and
+right; top and bottom values are ignored. See Details.}
 
-\item{edge_type}{Currently supported options are \code{"gradient"} (the default) and
-\code{"zigzag"}.}
+\item{edge_type}{What style of edge to draw at the sides of the plot. Currently supported
+options are \code{"gradient"} (the default) and \code{"zigzag"}.}
 
 \item{...}{Further parameters to be passed on.}
 }

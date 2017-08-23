@@ -48,7 +48,7 @@
 #'   columns provide the lower and upper confidence limits.
 #' @param interpretation_set
 #'   List-based object that specifies the boundaries between regions that each
-#'   of the confidence limits can fill in, and the interpretations to be
+#'   of the confidence limits can fall in, and the interpretations to be
 #'   returned in each of the cases.
 #' @param boundaries
 #'   Vector of numbers specifying the values for each of the boundaries defined
