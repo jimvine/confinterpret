@@ -24,14 +24,6 @@ print.interpretation_set <- function(x) {
 
   invisible(x_print)
 
-
-  # LETTERS78 <- c(LETTERS, paste0("A", LETTERS), paste0("B", LETTERS))
-  # row_names <- LETTERS78[1 : length(x$interpretations)]
-  #
-  # print(as.data.frame(t(simplify2array(x$interpretations)),
-  #                     row.names = row_names),
-  #       right = FALSE)
-
   print(interpretations_df(x), right = FALSE)
 
 }
