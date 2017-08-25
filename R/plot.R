@@ -136,6 +136,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
   ci_perms <- cbind(lower_value, upper_value)
 
   # Labelling
+  # Same rownames are used in print method.
   LETTERS78 <- c(LETTERS, paste0("A", LETTERS), paste0("B", LETTERS))
 
   rownames(ci_perms) <- LETTERS78[1 : nrow(ci_perms)]
