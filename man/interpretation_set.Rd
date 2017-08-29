@@ -74,4 +74,6 @@ uses \code{gsub} with \code{fixed=TRUE} to do substitutions for
 \code{placeholders} entries, so values should be selected that will match
 accordingly (and will not match extra items). Use of a non-alphanumeric
 character within a placeholder can help to reduce accidental matches.
+
+A \code{print} method is provided for \code{interpretation_set} objects.
 }
