@@ -15,9 +15,12 @@ print.interpretation_set <- function(x, ...) {
 
   x_print <-
     cat("Object of class 'interpretation_set', with ", length(x$boundary_names),
-        " boundaries and ", length(x$interpretations), " interpretations.\n\n",
+        ifelse(length(x$boundary_names) == 1, " boundary", " boundaries"),
+        " and ", length(x$interpretations), " interpretations.\n\n",
 
-        "Boundary names:\n  ",
+        ifelse(length(x$boundary_names) == 1,
+               "Boundary name:\n  ",
+               "Boundary names:\n  "),
         paste(x$boundary_names, sep = "\n  ", collapse = "\n  "),
         "\n\nPlaceholders:\n  ",
 
