@@ -2,9 +2,14 @@
 # Author: Jim Vine
 # print method for interpretation_set objects.
 
+
+# Further arguments to be passed to other methods (...) are ignored in this
+# function. According to `?print.default` they are in that too, so this is not
+# too out of the ordinary.
+
 #' @export
 #'
-print.interpretation_set <- function(x) {
+print.interpretation_set <- function(x, ...) {
 
   validate_interpretation_set(x)
 
