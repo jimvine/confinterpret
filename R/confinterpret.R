@@ -236,7 +236,46 @@ confinterpret <- function(ci,
     low_to_high = low_to_high
   )
 
+  class(interpretation) <- "interpretation_result"
+
   return(interpretation)
 }
 
+
+
+validate_interpretation_result <- function(x) {
+
+  # Check that an item is a valid result as should come from confinterpret()
+
+  if(class(x) != "interpretation_result") {
+    stop("Not an object of class interpretation_result.")
+  }
+
+  # Checker: is it a list object with the right elements?
+
+  if (!is.list(x) ||
+      is.null(x$interpretation_short) ||
+      is.null(x$interpretation) ||
+      is.null(x$interpretation_md) ||
+      is.null(x$parameters)) {
+    stop(paste("Invalid interpretation result. Should be a list object",
+               "containing at least $interpretation_short, $interpretation,",
+               "$interpretation_md and $parameters."))
+  }
+
+  # Checker: is $parameters a list object with the right elements?
+
+  if (!is.list(x$parameters) ||
+      is.null(x$parameters$ci) ||
+      is.null(x$parameters$interpretation_set_name) ||
+      is.null(x$parameters$boundaries) ||
+      is.null(x$parameters$comparison_labels) ||
+      is.null(x$parameters$low_to_high)) {
+    stop(paste("Invalid interpretation result. Should contain a list object",
+               "$parameters, which should contain at least $ci,",
+               "$interpretation_set_name, $boundaries, $comparison_labels",
+               "and $low_to_high."))
+  }
+
+}
 

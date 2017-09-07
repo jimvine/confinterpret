@@ -175,6 +175,104 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 
 
 
+#' Plot an interpretation_result, as returned by confinterpret()
+#'
+#' Produces a diagram that illustrates the confidence interval that was
+#' interpreted using \code{\link{confinterpret}()} against a background
+#' illustrating the \code{\link{interpretation_set}} that it was the basis for
+#' the interpretation.
+#'
+#' Additional boundaries can be displayed using the \code{extra_boundaries}
+#' parameter. This can be helpful if you want to show a position that is
+#' of some practical relevance, but is not defined as a boundary for the
+#' purposes of the \code{interpretation_set}.
+#'
+#' Plots use the current R Graphics Palette, so you may wish to set that to
+#' something attractive before plotting. See ?palette.
+#'
+#' @param x
+#'   An \code{interpretation_result} object, of the type returned by
+#'   \code{\link{confinterpret}}.
+#' @param extra_boundaries
+#'   A vector of numerical values specifying the position for displaying
+#'   additional boundaries, not specified in the \code{interpretation_set}.
+#'   May optionally be named values; if named, the names will be labelled
+#'   on the plot axis.
+#' @param estimate
+#'   Estimate value that the interval relates to. If not specified, a default
+#'   of the central point between the two ends of the interval will be assumed.
+#' @param ...
+#'   Further arguments passed to and from methods.
+#'
+#' @inheritParams plot_region_canvas
+#' @inheritParams plot_intervals
+#'
+#' @examples
+#' # Set a nice colour scheme
+#' grDevices::palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
+#' # Set up a confidence interval to interpret
+#' ci_test <- matrix(c(-0.05, 0.05),
+#'                   nrow = 1,
+#'                   dimnames = list("estimate", c("2.5 %", "97.5 %")))
+#' noninf <- interpret_noninferiority(ci_test, 0, 0.1, c("Treatment as usual",
+#'                                                       "New treatment"))
+#' plot(noninf)
+#'
+#' @export
+#'
+plot.interpretation_result <- function(x,
+                                       extra_boundaries = NULL,
+                                       estimate = NULL,
+                                       boundary_values = TRUE,
+                                       boundary_label_pos = "below",
+                                       interpretation_label_pos = "right",
+                                       x_axis_pos = "below",
+                                       y_axis_pos = "none",
+                                       inner_margin = c(-0.1, 0.05, -0.1, 0.05),
+                                       edge_margin = c(0, 0.02, 0, 0.02),
+                                       edge_type = "gradient",
+                                       interval_type = "norm",
+                                       interval_value_labels = TRUE,
+                                       estimate_value_labels = TRUE,
+                                       plot_estimate_marks = TRUE,
+                                       estimate_mark_points = c(0, 0.05,
+                                                                0, -0.05),
+                                       ...) {
+
+  validate_interpretation_result(x)
+
+  interpretation_set <- get(x$parameters$interpretation_set_name)
+  names(x$parameters$boundaries) <- interpretation_set$boundary_names
+
+  plot_region_canvas(boundaries = x$parameters$boundaries,
+                     extra_boundaries = extra_boundaries,
+                     values = x$parameters$ci,
+                     interpretations = x$interpretation_short,
+                     boundary_values = boundary_values,
+                     boundary_label_pos = boundary_label_pos,
+                     interpretation_label_pos = interpretation_label_pos,
+                     x_axis_pos = x_axis_pos,
+                     y_axis_pos = y_axis_pos,
+                     inner_margin = inner_margin,
+                     edge_margin = edge_margin,
+                     edge_type = edge_type,
+                     ...)
+
+
+  plot_intervals(intervals = x$parameters$ci,
+                 estimates = estimate,
+                 interval_type = interval_type,
+                 #y_scale = 0.75,
+                 interval_value_labels = interval_value_labels,
+                 estimate_value_labels = estimate_value_labels,
+                 plot_estimate_marks = plot_estimate_marks,
+                 estimate_mark_points = estimate_mark_points,
+                 ...)
+
+}
+
+
+
 #' Plot a canvas backed with regions defined by a set of boundaries
 #'
 #' Produces a plot with all the background elements for plotting
@@ -574,18 +672,49 @@ plot_edge_zigzag <- function(colour,
 #' \code{c("norm", "unif")} for a normal distribution-based curve
 #' and a box, respectively.
 #'
+#' @param interval_value_labels
+#' Logical value specifying whether interval value labels are to be added.
+#'
+#' @param estimate_value_labels
+#' Logical value specifying whether estimate value labels are to be added.
+#'
+#' @param plot_estimate_marks
+#' Whether to plot marks at the x location of the estimates.
+#'
+#' @param estimate_mark_points
+#' y positions of the ends of the estimate marks as a numeric vector of length
+#' 4. Values are, in order: start (relative to centre), end (relative to box
+#' top), start (relative to centre), end (relative to box bottom).
+#'
 #' @param ...
 #' Further parameters to be passed on.
 #'
 plot_intervals <- function(intervals,
                            estimates = NULL,
+                           interval_value_labels = FALSE,
+                           estimate_value_labels = FALSE,
                            interval_type = "norm",
+                           plot_estimate_marks = FALSE,
+                           estimate_mark_points = c(1.2 * strheight("M"),
+                                                    0.05,
+                                                    -1.2 * strheight("M"),
+                                                    -0.05),
                            ...) {
 
   if(interval_type == "norm") {
-    plot_intervals_norm(intervals = intervals, ...)
+    plot_intervals_norm(intervals = intervals,
+                        estimates = estimates,
+                        interval_value_labels = interval_value_labels,
+                        estimate_value_labels = estimate_value_labels,
+                        plot_estimate_marks = plot_estimate_marks,
+                        estimate_mark_points = estimate_mark_points,
+                        ...)
   } else if(interval_type == "unif") {
-    plot_intervals_unif(intervals = intervals, ...)
+    plot_intervals_unif(intervals = intervals,
+                        estimates = estimates,
+                        interval_value_labels = interval_value_labels,
+                        estimate_value_labels = estimate_value_labels,
+                        ...)
   }
 
 
@@ -596,18 +725,14 @@ plot_intervals <- function(intervals,
 #' @param y_scale
 #' How tall the interval plots are to be drawn
 #'
-#' @param interval_value_labels
-#' Logical value specifying whether interval value labels are to be added.
-#'
-#' @param estimate_value_labels
-#' Logical value specifying whether estimate value labels are to be added.
-#'
 #' @param interval_labels_offset
 #' Amount to offset interval labels by from the centre of the end
 #' of the interval's plot. \code{c(x1, x2, y1, y2)}.
 #'
 #' @param estimate_labels_offset
-#' Amount to offset estimate labels by. \code{c(x, y)}.
+#'   Amount to offset estimate labels by. \code{c(x, y)}. Normally want the
+#'   estimate to be x-located at its value, but may want a y-offset to move it
+#'   above or below the plot shape that represents the interval.
 #'
 #' @inheritParams plot_intervals
 plot_intervals_norm <- function(intervals,
@@ -615,8 +740,13 @@ plot_intervals_norm <- function(intervals,
                                y_scale = 1,
                                interval_value_labels = FALSE,
                                estimate_value_labels = FALSE,
-                               interval_labels_offset = c(0, 0, 0.2, 0.2),
-                               estimate_labels_offset = c(0, 0.6),
+                               interval_labels_offset = c(0, 0, 0.15, 0.15),
+                               estimate_labels_offset = c(0, 0.5 * y_scale),
+                               plot_estimate_marks = FALSE,
+                               estimate_mark_points = c(1.2 * strheight("M"),
+                                                        0.05,
+                                                        -1.2 * strheight("M"),
+                                                        -0.05),
                                ...) {
 
   # Check required packages ---------------------------------------------------
@@ -705,19 +835,38 @@ plot_intervals_norm <- function(intervals,
     if(estimate_value_labels) {
       label_estimate_values(estimates, estimate_labels_offset, ...)
     }
+
+
+    # Add marks for the location of the estimate.
+
+    if(plot_estimate_marks) {
+
+      graphics::lines(x = c(estimates[i], estimates[i]),
+                      y = c(y_mid + estimate_mark_points[1],
+                            y_mid + n_curve(estimates[i]) +
+                              estimate_mark_points[2]),
+                      col = "#333333")
+
+      graphics::lines(x = c(estimates[i], estimates[i]),
+                      y = c(y_mid + estimate_mark_points[3],
+                            y_mid - n_curve(estimates[i]) +
+                              estimate_mark_points[4]),
+                      col = "#333333")
+
+    }
   }
 }
 
 #' Plot intervals as uniform (box) areas
 #'
-#' @inheritParams plot_intervals_norm
+#' @inheritParams plot_intervals
 #'
 plot_intervals_unif <- function(intervals,
                                 estimates = NULL,
                                 interval_value_labels = FALSE,
                                 estimate_value_labels = FALSE,
-                                interval_labels_offset = c(-0.1, 0.1, 0, 0),
-                                estimate_labels_offset = c(0, 0.6),
+                                interval_labels_offset = c(0, 0, 0.3, 0.3),
+                                estimate_labels_offset = c(0, 0.3),
                                 ...) {
 
   if(is.null(estimates)) {

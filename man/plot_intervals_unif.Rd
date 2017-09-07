@@ -6,8 +6,8 @@
 \usage{
 plot_intervals_unif(intervals, estimates = NULL,
   interval_value_labels = FALSE, estimate_value_labels = FALSE,
-  interval_labels_offset = c(-0.1, 0.1, 0, 0), estimate_labels_offset = c(0,
-  0.6), ...)
+  interval_labels_offset = c(0, 0, 0.3, 0.3), estimate_labels_offset = c(0,
+  0.3), ...)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}
@@ -17,11 +17,6 @@ plot_intervals_unif(intervals, estimates = NULL,
 \item{interval_value_labels}{Logical value specifying whether interval value labels are to be added.}
 
 \item{estimate_value_labels}{Logical value specifying whether estimate value labels are to be added.}
-
-\item{interval_labels_offset}{Amount to offset interval labels by from the centre of the end
-of the interval's plot. \code{c(x1, x2, y1, y2)}.}
-
-\item{estimate_labels_offset}{Amount to offset estimate labels by. \code{c(x, y)}.}
 
 \item{...}{Further parameters to be passed on.}
 }

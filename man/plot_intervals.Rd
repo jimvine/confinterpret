@@ -4,16 +4,29 @@
 \alias{plot_intervals}
 \title{Plot intervals}
 \usage{
-plot_intervals(intervals, estimates = NULL, interval_type = "norm", ...)
+plot_intervals(intervals, estimates = NULL, interval_value_labels = FALSE,
+  estimate_value_labels = FALSE, interval_type = "norm",
+  plot_estimate_marks = FALSE, estimate_mark_points = c(1.2 *
+  strheight("M"), 0.05, -1.2 * strheight("M"), -0.05), ...)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}
 
 \item{estimates}{Estimates for each of the intervals (optional).}
 
+\item{interval_value_labels}{Logical value specifying whether interval value labels are to be added.}
+
+\item{estimate_value_labels}{Logical value specifying whether estimate value labels are to be added.}
+
 \item{interval_type}{Set the way the interval is presented. Current options are
 \code{c("norm", "unif")} for a normal distribution-based curve
 and a box, respectively.}
+
+\item{plot_estimate_marks}{Whether to plot marks at the x location of the estimates.}
+
+\item{estimate_mark_points}{y positions of the ends of the estimate marks as a numeric vector of length
+4. Values are, in order: start (relative to centre), end (relative to box
+top), start (relative to centre), end (relative to box bottom).}
 
 \item{...}{Further parameters to be passed on.}
 }
