@@ -58,6 +58,9 @@
 #' accordingly (and will not match extra items). Use of a non-alphanumeric
 #' character within a placeholder can help to reduce accidental matches.
 #'
+#' A \code{plot} method is provided for \code{interpretation_set} objects. See
+#' \code{\link{plot.interpretation_set}} for details.
+#'
 #' A \code{print} method is provided for \code{interpretation_set} objects.
 #'
 #'

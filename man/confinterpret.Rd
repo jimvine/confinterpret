@@ -29,8 +29,9 @@ This can be used to reverse the assessment, including in the cases where
 only one boundary is supplied. See Details.}
 }
 \value{
-A list object with elements stating the interpretation in different
-  formats, plus the parameters used to generate the interpretation.
+A list object of class \code{interpretation_result} with elements
+  stating the interpretation in different formats, plus the parameters
+  used to generate the interpretation.
 }
 \description{
 Produces descriptive interpretations of confidence intervals, depending

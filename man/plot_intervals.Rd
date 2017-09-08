@@ -34,3 +34,14 @@ top), start (relative to centre), end (relative to box bottom).}
 Plot intervals on a canvas, typically prepared with
 \code{plot_region_canvas()}.
 }
+\details{
+The \code{estimate_mark_points} parameter can be used to set the length of
+estimate marks, if they are requested using
+\code{plot_estimate_marks = TRUE}. The default is extending a little above
+and below the interval plot shape and with a gap in the middle big enough
+for a line of text (a bit bigger than the height of letter "M"). To leave
+no gap, set the first and third elements to zero, e.g.
+\code{estimate_mark_points = c(0, 0.05, 0, -0.05)}. To have the marks not
+extend outside of the interval shape, set the second and fourth elements to
+zero, e.g. \code{estimate_mark_points = c(0, 0, 0, 0)}.
+}

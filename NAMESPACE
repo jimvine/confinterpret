@@ -2,6 +2,7 @@
 
 S3method(plot,interpretation_result)
 S3method(plot,interpretation_set)
+S3method(print,interpretation_result)
 S3method(print,interpretation_set)
 export(confinterpret)
 export(interpret_equivalence)
@@ -11,4 +12,5 @@ export(interpretation_set)
 export(interpretations_equivalence)
 export(interpretations_noninferiority)
 export(interpretations_superiority)
+export(validate_interpretation_result)
 export(validate_interpretation_set)

@@ -37,7 +37,7 @@ at -0.5 and +0.5; for an odd number of boundaries the central one will be
 at 0, and the next ones (if any) will be at -1 and +1, and so on.
 
 Plots use the current R Graphics Palette, so you may wish to set that to
-something attractive before plotting. See ?palette.
+something attractive before plotting. See \code{?palette}.
 }
 \examples{
 # Set a nice colour scheme

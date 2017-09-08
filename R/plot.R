@@ -23,7 +23,7 @@
 #' at 0, and the next ones (if any) will be at -1 and +1, and so on.
 #'
 #' Plots use the current R Graphics Palette, so you may wish to set that to
-#' something attractive before plotting. See ?palette.
+#' something attractive before plotting. See \code{?palette}.
 #'
 #' @param x
 #'   An \code{interpretation_set} object.
@@ -211,11 +211,11 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' # Set a nice colour scheme
 #' grDevices::palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
 #' # Set up a confidence interval to interpret
-#' ci_test <- matrix(c(-0.05, 0.05),
+#' ci_test <- matrix(c(-0.03, 0.05),
 #'                   nrow = 1,
 #'                   dimnames = list("estimate", c("2.5 %", "97.5 %")))
-#' noninf <- interpret_noninferiority(ci_test, 0, 0.1, c("Treatment as usual",
-#'                                                       "New treatment"))
+#' noninf <- interpret_noninferiority(ci_test, 0, 0.05, c("Treatment as usual",
+#'                                                        "New treatment"))
 #' plot(noninf)
 #'
 #' @export
@@ -241,7 +241,7 @@ plot.interpretation_result <- function(x,
 
   validate_interpretation_result(x)
 
-  interpretation_set <- get(x$parameters$interpretation_set_name)
+  interpretation_set <- x$parameters$interpretation_set
   names(x$parameters$boundaries) <- interpretation_set$boundary_names
 
   plot_region_canvas(boundaries = x$parameters$boundaries,
@@ -661,6 +661,16 @@ plot_edge_zigzag <- function(colour,
 #' Plot intervals on a canvas, typically prepared with
 #' \code{plot_region_canvas()}.
 #'
+#' The \code{estimate_mark_points} parameter can be used to set the length of
+#' estimate marks, if they are requested using
+#' \code{plot_estimate_marks = TRUE}. The default is extending a little above
+#' and below the interval plot shape and with a gap in the middle big enough
+#' for a line of text (a bit bigger than the height of letter "M"). To leave
+#' no gap, set the first and third elements to zero, e.g.
+#' \code{estimate_mark_points = c(0, 0.05, 0, -0.05)}. To have the marks not
+#' extend outside of the interval shape, set the second and fourth elements to
+#' zero, e.g. \code{estimate_mark_points = c(0, 0, 0, 0)}.
+#'
 #' @param intervals
 #' The interval(s) to be plotted. Two column matrix.
 #'
@@ -714,6 +724,8 @@ plot_intervals <- function(intervals,
                         estimates = estimates,
                         interval_value_labels = interval_value_labels,
                         estimate_value_labels = estimate_value_labels,
+                        plot_estimate_marks = plot_estimate_marks,
+                        estimate_mark_points = estimate_mark_points,
                         ...)
   }
 
@@ -866,8 +878,16 @@ plot_intervals_unif <- function(intervals,
                                 interval_value_labels = FALSE,
                                 estimate_value_labels = FALSE,
                                 interval_labels_offset = c(0, 0, 0.3, 0.3),
-                                estimate_labels_offset = c(0, 0.3),
+                                estimate_labels_offset = c(0, box_halfheight +
+                                                             0.1),
+                                plot_estimate_marks = FALSE,
+                                estimate_mark_points = c(1.2 * strheight("M"),
+                                                         0.05,
+                                                         -1.2 * strheight("M"),
+                                                         -0.05),
                                 ...) {
+
+  box_halfheight <- ifelse(nrow(intervals) == 1, 0.2, 0.4)
 
   if(is.null(estimates)) {
     estimates <- (intervals[, 1] + intervals[, 2]) / 2
@@ -889,6 +909,25 @@ plot_intervals_unif <- function(intervals,
   # Label the estimates
   if(estimate_value_labels) {
     label_estimate_values(estimates, estimate_labels_offset, ...)
+  }
+
+  # Add marks for the location of the estimate.
+
+  if(plot_estimate_marks) {
+
+    for(i in 1 : length(estimates)) {
+
+      graphics::lines(x = c(estimates[i], estimates[i]),
+                      y = c(i + estimate_mark_points[1],
+                            i + box_halfheight + estimate_mark_points[2]),
+                      col = "#333333")
+
+      graphics::lines(x = c(estimates[i], estimates[i]),
+                      y = c(i + estimate_mark_points[3],
+                            i - box_halfheight + estimate_mark_points[4]),
+                      col = "#333333")
+
+    }
   }
 }
 
