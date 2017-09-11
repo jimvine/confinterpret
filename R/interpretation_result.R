@@ -4,7 +4,50 @@
 
 
 
-
+#' Interpretation result
+#'
+#' A class to define the result that is returned by an interpretation conducted
+#' by \code{\link{confinterpret}}.
+#'
+#' The parameters are the ones that were used in conducting the interpretation
+#' (typically using \code{confinterpret} or one of its convenience wrapper
+#' functions). See \code{\link{confinterpret}} for more details on how these
+#' parameters were used in conducting the interpretation.
+#'
+#' @param interpretation
+#'   A list object from a an \code{\link{interpretation_set}} providing the
+#'   qualitative interpretation.
+#' @param ci
+#'   The confidence interval that was interpreted.
+#' @param interpretation_set
+#'   The \code{\link{interpretation_set}} object that was used to conduct the
+#'   interpretation.
+#' @param interpretation_set_name
+#'   The name of the \code{interpretation_set} that was used for the
+#'   interpretation.
+#' @param boundaries
+#'   The boundaries parameter that was used for the interpretation.
+#' @param comparison_labels
+#'   Labels that were used to describe the groups that were compared in the
+#'   interpretation.
+#' @param low_to_high
+#'   Whether the boundaries were provided in low-to-high or high-to-low order.
+#'
+#' @return A list object of class \code{interpretation_result} with elements
+#'   stating the interpretation in different formats
+#'   (\code{$interpretation_short}, \code{$interpretation}, and
+#'   \code{$interpretation_md}) and \code{$parameters}. \code{$parameters} is
+#'   list object detailing the parameters that were used to generate the
+#'   interpretation, and contains
+#'   \code{$ci},
+#'   \code{$interpretation_set},
+#'   \code{$interpretation_set_name},
+#'   \code{$boundaries},
+#'   \code{$comparison_labels} and
+#'   \code{$low_to_high}.
+#'
+#' @export
+#'
 interpretation_result <- function(interpretation,
                                   ci,
                                   interpretation_set,
@@ -126,9 +169,13 @@ validate_interpretation_result <- function(x) {
       is.null(x$parameters$comparison_labels) ||
       is.null(x$parameters$low_to_high)) {
     stop(paste("Invalid interpretation result. Should contain a list object",
-               "$parameters, which should contain at least $ci,",
-               "$interpretation_set_name, $boundaries, $comparison_labels",
-               "and $low_to_high."))
+               "$parameters, which should contain at least",
+               "$ci,",
+               "$interpretation_set,",
+               "$interpretation_set_name,",
+               "$boundaries,",
+               "$comparison_labels and",
+               "$low_to_high."))
   }
 
   validate_interpretation_set(x$parameters$interpretation_set)

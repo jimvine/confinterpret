@@ -8,8 +8,8 @@ plot_intervals_norm(intervals, estimates = NULL, y_scale = 1,
   interval_value_labels = FALSE, estimate_value_labels = FALSE,
   interval_labels_offset = c(0, 0, 0.15, 0.15),
   estimate_labels_offset = c(0, 0.5 * y_scale), plot_estimate_marks = FALSE,
-  estimate_mark_points = c(1.2 * strheight("M"), 0.05, -1.2 * strheight("M"),
-  -0.05), ...)
+  estimate_mark_points = c(1.2 * graphics::strheight("M"), 0.05, -1.2 *
+  graphics::strheight("M"), -0.05), ...)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}

@@ -5,9 +5,10 @@
 \title{Plot intervals}
 \usage{
 plot_intervals(intervals, estimates = NULL, interval_value_labels = FALSE,
-  estimate_value_labels = FALSE, interval_type = "norm",
+  estimate_value_labels = FALSE, interval_labels_offset,
+  estimate_labels_offset, interval_type = "norm",
   plot_estimate_marks = FALSE, estimate_mark_points = c(1.2 *
-  strheight("M"), 0.05, -1.2 * strheight("M"), -0.05), ...)
+  graphics::strheight("M"), 0.05, -1.2 * graphics::strheight("M"), -0.05), ...)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}
@@ -17,6 +18,13 @@ plot_intervals(intervals, estimates = NULL, interval_value_labels = FALSE,
 \item{interval_value_labels}{Logical value specifying whether interval value labels are to be added.}
 
 \item{estimate_value_labels}{Logical value specifying whether estimate value labels are to be added.}
+
+\item{interval_labels_offset}{Amount to offset interval labels by from the centre of the end
+of the interval's plot. \code{c(x1, x2, y1, y2)}.}
+
+\item{estimate_labels_offset}{Amount to offset estimate labels by. \code{c(x, y)}. Normally want the
+estimate to be x-located at its value, but may want a y-offset to move it
+above or below the plot shape that represents the interval.}
 
 \item{interval_type}{Set the way the interval is presented. Current options are
 \code{c("norm", "unif")} for a normal distribution-based curve

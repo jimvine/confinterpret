@@ -6,10 +6,10 @@
 \usage{
 plot_intervals_unif(intervals, estimates = NULL,
   interval_value_labels = FALSE, estimate_value_labels = FALSE,
-  interval_labels_offset = c(0, 0, 0.3, 0.3), estimate_labels_offset = c(0,
-  box_halfheight + 0.1), plot_estimate_marks = FALSE,
-  estimate_mark_points = c(1.2 * strheight("M"), 0.05, -1.2 * strheight("M"),
-  -0.05), ...)
+  interval_labels_offset = c(0, 0, box_halfheight + 0.1, box_halfheight +
+  0.1), estimate_labels_offset = c(0, box_halfheight + 0.1),
+  plot_estimate_marks = FALSE, estimate_mark_points = c(1.2 *
+  graphics::strheight("M"), 0.05, -1.2 * graphics::strheight("M"), -0.05), ...)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}
@@ -20,6 +20,13 @@ plot_intervals_unif(intervals, estimates = NULL,
 
 \item{estimate_value_labels}{Logical value specifying whether estimate value labels are to be added.}
 
+\item{interval_labels_offset}{Amount to offset interval labels by from the centre of the end
+of the interval's plot. \code{c(x1, x2, y1, y2)}.}
+
+\item{estimate_labels_offset}{Amount to offset estimate labels by. \code{c(x, y)}. Normally want the
+estimate to be x-located at its value, but may want a y-offset to move it
+above or below the plot shape that represents the interval.}
+
 \item{plot_estimate_marks}{Whether to plot marks at the x location of the estimates.}
 
 \item{estimate_mark_points}{y positions of the ends of the estimate marks as a numeric vector of length
@@ -29,5 +36,13 @@ top), start (relative to centre), end (relative to box bottom).}
 \item{...}{Further parameters to be passed on.}
 }
 \description{
-Plot intervals as uniform (box) areas
+The current implementation of this function uses \code{\link{boxplot}} to
+draw its boxes.
+}
+\details{
+The default value for the \code{estimate_labels_offset} parameter is defined
+in terms of a variable, \code{box_halfheight}. Because \code{boxplot}, the
+underlying plotting function, draws boxes different heights depending on
+the number of boxes drawn, this is set within the function. For one box the
+\code{box_halfheight} is \code{0.2}; otherwise it is \code{0.4}.
 }

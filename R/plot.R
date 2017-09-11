@@ -677,6 +677,15 @@ plot_edge_zigzag <- function(colour,
 #' @param estimates
 #' Estimates for each of the intervals (optional).
 #'
+#' @param interval_labels_offset
+#' Amount to offset interval labels by from the centre of the end
+#' of the interval's plot. \code{c(x1, x2, y1, y2)}.
+#'
+#' @param estimate_labels_offset
+#'   Amount to offset estimate labels by. \code{c(x, y)}. Normally want the
+#'   estimate to be x-located at its value, but may want a y-offset to move it
+#'   above or below the plot shape that represents the interval.
+#'
 #' @param interval_type
 #' Set the way the interval is presented. Current options are
 #' \code{c("norm", "unif")} for a normal distribution-based curve
@@ -703,12 +712,13 @@ plot_intervals <- function(intervals,
                            estimates = NULL,
                            interval_value_labels = FALSE,
                            estimate_value_labels = FALSE,
+                           interval_labels_offset,
+                           estimate_labels_offset,
                            interval_type = "norm",
                            plot_estimate_marks = FALSE,
-                           estimate_mark_points = c(1.2 * strheight("M"),
-                                                    0.05,
-                                                    -1.2 * strheight("M"),
-                                                    -0.05),
+                           estimate_mark_points =
+                             c(1.2 * graphics::strheight("M"), 0.05,
+                               -1.2 * graphics::strheight("M"), -0.05),
                            ...) {
 
   if(interval_type == "norm") {
@@ -737,15 +747,6 @@ plot_intervals <- function(intervals,
 #' @param y_scale
 #' How tall the interval plots are to be drawn
 #'
-#' @param interval_labels_offset
-#' Amount to offset interval labels by from the centre of the end
-#' of the interval's plot. \code{c(x1, x2, y1, y2)}.
-#'
-#' @param estimate_labels_offset
-#'   Amount to offset estimate labels by. \code{c(x, y)}. Normally want the
-#'   estimate to be x-located at its value, but may want a y-offset to move it
-#'   above or below the plot shape that represents the interval.
-#'
 #' @inheritParams plot_intervals
 plot_intervals_norm <- function(intervals,
                                estimates = NULL,
@@ -755,10 +756,9 @@ plot_intervals_norm <- function(intervals,
                                interval_labels_offset = c(0, 0, 0.15, 0.15),
                                estimate_labels_offset = c(0, 0.5 * y_scale),
                                plot_estimate_marks = FALSE,
-                               estimate_mark_points = c(1.2 * strheight("M"),
-                                                        0.05,
-                                                        -1.2 * strheight("M"),
-                                                        -0.05),
+                               estimate_mark_points =
+                                 c(1.2 * graphics::strheight("M"), 0.05,
+                                   -1.2 * graphics::strheight("M"), -0.05),
                                ...) {
 
   # Check required packages ---------------------------------------------------
@@ -871,20 +871,32 @@ plot_intervals_norm <- function(intervals,
 
 #' Plot intervals as uniform (box) areas
 #'
+#' The current implementation of this function uses \code{\link{boxplot}} to
+#' draw its boxes.
+#'
+#' The default value for the \code{estimate_labels_offset} parameter is defined
+#' in terms of a variable, \code{box_halfheight}. Because \code{boxplot}, the
+#' underlying plotting function, draws boxes different heights depending on
+#' the number of boxes drawn, this is set within the function. For one box the
+#' \code{box_halfheight} is \code{0.2}; otherwise it is \code{0.4}.
+#'
 #' @inheritParams plot_intervals
 #'
 plot_intervals_unif <- function(intervals,
                                 estimates = NULL,
                                 interval_value_labels = FALSE,
                                 estimate_value_labels = FALSE,
-                                interval_labels_offset = c(0, 0, 0.3, 0.3),
+                                interval_labels_offset = c(0, 0,
+                                                           box_halfheight +
+                                                             0.1,
+                                                           box_halfheight +
+                                                             0.1),
                                 estimate_labels_offset = c(0, box_halfheight +
                                                              0.1),
                                 plot_estimate_marks = FALSE,
-                                estimate_mark_points = c(1.2 * strheight("M"),
-                                                         0.05,
-                                                         -1.2 * strheight("M"),
-                                                         -0.05),
+                                estimate_mark_points =
+                                  c(1.2 * graphics::strheight("M"), 0.05,
+                                    -1.2 * graphics::strheight("M"), -0.05),
                                 ...) {
 
   box_halfheight <- ifelse(nrow(intervals) == 1, 0.2, 0.4)
