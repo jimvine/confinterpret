@@ -166,7 +166,7 @@ validate_interpretation_result <- function(x) {
       is.null(x$parameters$interpretation_set) ||
       is.null(x$parameters$interpretation_set_name) ||
       is.null(x$parameters$boundaries) ||
-      is.null(x$parameters$comparison_labels) ||
+
       is.null(x$parameters$low_to_high)) {
     stop(paste("Invalid interpretation result. Should contain a list object",
                "$parameters, which should contain at least",
@@ -174,8 +174,14 @@ validate_interpretation_result <- function(x) {
                "$interpretation_set,",
                "$interpretation_set_name,",
                "$boundaries,",
-               "$comparison_labels and",
+               " and",
                "$low_to_high."))
+  }
+
+  if(is.null(x$parameters$comparison_labels) &&
+     !is.null(x$parameters$interpretation_set$placeholders)) {
+    stop(paste("If the interpretation_set included $placeholders then",
+               "$parameters$comparison_labels should not be NULL."))
   }
 
   validate_interpretation_set(x$parameters$interpretation_set)
