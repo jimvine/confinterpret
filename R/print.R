@@ -61,27 +61,32 @@ print.interpretation_result <- function(x, ...) {
   validate_interpretation_result(x)
 
   x_print <-
-    cat("Object of class 'interpretation_result', with interpretation values:",
+    paste0(
+      cat("Object of class 'interpretation_result', with interpretation values:",
         "\n  $interpretation_short: ", x$interpretation_short,
         "\n  $interpretation:       ", x$interpretation,
         "\n  $interpretation_md:    ", x$interpretation_md,
         "\n\n",
-        "And parameters:",
-        "\n  $parameters$ci:\n", x$parameters$ci,
 
-        "\n  $parameters$interpretation_set:\n",
+        "And parameters:",
+
+        "\n  $parameters$ci:\n",
+        sep = ""),
+      print(x$parameters$ci),
+
+      cat("\n  $parameters$interpretation_set:\n",
         "interpretation_set object. For details use 'print(",
         deparse(substitute(x)), "$parameters$interpretation_set)'.",
 
-        "\n  $parameters$interpretation_set_name:\n",
+        "\n\n  $parameters$interpretation_set_name:  ",
         x$parameters$interpretation_set_name,
+        sep = ""),
 
-        "\n  $parameters$boundaries:\n", x$parameters$boundaries,
-        "\n  $parameters$comparison_labels:\n", x$parameters$comparison_labels,
-        "\n  $parameters$low_to_high:\n", x$parameters$low_to_high,
-
-
-        sep = "")
+      cat("\n\n  $parameters$boundaries:\n"),
+      print(x$parameters$boundaries),
+      cat("\n  $parameters$comparison_labels:\n"),
+      print(x$parameters$comparison_labels),
+      cat("\n  $parameters$low_to_high:  ", x$parameters$low_to_high))
 
   invisible(x_print)
 
