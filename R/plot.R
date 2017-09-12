@@ -1,6 +1,6 @@
 # (c) Jim Vine
 # Author: Jim Vine
-# plot method for interpretation_set objects.
+# plot methods for interpretation_set and interpretation_result objects.
 
 #' Plot a diagram of the valid options for an interpretation_set object
 #'
