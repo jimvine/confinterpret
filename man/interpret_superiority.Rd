@@ -33,9 +33,9 @@ measuring the prevalence of patients falling ill with a disease it is
 likely to be \strong{not} beneficial.}
 }
 \value{
-A list object of class \code{interpretation_result} with elements
-  stating the interpretation in different formats, plus the parameters
-  used to generate the interpretation.
+A list object of class \code{\link{interpretation_result}} with
+  elements stating the interpretation in different formats, plus the
+  parameters used to generate the interpretation.
 }
 \description{
 Conduct superiority tests on confidence intervals using a standard set of

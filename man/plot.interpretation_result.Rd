@@ -75,7 +75,7 @@ top), start (relative to centre), end (relative to box bottom).}
 }
 \description{
 Produces a diagram that illustrates the confidence interval that was
-interpreted using \code{\link{confinterpret}()} against a background
+interpreted using \code{\link{confinterpret}} against a background
 illustrating the \code{\link{interpretation_set}} that it was the basis for
 the interpretation.
 }
@@ -84,6 +84,9 @@ Additional boundaries can be displayed using the \code{extra_boundaries}
 parameter. This can be helpful if you want to show a position that is
 of some practical relevance, but is not defined as a boundary for the
 purposes of the \code{interpretation_set}.
+
+If you wish to plot multiple \code{interpretation_result} objects on one
+chart, see \code{\link{plot_interpretation_result_set}}.
 
 Plots use the current R Graphics Palette, so you may wish to set that to
 something attractive before plotting. See ?palette.

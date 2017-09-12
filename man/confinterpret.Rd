@@ -29,9 +29,9 @@ This can be used to reverse the assessment, including in the cases where
 only one boundary is supplied. See Details.}
 }
 \value{
-A list object of class \code{interpretation_result} with elements
-  stating the interpretation in different formats, plus the parameters
-  used to generate the interpretation.
+A list object of class \code{\link{interpretation_result}} with
+  elements stating the interpretation in different formats, plus the
+  parameters used to generate the interpretation.
 }
 \description{
 Produces descriptive interpretations of confidence intervals, depending
@@ -64,6 +64,11 @@ The use of low_to_high only affects the order of the boundaries (and
 the regions these implicitly define). It does \strong{not} affect the
 ordering of the confidence interval: the numerically lower confidence limit
 should be listed first either way.
+
+Plotting functions are provided to display the results of
+\code{confinterpret}. To plot a single result see
+\code{\link{plot.interpretation_result}}. To plot multiple results on one
+chart see \code{\link{plot_interpretation_result_set}}.
 }
 \examples{
 # Establish a test confidence interval

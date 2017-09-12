@@ -58,4 +58,8 @@ ci_above_sup$interpretation
 
 # Access the full interpretation, marked up with markdown:
 ci_above_sup$interpretation_md
+
+# Plot a chart of the interpretation (specify a nice colour-scheme first):
+grDevices::palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
+plot(ci_above_sup)
 ```

@@ -7,7 +7,7 @@ Authors@R: person("Jim", "Vine", email = "code@jimvine.co.uk",
 Description: Produces descriptive interpretations of confidence intervals.
     Includes (extensible) support for various test types, specified as sets
     of interpretations dependent on where the lower and upper confidence limits
-    sit.
+    sit. Provides plotting functions for graphical display of interpretations.
 License: AGPL-3
 URL: https://github.com/jimvine/confinterpret
 BugReports: https://github.com/jimvine/confinterpret/issues

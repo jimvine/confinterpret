@@ -10,6 +10,9 @@
 #' named then the names will be used for labelling the relevant intervals on
 #' the chart.
 #'
+#' For a single \code{interpretation_result} object a \code{plot()} method is
+#' provided; see \code{\link{plot.interpretation_result}}.
+#'
 #' @param x
 #'   A list of \code{interpretation_result} objects, length at least 2. The
 #'   objects may optionally be named.

@@ -42,6 +42,11 @@
 #' ordering of the confidence interval: the numerically lower confidence limit
 #' should be listed first either way.
 #'
+#' Plotting functions are provided to display the results of
+#' \code{confinterpret}. To plot a single result see
+#' \code{\link{plot.interpretation_result}}. To plot multiple results on one
+#' chart see \code{\link{plot_interpretation_result_set}}.
+#'
 #' @param ci
 #'   A single row from a matrix of the type returned by \code{confint()},
 #'   containing the confidence interval for the parameter estimate. The two
@@ -63,9 +68,9 @@
 #'   This can be used to reverse the assessment, including in the cases where
 #'   only one boundary is supplied. See Details.
 #'
-#' @return A list object of class \code{interpretation_result} with elements
-#'   stating the interpretation in different formats, plus the parameters
-#'   used to generate the interpretation.
+#' @return A list object of class \code{\link{interpretation_result}} with
+#'   elements stating the interpretation in different formats, plus the
+#'   parameters used to generate the interpretation.
 #' @examples
 #' # Establish a test confidence interval
 #' ci_test <- matrix(c(-0.1,0.1),

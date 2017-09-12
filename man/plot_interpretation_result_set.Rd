@@ -74,6 +74,10 @@ objects on a single chart. If the \code{interpretation_result} objects are
 named then the names will be used for labelling the relevant intervals on
 the chart.
 }
+\details{
+For a single \code{interpretation_result} object a \code{plot()} method is
+provided; see \code{\link{plot.interpretation_result}}.
+}
 \examples{
 
 # Set up some intervals to test:
