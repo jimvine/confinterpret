@@ -45,7 +45,7 @@
 #' Plotting functions are provided to display the results of
 #' \code{confinterpret}. To plot a single result see
 #' \code{\link{plot.interpretation_result}}. To plot multiple results on one
-#' chart see \code{\link{plot_interpretation_result_set}}.
+#' chart see \code{\link{plot_interpretation_result_list}}.
 #'
 #' @param ci
 #'   A single row from a matrix of the type returned by \code{confint()},

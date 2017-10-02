@@ -1,11 +1,12 @@
 # (c) Jim Vine
 # Author: Jim Vine
-# plotting function for sets of interpretation_result objects.
+# plotting function for collections of interpretation_result objects.
 
 
-#' Plotting function for set of interpretation_result objects
+#' Plotting function for collection of interpretation_result objects
 #'
-#' Produces a plot presenting a set of \code{\link{interpretation_result}}
+#' Produces a plot presenting a collection of
+#' \code{\link{interpretation_result}}
 #' objects on a single chart. If the \code{interpretation_result} objects are
 #' named then the names will be used for labelling the relevant intervals on
 #' the chart.
@@ -57,30 +58,31 @@
 #'                        "Stage 2" = interp_stage_2)
 #' # Set a nice colour scheme
 #' grDevices::palette(c("#FF671F99", "#F2A90099", "#0085CA99"))
-#' plot_interpretation_result_set(interp_1_and_2, boundary_label_pos = "on top")
+#' plot_interpretation_result_list(interp_1_and_2,
+#'                                 boundary_label_pos = "on top")
 #'
 #' @export
 #'
-plot_interpretation_result_set <- function(x,
-                                           extra_boundaries = NULL,
-                                           estimates = NULL,
-                                           boundary_values = TRUE,
-                                           boundary_label_pos = "below",
-                                           interpretation_label_pos = "right",
-                                           x_axis_pos = "below",
-                                           y_axis_pos = "none",
-                                           inner_margin = c(-0.1, 0.05,
-                                                            -0.1, 0.05),
-                                           edge_margin = c(0, 0.02, 0, 0.02),
-                                           edge_type = "gradient",
-                                           interval_type = "norm",
-                                           y_scale = 0.75,
-                                           interval_value_labels = TRUE,
-                                           estimate_value_labels = TRUE,
-                                           plot_estimate_marks = TRUE,
-                                           ...) {
+plot_interpretation_result_list <- function(x,
+                                            extra_boundaries = NULL,
+                                            estimates = NULL,
+                                            boundary_values = TRUE,
+                                            boundary_label_pos = "below",
+                                            interpretation_label_pos = "right",
+                                            x_axis_pos = "below",
+                                            y_axis_pos = "none",
+                                            inner_margin = c(-0.1, 0.05,
+                                                             -0.1, 0.05),
+                                            edge_margin = c(0, 0.02, 0, 0.02),
+                                            edge_type = "gradient",
+                                            interval_type = "norm",
+                                            y_scale = 0.75,
+                                            interval_value_labels = TRUE,
+                                            estimate_value_labels = TRUE,
+                                            plot_estimate_marks = TRUE,
+                                            ...) {
 
-  validate_result_set(x)
+  validate_result_list(x)
 
   interpretation_set <- x[[1]]$parameters$interpretation_set
   names(x[[1]]$parameters$boundaries) <- interpretation_set$boundary_names
@@ -119,9 +121,9 @@ plot_interpretation_result_set <- function(x,
   }
 }
 
-#' Validates a set of interpretation_result objects
+#' Validates a collection of interpretation_result objects
 #'
-#' Checks that a set of interpretation_result objects has been correctly
+#' Checks that a collection of interpretation_result objects has been correctly
 #' assembled for use in the plotting function.
 #'
 #' To be a valid group of \code{interpretation_result} objects, each of the
@@ -130,12 +132,12 @@ plot_interpretation_result_set <- function(x,
 #' been generated using the same \code{interpretation_set}, with the same
 #' boundaries, and the \code{low_to_high} parameter must be the same.
 #'
-#' @inheritParams plot_interpretation_result_set
+#' @inheritParams plot_interpretation_result_list
 #'
-validate_result_set <- function(x) {
+validate_result_list <- function(x) {
 
   if(length(x) < 2) {
-    stop(paste("The interpretation_result_set should be at least length 2",
+    stop(paste("The interpretation_result list should be at least length 2",
                "to use this."))
   }
 

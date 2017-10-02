@@ -8,7 +8,7 @@
 ## Plotting
 
 * Added plot method for `interpretation_result` objects. Plots the result on a chart, using the `interpretation_set` and associated parameters to draw a relevant canvas that shows the boundaries etc.
-* Added a plotting function that works for a set of `interpretation_result` objects. See `?plot_interpretation_result_set`.
+* Added a plotting function that works for a set of `interpretation_result` objects. See `?plot_interpretation_result_list`.
 * All plotting functions support (and default to) drawing the intervals as curves rather than simple boxes. (Boxes can still be produced by specifying `interval_type = "unif"`.)
 
 ## Printing

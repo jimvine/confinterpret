@@ -188,7 +188,7 @@ plot.interpretation_set <- function(x, extra_boundaries = NULL, ...) {
 #' purposes of the \code{interpretation_set}.
 #'
 #' If you wish to plot multiple \code{interpretation_result} objects on one
-#' chart, see \code{\link{plot_interpretation_result_set}}.
+#' chart, see \code{\link{plot_interpretation_result_list}}.
 #'
 #' Plots use the current R Graphics Palette, so you may wish to set that to
 #' something attractive before plotting. See ?palette.
