@@ -383,12 +383,12 @@ plot_region_canvas <- function(boundaries,
 
   # Check required packages ---------------------------------------------------
   if (!requireNamespace("graphics", quietly = TRUE)) {
-    stop(paste("graphics package needed for plot.interpretation_set to work.",
+    stop(paste("graphics package needed for plotting functions to work.",
                "Please install it."), call. = FALSE)
   }
 
   if (!requireNamespace("grDevices", quietly = TRUE)) {
-    stop(paste("grDevices package needed for plot.interpretation_set to work.",
+    stop(paste("grDevices package needed for plotting functions to work.",
                "Please install it."), call. = FALSE)
   }
 
@@ -595,12 +595,12 @@ plot_edge_gradient <- function(start_colour,
 
   # Check required packages ---------------------------------------------------
   if (!requireNamespace("graphics", quietly = TRUE)) {
-    stop(paste("graphics package needed for plot.interpretation_set to work.",
+    stop(paste("graphics package needed for plotting functions to work.",
                "Please install it."), call. = FALSE)
   }
 
   if (!requireNamespace("grDevices", quietly = TRUE)) {
-    stop(paste("grDevices package needed for plot.interpretation_set to work.",
+    stop(paste("grDevices package needed for plotting functions to work.",
                "Please install it."), call. = FALSE)
   }
 
