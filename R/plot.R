@@ -643,6 +643,18 @@ plot_edge_zigzag <- function(colour,
                              ybottom, ytop,
                              ...) {
 
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
   # Polygons to plot the filled zigzags. Filled in same colours as edge
   # background boxes to extend them.
   poly_y <- c(seq(ybottom, ytop, length.out = 1 + zigzag_number * 2),
@@ -902,6 +914,20 @@ plot_intervals_unif <- function(intervals,
                                     -1.2 * graphics::strheight("M"), -0.05),
                                 ...) {
 
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
+
   box_halfheight <- ifelse(nrow(intervals) == 1, 0.2, 0.4)
 
   if(is.null(estimates)) {
@@ -950,6 +976,20 @@ label_interval_values <- function(intervals,
                                   interval_labels_offset = c(0, 0, 0, 0),
                                   interval_labels_rounding = 3,
                                   ...) {
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
+
   graphics::text(x = cbind(intervals[, 1] + interval_labels_offset[1],
                            intervals[, 2] + interval_labels_offset[2]),
                  y = c((1 : nrow(intervals)) + interval_labels_offset[3],
@@ -962,6 +1002,20 @@ label_estimate_values <- function(estimates,
                                   estimate_labels_offset = c(0, 0),
                                   estimate_labels_rounding = 3,
                                   ...) {
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
+
   graphics::text(x = estimates + estimate_labels_offset[1],
                  y = (1 : length(estimates)) + estimate_labels_offset[2],
                  round(estimates, estimate_labels_rounding))
@@ -977,6 +1031,19 @@ label_estimate_values <- function(estimates,
 #' @inheritParams plot_region_canvas
 #'
 label_ontop_boundaries <- function(boundaries, extra_boundaries = NULL) {
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
 
   y_mid <- (graphics::par("usr")[4] + graphics::par("usr")[3]) / 2
   graphics::text(x = boundaries,
@@ -997,6 +1064,20 @@ label_ontop_boundaries <- function(boundaries, extra_boundaries = NULL) {
 #' @param s
 #' A character vector whose width is to be determined.
 strwidthl <- function(s) {
+
+  # Check required packages ---------------------------------------------------
+  if (!requireNamespace("graphics", quietly = TRUE)) {
+    stop(paste("graphics package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  if (!requireNamespace("grDevices", quietly = TRUE)) {
+    stop(paste("grDevices package needed for plotting functions to work.",
+               "Please install it."), call. = FALSE)
+  }
+
+  # Etc ----------------------------------------------------------------------
+
   graphics::strwidth(s, units = "inches") /
     graphics::strheight("M", unit = "inches")
 }
