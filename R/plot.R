@@ -446,13 +446,13 @@ plot_region_canvas <- function(boundaries,
   margin_left <- 0.5 +
     ifelse(y_axis_pos == "left", 2, 0) +
     ifelse(interpretation_label_pos == "left",
-           max(0, strwidthl(interpretations)),
+           max(0, 1 + strwidthl(interpretations)),
            0)
 
   margin_right <- 0.5 +
     ifelse(y_axis_pos == "right", 2, 0) +
     ifelse(interpretation_label_pos == "right",
-           max(0, strwidthl(interpretations)),
+           max(0, 1 + strwidthl(interpretations)),
            0)
 
   graphics::par(mar = c(margin_below, margin_left, margin_above, margin_right))
