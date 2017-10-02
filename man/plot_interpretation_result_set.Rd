@@ -14,7 +14,7 @@ plot_interpretation_result_set(x, extra_boundaries = NULL, estimates = NULL,
 }
 \arguments{
 \item{x}{A list of \code{interpretation_result} objects, length at least 2. The
-objects may optionally be named.}
+objects may optionally be named. See Details.}
 
 \item{extra_boundaries}{Names optional.}
 
@@ -77,6 +77,13 @@ the chart.
 \details{
 For a single \code{interpretation_result} object a \code{plot()} method is
 provided; see \code{\link{plot.interpretation_result}}.
+
+To be a valid group of \code{interpretation_result} objects, each of the
+items in \code{x} must be a valid \code{interpretation_result}, and they
+must all share some characteristics. Each of the component objects must have
+been generated using the same \code{interpretation_set}, with the same
+boundaries, and the \code{low_to_high} parameter must be the same. This
+enables them to be meaningfully plotted on the same canvas.
 }
 \examples{
 

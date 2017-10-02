@@ -8,9 +8,16 @@ validate_result_set(x)
 }
 \arguments{
 \item{x}{A list of \code{interpretation_result} objects, length at least 2. The
-objects may optionally be named.}
+objects may optionally be named. See Details.}
 }
 \description{
 Checks that a set of interpretation_result objects has been correctly
 assembled for use in the plotting function.
+}
+\details{
+To be a valid group of \code{interpretation_result} objects, each of the
+items in \code{x} must be a valid \code{interpretation_result}, and they
+must all share some characteristics. Each of the component objects must have
+been generated using the same \code{interpretation_set}, with the same
+boundaries, and the \code{low_to_high} parameter must be the same.
 }
