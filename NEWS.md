@@ -2,7 +2,7 @@
 
 ## S3 class for interpretation_result
 
-* The output of `confinterpret()` now returns an object of class `interpretation_result.
+* The output of `confinterpret()` now returns an object of class `interpretation_result`.
 * These results now include the `interpretation_set` object that were used to generate them (previous versions just included the name of the `interpretation_set`).
 
 ## Plotting
