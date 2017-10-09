@@ -1,9 +1,10 @@
 Package: confinterpret
 Type: Package
 Title: Descriptive Interpretations of Confidence Intervals
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: person("Jim", "Vine", email = "code@jimvine.co.uk", 
-    role = c("aut", "cre"))
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0003-3406-5657"))
 Description: Produces descriptive interpretations of confidence intervals.
     Includes (extensible) support for various test types, specified as sets
     of interpretations dependent on where the lower and upper confidence limits
