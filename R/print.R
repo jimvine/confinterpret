@@ -75,7 +75,7 @@ print.interpretation_result <- function(x, ...) {
       print(x$parameters$ci),
 
       cat("\n  $parameters$interpretation_set:\n",
-        "interpretation_set object. For details use 'print(",
+        "interpretation_set object. \nFor details use 'print(",
         deparse(substitute(x)), "$parameters$interpretation_set)'.",
 
         "\n\n  $parameters$interpretation_set_name:  ",
