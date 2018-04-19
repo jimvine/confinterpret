@@ -21,4 +21,5 @@ Suggests: graphics,
     knitr,
     rmarkdown,
     RColorBrewer
+    captioner
 VignetteBuilder: knitr

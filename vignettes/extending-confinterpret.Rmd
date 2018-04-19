@@ -23,22 +23,18 @@ library("confinterpret")
 ```
 
 ```{r include=FALSE}
-print_interps_md_xtable <- function(interpretation_set, name) {
 
+#' Arrange an interpretation_set object into a table, for printing etc.
+tabulate_interpretation_set <- function(interpretation_set, name) {
   int_md <- as.data.frame(sapply(interpretation_set$interpretations,
                                  "[[", "interpretation_md"))
   rownames(int_md) <- LETTERS[1 : nrow(int_md)]
   colnames(int_md) <- name
-  print(xtable::xtable(int_md,
-                       label = paste0("tab:", deparse(substitute(interpretation_set))),
-                       caption = name),
-        # Use standard sanitization function plus a custom regex to change markdown to latex.
-        sanitize.text.function = function(x) {
-          result <- xtable::sanitize(str = x)
-          result <- gsub(pattern = "\\*\\*([[:print:]]+)\\*\\*", "\\\\textbf{\\1}", result)
-          return(result)},
-        comment = FALSE)
+  int_md
 }
+
+table_nums <- captioner::captioner(prefix = "Table")
+figure_nums <- captioner::captioner(prefix = "Figure")
 ```
 
 
@@ -75,7 +71,7 @@ which equals:
 
 $$n_r (n_r + 1) / 2$$
 
-An interpretation needs to be provided for each of these combinations. For likely (i.e., small) numbers of boundaries, the numbers of regions and interpretations are as shown in Table&nbsp;\ref{tab:numbers_b_r_i}.
+An interpretation needs to be provided for each of these combinations. For likely (i.e., small) numbers of boundaries, the numbers of regions and interpretations are as shown in `r table_nums(name = "numbers_b_r_i", display = "cite")`.
 
 ```{r echo=FALSE, results="asis"}
 
@@ -91,19 +87,15 @@ colnames(numbers) <- c("Number of boundaries, $n_b$",
                        "Number of regions, $n_r$",
                        "Number of interpretations")
 
-print(xtable::xtable(numbers,
-                     label = "tab:numbers_b_r_i",
-                     caption = "Number of regions and interpretations for each number of boundaries."), 
-      # Switch off sanitizing on column names, 
-      # so the $n_x$ subscripts get through.
-      sanitize.colnames.function = function(x) {x},
-      include.rownames = FALSE,
-      comment = FALSE)
+knitr::kable(numbers,
+             caption = table_nums(name = "numbers_b_r_i", 
+                                  caption = "Number of regions and interpretations for each number of boundaries."))
+
 ```
 
 Since the `interpretation_set()` function calls a validator function, if you make an error in setting up the correct number of interpretations it will be caught and an error reported.
 
-The order in which interpretations should be provided is well-defined. The order is based on first specifying all the cases where the lower confidence limit is in the bottom region, and each of the regions for the upper confidence limit (again, starting from the bottom and increasing to the top); next come all of the cases where the lower confidence limit is in the second-from-bottom region (in this case the valid regions for the upper confidence limit will start at the second-from-bottom and go up to the top region); and so on. So for a 2 region (1 boundary) situation, the interpretations should be provided in the order in Table&nbsp;\ref{tab:order_2}.
+The order in which interpretations should be provided is well-defined. The order is based on first specifying all the cases where the lower confidence limit is in the bottom region, and each of the regions for the upper confidence limit (again, starting from the bottom and increasing to the top); next come all of the cases where the lower confidence limit is in the second-from-bottom region (in this case the valid regions for the upper confidence limit will start at the second-from-bottom and go up to the top region); and so on. So for a 2 region (1 boundary) situation, the interpretations should be provided in the order in `r table_nums(name = "order_2", display = "cite")`.
 
 ```{r echo=FALSE, results="asis"}
 
@@ -125,26 +117,29 @@ region_orders <- function(number_regions) {
 
 boundary_2 <- region_orders(2)
 
-print(xtable::xtable(boundary_2,
-                     label = "tab:order_2",
-                     caption = "Order of interpretations with two regions."),
-      comment = FALSE)
+knitr::kable(boundary_2, 
+             caption = table_nums(name = "order_2", 
+                                  caption = "Order of interpretations with two regions."))
+
 ```
 
-For a 3 region (2 boundary) situation, the interpretations should be provided in the order in Table&nbsp;\ref{tab:order_3}.
+For a 3 region (2 boundary) situation, the interpretations should be provided in the order in `r table_nums(name = "order_3", display = "cite")`.
 
 ```{r echo=FALSE, results="asis"}
 boundary_3 <- region_orders(3)
 
-print(xtable::xtable(boundary_3,
-                     label = "tab:order_3",
-                     caption = "Order of interpretations with three regions."),
-      comment = FALSE)
+knitr::kable(boundary_3,
+             caption = table_nums(name = "order_3", 
+                                  caption = "Order of interpretations with three regions."))
 ```
 
-Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your `interpretation_set` object with the progression of letters through the alphabet (Figure&nbsp;\ref{fig:dummy-interpretation-set-plot}).
+Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your `interpretation_set` object with the progression of letters through the alphabet (`r figure_nums("dummy-interpretation-set-plot", display = "cite")`).
 
-```{r dummy-interpretation-set-plot, fig.cap="Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations."}
+```{r echo=FALSE}
+dummy_i_s_label <- figure_nums("dummy-interpretation-set-plot", "Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations.")
+```
+
+```{r dummy-interpretation-set-plot, fig.cap=dummy_i_s_label}
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
@@ -181,13 +176,20 @@ grDevices::palette(RColorBrewer::brewer.pal(3,"RdYlBu"))
 plot(practical_superiority)
 ```
 
+
+
 ## Drafting interpretations
 
 Once you have a visualisation of the labelled `interpretation_set` in front of you, you can start to establish the interpretations that would apply to each option.
 
 Values for `placeholders` can be specified to enable sections of text in interpretations to be replaced automatically. This can be used, for example, to allow names or descriptions of interventions to be passed to `confinterpret`, so that these can be returned in the final interpretation rather than a generic description. `confinterpret` uses `gsub()` with `fixed=TRUE` to do substitutions for `placeholders` entries, so values should be selected that will match accordingly (and will not match extra items). Use of a non-alphanumeric character within a placeholder can help to reduce accidental matches.
 
-```{r new-interpretation-set-plot, fig.cap="Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations."}
+```{r echo=FALSE}
+new_i_s_label <- figure_nums("new-interpretation-set-plot", "Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations.")
+```
+
+
+```{r new-interpretation-set-plot, fig.cap=new_i_s_label}
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
@@ -232,8 +234,10 @@ plot(practical_superiority)
 As noted before, the function building the `interpretation_set` will run it through the validator, so errors may be picked up if they have been introduced.
 
 ```{r echo=FALSE, results="asis"}
-print_interps_md_xtable(practical_superiority,
-                        "Practical superiority interpretations.")
+
+knitr::kable(tabulate_interpretation_set(practical_superiority,
+                                         "Practical superiority interpretations."),
+             caption = "Practical superiority interpretations.")
 ```
 
 ## Using a new `interpretation_set` object
@@ -256,9 +260,13 @@ ci_specialist <- matrix(c(0.0296644, 0.1767746),
 
 ```
 
-Suppose, using the data from the study introduced above, our analysis plan specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in Figure&nbsp;\ref{fig:re-interpret-plot}.
+Suppose, using the data from the study introduced above, our analysis plan specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in `r figure_nums("re-interpret-plot", display = "cite")`.
 
-```{r re-interpret-plot, fig.height=5.5, fig.cap="Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object."}
+```{r echo=FALSE}
+re_int_label <- figure_nums("re-interpret-plot", "Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object.")
+```
+
+```{r re-interpret-plot, fig.height=5.5, fig.cap=re_int_label}
 specialist_prac_sup <- confinterpret(ci_specialist,
                                      practical_superiority,
                                      boundaries = c(0, 0.05),
@@ -270,9 +278,10 @@ specialist_prac_sup <- confinterpret(ci_specialist,
 plot(specialist_prac_sup)
 ```
 
-As well as the short interpretation shown on the plot, the longer version of the result can be extracted using `specialist_prac_sup$interpretation`, which gives:
+As well as the short interpretation shown on the plot, the longer version of the result can be extracted using `specialist_prac_sup$interpretation` or `specialist_prac_sup$interpretation_md`, which give, respectively:
 
 * `r specialist_prac_sup$interpretation`
+* `r specialist_prac_sup$interpretation_md`
 
 As described above, the confinterpret package is provided with `interpretations_superiority` for the more typical approach to superiority interpretations. Whilst that approach can result in some practically insignificant results being deemed "superior", by enabling clear presentation in terms of the actual effect sizes, the small / insignificant extent to which the effect was superior would be on clear display.
 
