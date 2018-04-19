@@ -20,6 +20,6 @@ Suggests: graphics,
     testthat,
     knitr,
     rmarkdown,
-    RColorBrewer
+    RColorBrewer,
     captioner
 VignetteBuilder: knitr
