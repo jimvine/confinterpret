@@ -1,5 +1,5 @@
 ---
-title: "Extending confinterpret: defining new interpretation_set objects"
+title: "Extending confinterpret: defining new `interpretation_set` objects"
 author: "Jim Vine"
 date: "`r Sys.Date()`"
 output: 
@@ -42,11 +42,12 @@ figure_nums <- captioner::captioner(prefix = "Figure")
 As a framework for interpreting range-based results, one of the stengths of the confinterpret package is that it is extensible. The extensibility is primarily provided in the form of being able to systematically define new `interpretation_set` objects. The following example is provided to demonstrate how users can make use of this extensibility.
 
 ## Motivating example: 'Practical superiority'
-<span style="color:red">We introduced earlier</span> the concept of a minimum practical difference in the context of a non-inferiority interpretation. In this example we demonstrate the process for establishing a new `interpretation_set` using this concept in the case where we wish to conduct a superiority test, but to insist on superiority above some threshold before declaring the intervention truly superior.
 
-Although this is not a typical approach, and hence not provided by default within the package, it is plausible as an option that a user may wish to conduct. <span style="color:red">As described above</span>, a result that is of statistical significance --- which is equivalent to having a confidence interval that is entirely superior --- may not equate to a practically significant result. A narrow confidence interval that is all superior --- for example 0.1% to 0.3% improvement --- would pass a standard superiority test but might not be practically superior if decision-makers are only interested in improvements of more than, say, 1%. The example is provided to illustrate the process rather than to particularly recommend this design of interpretations.
+The concept of a minimum practical difference is used in some forms of analyses, such as typically forming the basis for establishing the non-inferiority margin in non-inferiority tests. (See `?interpret_noninferiority` for further details.) In this example we demonstrate the process for establishing a new `interpretation_set` using this concept in the case where we wish to conduct a superiority test, but to insist on superiority above some threshold before declaring the intervention to be meaingfully superior.
 
-The process of establishing a new `interpretation_set` object is helpful because it forces the user to consider, and formally specify, the interpretation that will apply in all eventualities. This is particularly useful if conducted before analysis commences, as it gets the analyst to establish in advance how she / he  will describe the findings if any particular outcome is observed. As one part of a strategy to reduce researcher degrees of freedom [@simmons_false-positive_2011] it can contribute to the enhancement of the credibility of findings and ultimately improve the quality of the published literature.
+Although this is not a typical approach, and hence not provided by default within the package, it is plausible as an option that a user may wish to conduct. A result that is of statistical significance --- which is equivalent to having a confidence interval that is entirely superior --- may not equate to a practically significant result. A narrow confidence interval that is all superior --- for example 0.1% to 0.3% improvement --- would pass a standard superiority test but might not be practically superior if decision-makers are only interested in improvements of more than, say, 1%. The example is, however, provided to illustrate the process of extending the package, rather than to particularly recommend this design of interpretations.
+
+The process of establishing a new `interpretation_set` object is helpful because it forces the user to consider, and formally specify, the interpretation that will apply in all eventualities. This is particularly useful if conducted before analysis commences, as it gets the analysts to establish in advance how they  will describe the findings if any particular outcome is observed. As one part of a strategy to reduce researcher degrees of freedom [@simmons_false-positive_2011] it can contribute to the enhancement of the credibility of findings and ultimately improve the quality of the published literature.
 
 Whilst an `interpretation_set` object can be built from scratch in one step with a call to the `interpretation_set()` function, the following process can make it easier to build the object in stages:
 
@@ -60,7 +61,7 @@ Whilst an `interpretation_set` object can be built from scratch in one step with
 
 To build an `interpretation_set` object you will first need to consider the boundaries that specify the type of analysis you are undertaking. Having established the boundaries you will be able to identify how many interpretations you need to specify, as follows.
 
-The number of boundaries, $n_b$ specified in an `interpretation_set` can be thought of as establishing a number of regions, $n_r$, within which the lower and upper confidence limits can sit. This is simply given by:
+The number of boundaries, $n_b$ specified in an `interpretation_set` can be thought of as establishing a number of regions, $n_r$, within which the lower and upper confidence limits can sit. This is given by:
 
 $$n_r = n_b + 1$$
 
@@ -244,10 +245,8 @@ knitr::kable(tabulate_interpretation_set(practical_superiority,
 ## Using a new `interpretation_set` object
 The newly-created `interpretation_set` object can be used as with any of the provided ones, although natrually this will only be via the main `confinterpret()` function rather than being able to rely on a helper variant, unless you write one of those too.
 
+The following example shows how the new object can be used to interpret and visualise results of a randomised controlled trial. The data provided are from [@vine_effects_2016]. Briefly, in this study, alternative letter variants were tested using a randomised controlled trial (RCT) approach, to see whether the new letter resulted in more participants engaging with a free support service than the existing standard letter. The relative effectiveness of the letters was assessed at two stages, a triage stage ('gateway') and then at engagement with a specialist advisor. These were binary / dichotomous outcomes, and the effect size measure was prevalence difference: the difference between the proportion of participants who engaged with the new letter and the old letter. Confidence intervals for these prevalence differences were calculated at the 95% level. The resulting estimates and confidence intervals were:
 
-<span style="color:red">
-The following example shows how the confinterpret package can be used in practice to interpret and visualise results of a randomised controlled trial. The data provided are from [@vine_effects_2016]. Briefly, in this study, alternative letter variants were tested using a randomised controlled trial (RCT) approach, to see whether the new letter resulted in more participants engaging with a free support service than the existing standard letter. The relative effectiveness of the letters was assessed at two stages, a triage stage ('gateway') and then at engagement with a specialist advisor. These were binary / dichotomous outcomes, and the effect size measure was prevalence difference: the difference between the proportion of participants who engaged with the new letter and the old letter. Confidence intervals for these prevalence differences were calculated at the 95% level. The resulting estimates and confidence intervals were:
-</span>
 ```{r}
 estimate_gateway <- c("prevalence difference" = 0.1032195)
 ci_gateway <- matrix(c(0.04777727, 0.2064016),
@@ -261,7 +260,7 @@ ci_specialist <- matrix(c(0.0296644, 0.1767746),
 
 ```
 
-Suppose, using the data from the study introduced above, our analysis plan specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in `r figure_nums("re-interpret-plot", display = "cite")`.
+Suppose, using the data from the study introduced above, that our analysis plan had specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in `r figure_nums("re-interpret-plot", display = "cite")`.
 
 ```{r echo=FALSE}
 re_int_label <- figure_nums("re-interpret-plot", "Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object.")
