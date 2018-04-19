@@ -2,7 +2,10 @@
 title: "Extending confinterpret: defining new interpretation_set objects"
 author: "Jim Vine"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+bibliography: confinterpret.bib
 vignette: >
   %\VignetteIndexEntry{Extending confinterpret: defining new interpretation_set objects}
   %\VignetteEngine{knitr::rmarkdown}
@@ -39,16 +42,16 @@ print_interps_md_xtable <- function(interpretation_set, name) {
 ```
 
 
-As a framework for interpreting range-based results, one of the stengths of \pkg{confinterpret} is that it is extensible. The extensibility is primarily provided in the form of being able to systematically define new \code{interpretation_set} objects. The following example is provided to demonstrate how users can make use of this extensibility.
+As a framework for interpreting range-based results, one of the stengths of the confinterpret package is that it is extensible. The extensibility is primarily provided in the form of being able to systematically define new `interpretation_set` objects. The following example is provided to demonstrate how users can make use of this extensibility.
 
-### Example: 'Practical superiority'
-We introduced earlier the concept of a minimum practical difference in the context of a non-inferiority interpretation. In this example we demonstrate the process for establishing a new \code{interpretation_set} using this concept in the case where we wish to conduct a superiority test, but to insist on superiority above some threshold before declaring the intervention truly superior.
+## Motivating example: 'Practical superiority'
+<span style="color:red">We introduced earlier</span> the concept of a minimum practical difference in the context of a non-inferiority interpretation. In this example we demonstrate the process for establishing a new `interpretation_set` using this concept in the case where we wish to conduct a superiority test, but to insist on superiority above some threshold before declaring the intervention truly superior.
 
-Although this is not a typical approach, and hence not provided by default within the package, it is plausible as an option that a user may wish to conduct. As described above, a result that is of statistical significance --- which is equivalent to having a confidence interval that is entirely superior --- may not equate to a practically significant result. A narrow confidence interval that is all superior --- for example 0.1% to 0.3% improvement --- would pass a standard superiority test but might not be practically superior if decision-makers are only interested in improvements of more than, say, 1%. The example is provided to illustrate the process rather than to particularly recommend this design of interpretations.
+Although this is not a typical approach, and hence not provided by default within the package, it is plausible as an option that a user may wish to conduct. <span style="color:red">As described above</span>, a result that is of statistical significance --- which is equivalent to having a confidence interval that is entirely superior --- may not equate to a practically significant result. A narrow confidence interval that is all superior --- for example 0.1% to 0.3% improvement --- would pass a standard superiority test but might not be practically superior if decision-makers are only interested in improvements of more than, say, 1%. The example is provided to illustrate the process rather than to particularly recommend this design of interpretations.
 
-The process of establishing a new \code{interpretation_set} object is helpful because it forces the user to consider, and formally specify, the interpretation that will apply in all eventualities. This is particularly useful if conducted before analysis commences, as it gets the analyst to establish in advance how she / he  will describe the findings if any particular outcome is observed. As one part of a strategy to reduce researcher degrees of freedom [@simmons_false-positive_2011] it can contribute to the enhancement of the credibility of findings and ultimately improve the quality of the published literature.
+The process of establishing a new `interpretation_set` object is helpful because it forces the user to consider, and formally specify, the interpretation that will apply in all eventualities. This is particularly useful if conducted before analysis commences, as it gets the analyst to establish in advance how she / he  will describe the findings if any particular outcome is observed. As one part of a strategy to reduce researcher degrees of freedom [@simmons_false-positive_2011] it can contribute to the enhancement of the credibility of findings and ultimately improve the quality of the published literature.
 
-Whilst an \code{interpretation_set} object can be built from scratch in one step with a call to the \code{interpretation_set()} function, the following process can make it easier to build the object in stages:
+Whilst an `interpretation_set` object can be built from scratch in one step with a call to the `interpretation_set()` function, the following process can make it easier to build the object in stages:
 
 * First, build the object with only identifying labels, not meaningful interpretations.
 * Then plot the object to see the range of interpretations that need to be provided, based on the boundaries.
@@ -56,17 +59,11 @@ Whilst an \code{interpretation_set} object can be built from scratch in one step
 * Re-plot and print the object to check your interpretations are correct.
 
 
-\begin{comment}
-#### Building an interpretation set with identifying labels
-\end{comment}
+## Building an `interpretation_set` with identifying labels
 
-\subsubsection[Building an interpretation set with identifying
-labels]{Building an \code{interpretation\textunderscore set} with identifying
-labels}\label{building-an-interpretation-set-with-identifying-labels}
+To build an `interpretation_set` object you will first need to consider the boundaries that specify the type of analysis you are undertaking. Having established the boundaries you will be able to identify how many interpretations you need to specify, as follows.
 
-To build an \code{interpretation_set} object you will first need to consider the boundaries that specify the type of analysis you are undertaking. Having established the boundaries you will be able to identify how many interpretations you need to specify, as follows.
-
-The number of boundaries, $n_b$ specified in an \code{interpretation_set} can be thought of as establishing a number of regions, $n_r$, within which the lower and upper confidence limits can sit. This is simply given by:
+The number of boundaries, $n_b$ specified in an `interpretation_set` can be thought of as establishing a number of regions, $n_r$, within which the lower and upper confidence limits can sit. This is simply given by:
 
 $$n_r = n_b + 1$$
 
@@ -104,7 +101,7 @@ print(xtable::xtable(numbers,
       comment = FALSE)
 ```
 
-Since the \code{interpretation_set()} function calls a validator function, if you make an error in setting up the correct number of interpretations it will be caught and an error reported.
+Since the `interpretation_set()` function calls a validator function, if you make an error in setting up the correct number of interpretations it will be caught and an error reported.
 
 The order in which interpretations should be provided is well-defined. The order is based on first specifying all the cases where the lower confidence limit is in the bottom region, and each of the regions for the upper confidence limit (again, starting from the bottom and increasing to the top); next come all of the cases where the lower confidence limit is in the second-from-bottom region (in this case the valid regions for the upper confidence limit will start at the second-from-bottom and go up to the top region); and so on. So for a 2 region (1 boundary) situation, the interpretations should be provided in the order in Table&nbsp;\ref{tab:order_2}.
 
@@ -145,9 +142,9 @@ print(xtable::xtable(boundary_3,
       comment = FALSE)
 ```
 
-Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your \code{interpretation_set} object with the progression of letters through the alphabet (Figure&nbsp;\ref{fig:dummy-interpretation-set-plot}).
+Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your `interpretation_set` object with the progression of letters through the alphabet (Figure&nbsp;\ref{fig:dummy-interpretation-set-plot}).
 
-```{r dummy-interpretation-set-plot, fig.cap="Plot of a 'dummy' \\code{interpretation\\textunderscore set} object, providing visual support for use while drafting interpretations."}
+```{r dummy-interpretation-set-plot, fig.cap="Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations."}
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
@@ -178,16 +175,19 @@ practical_superiority <- interpretation_set(
            interpretation       = "F",
            interpretation_md    = "F")))
 
+# Set a nice colour scheme
+grDevices::palette(RColorBrewer::brewer.pal(3,"RdYlBu"))
+
 plot(practical_superiority)
 ```
 
-#### Drafting interpretations
+## Drafting interpretations
 
-Once you have a visualisation of the labelled \code{interpretation_set} in front of you, you can start to establish the interpretations that would apply to each option.
+Once you have a visualisation of the labelled `interpretation_set` in front of you, you can start to establish the interpretations that would apply to each option.
 
-Values for \code{placeholders} can be specified to enable sections of text in interpretations to be replaced automatically. This can be used, for example, to allow names or descriptions of interventions to be passed to \code{confinterpret}, so that these can be returned in the final interpretation rather than a generic description. \code{confinterpret} uses \code{gsub} with \code{fixed=TRUE} to do substitutions for \code{placeholders} entries, so values should be selected that will match accordingly (and will not match extra items). Use of a non-alphanumeric character within a placeholder can help to reduce accidental matches.
+Values for `placeholders` can be specified to enable sections of text in interpretations to be replaced automatically. This can be used, for example, to allow names or descriptions of interventions to be passed to `confinterpret`, so that these can be returned in the final interpretation rather than a generic description. `confinterpret` uses `gsub()` with `fixed=TRUE` to do substitutions for `placeholders` entries, so values should be selected that will match accordingly (and will not match extra items). Use of a non-alphanumeric character within a placeholder can help to reduce accidental matches.
 
-```{r new-interpretation-set-plot, fig.cap="Plot of the newly-defined \\code{interpretation\\textunderscore set} object, showing short versions of the drafted interpretations."}
+```{r new-interpretation-set-plot, fig.cap="Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations."}
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
@@ -229,28 +229,20 @@ practical_superiority <- interpretation_set(
 plot(practical_superiority)
 ```
 
-As noted before, the function building the \code{interpretation_set} will run it through the validator, so errors may be picked up if they have been introduced.
+As noted before, the function building the `interpretation_set` will run it through the validator, so errors may be picked up if they have been introduced.
 
 ```{r echo=FALSE, results="asis"}
 print_interps_md_xtable(practical_superiority,
                         "Practical superiority interpretations.")
 ```
 
-\begin{comment}
-#### Using a new interpretation set object
-\end{comment}
-
-\subsubsection[Using a new interpretation set
-object]{Using a new \code{interpretation\textunderscore set}
-object}\label{using-a-new-interpretation-set-object}
+## Using a new `interpretation_set` object
+The newly-created `interpretation_set` object can be used as with any of the provided ones, although natrually this will only be via the main `confinterpret()` function rather than being able to rely on a helper variant, unless you write one of those too.
 
 
-The newly-created \code{interpretation_set} object can be used as with any of the provided ones, although natrually this will only be via the main \code{confinterpret()} function rather than being able to rely on a helper variant, unless you write one of those too.
-
-# REWORD THIS FOR CONTEXT
-
-The following example shows how \pkg{confinterpret} can be used in practice to interpret and visualise results of a randomised controlled trial. The data provided are from [@vine_effects_2016]. Briefly, in this study, alternative letter variants were tested using a randomised controlled trial (RCT) approach, to see whether the new letter resulted in more participants engaging with a free support service than the existing standard letter. The relative effectiveness of the letters was assessed at two stages, a triage stage ('gateway') and then at engagement with a specialist advisor. These were binary / dichotomous outcomes, and the effect size measure was prevalence difference: the difference between the proportion of participants who engaged with the new letter and the old letter. Confidence intervals for these prevalence differences were calculated at the 95% level. The resulting estimates and confidence intervals were:
-
+<span style="color:red">
+The following example shows how the confinterpret package can be used in practice to interpret and visualise results of a randomised controlled trial. The data provided are from [@vine_effects_2016]. Briefly, in this study, alternative letter variants were tested using a randomised controlled trial (RCT) approach, to see whether the new letter resulted in more participants engaging with a free support service than the existing standard letter. The relative effectiveness of the letters was assessed at two stages, a triage stage ('gateway') and then at engagement with a specialist advisor. These were binary / dichotomous outcomes, and the effect size measure was prevalence difference: the difference between the proportion of participants who engaged with the new letter and the old letter. Confidence intervals for these prevalence differences were calculated at the 95% level. The resulting estimates and confidence intervals were:
+</span>
 ```{r}
 estimate_gateway <- c("prevalence difference" = 0.1032195)
 ci_gateway <- matrix(c(0.04777727, 0.2064016),
@@ -264,12 +256,9 @@ ci_specialist <- matrix(c(0.0296644, 0.1767746),
 
 ```
 
-
-# END REWORD
-
 Suppose, using the data from the study introduced above, our analysis plan specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in Figure&nbsp;\ref{fig:re-interpret-plot}.
 
-```{r re-interpret-plot, fig.height=5.5, fig.cap="Plot showing a study result, re-interpreted using the newly-defined \\code{interpretation\\textunderscore set} object."}
+```{r re-interpret-plot, fig.height=5.5, fig.cap="Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object."}
 specialist_prac_sup <- confinterpret(ci_specialist,
                                      practical_superiority,
                                      boundaries = c(0, 0.05),
@@ -281,11 +270,14 @@ specialist_prac_sup <- confinterpret(ci_specialist,
 plot(specialist_prac_sup)
 ```
 
-As well as the short interpretation shown on the plot, the longer version of the result can be extracted using \code{specialist_prac_sup$interpretation}, which gives:
+As well as the short interpretation shown on the plot, the longer version of the result can be extracted using `specialist_prac_sup$interpretation`, which gives:
 
 * `r specialist_prac_sup$interpretation`
 
-As described above, \pkg{confinterpret} is provided with \code{interpretations_superiority} for the more typical approach to superiority interpretations. Whilst that approach can result in some practically insignificant results being deemed "superior", by enabling clear presentation in terms of the actual effect sizes, the small / insignificant extent to which the effect was superior would be on clear display.
+As described above, the confinterpret package is provided with `interpretations_superiority` for the more typical approach to superiority interpretations. Whilst that approach can result in some practically insignificant results being deemed "superior", by enabling clear presentation in terms of the actual effect sizes, the small / insignificant extent to which the effect was superior would be on clear display.
 
 
 
+## References {-}
+
+<div id="refs"></div>

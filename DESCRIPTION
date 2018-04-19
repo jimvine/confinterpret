@@ -19,5 +19,6 @@ Suggests: graphics,
     grDevices,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    RColorBrewer
 VignetteBuilder: knitr
