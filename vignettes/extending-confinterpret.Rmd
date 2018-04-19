@@ -15,7 +15,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=6.5, fig.height=6.5
 )
 
 library("confinterpret")
