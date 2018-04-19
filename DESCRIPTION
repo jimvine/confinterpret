@@ -17,4 +17,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: graphics,
     grDevices,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
