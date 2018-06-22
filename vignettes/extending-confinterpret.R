@@ -81,31 +81,31 @@ practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
                    tested_intervention = "$test"),
-    interpretations = list(
-      # A
-      list(interpretation_short = "A",
-           interpretation       = "A",
-           interpretation_md    = "A"),
-      # B
-      list(interpretation_short = "B",
-           interpretation       = "B",
-           interpretation_md    = "B"),
-      # C
-      list(interpretation_short = "C",
-           interpretation       = "C",
-           interpretation_md    = "C"),
-      # D
-      list(interpretation_short = "D",
-           interpretation       = "D",
-           interpretation_md    = "D"),
-      # E
-      list(interpretation_short = "E",
-           interpretation       = "E",
-           interpretation_md    = "E"),
-      # F
-      list(interpretation_short = "F",
-           interpretation       = "F",
-           interpretation_md    = "F")))
+  interpretations = list(
+    # A
+    list(interpretation_short = "A",
+         interpretation       = "A",
+         interpretation_md    = "A"),
+    # B
+    list(interpretation_short = "B",
+         interpretation       = "B",
+         interpretation_md    = "B"),
+    # C
+    list(interpretation_short = "C",
+         interpretation       = "C",
+         interpretation_md    = "C"),
+    # D
+    list(interpretation_short = "D",
+         interpretation       = "D",
+         interpretation_md    = "D"),
+    # E
+    list(interpretation_short = "E",
+         interpretation       = "E",
+         interpretation_md    = "E"),
+    # F
+    list(interpretation_short = "F",
+         interpretation       = "F",
+         interpretation_md    = "F")))
 
 # Set a nice colour scheme
 grDevices::palette(RColorBrewer::brewer.pal(3,"RdYlBu"))

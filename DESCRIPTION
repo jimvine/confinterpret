@@ -1,7 +1,7 @@
 Package: confinterpret
 Type: Package
 Title: Descriptive Interpretations of Confidence Intervals
-Version: 1.0.0.9000
+Version: 1.0.0.9001
 Authors@R: person("Jim", "Vine", email = "code@jimvine.co.uk", 
     role = c("aut", "cre"),
     comment = c(ORCID = "0000-0003-3406-5657"))
