@@ -18,12 +18,17 @@ specific value to be substituted.
 Can be null.}
 
 \item{interpretations}{An ordered list of interpretations, one for each valid combination of
-confidence limits. See Details for information on the number and expected
-ordering of \code{interpretations} in a given \code{interpretation_set}.}
+confidence limits. See Details for information on the number, format, and
+expected ordering of \code{interpretations} in a given
+\code{interpretation_set}.}
+}
+\value{
+An object of class \code{interpretation_set} (a list object).
 }
 \description{
 A class to define a set of interpretations for confidence intervals,
-depending on where the lower and upper confidence limits sit.
+depending on where the lower and upper confidence limits sit. A helper
+function for producing objects of this class.
 }
 \details{
 The set of boundaries specified in an \code{interpretation_set} can be
@@ -65,9 +70,20 @@ in this order:
    6 \tab Region 3 \tab Region 3 \cr
    }
 
+Each interpretation should itself be a list object containing named items:
+\code{interpretation_short}, \code{interpretation}, and
+\code{interpretation_md}. These contain, respectively, a short interpretation
+(one or two words), a version of the interpretation that would typically be
+a little longer (a short phrase), and the \code{interpretation} phrase with
+any markdown that is required. The markdown is typically used to emphasise
+the key words from the interpretation.
+
+See the vignette on extending \code{confinterpret} for a worked example of
+how these list items are supplied.
+
 Values for \code{placeholders} can be specified to enable sections of text
 in interpretations to be replaced automatically. This can be used, for
-example, to allow names or descriptions of intervention to be passed to
+example, to allow names or descriptions of interventions to be passed to
 \code{\link{confinterpret}}, so that these can be returned in the final
 interpretation rather than a generic description. \code{confinterpret}
 uses \code{gsub} with \code{fixed=TRUE} to do substitutions for
