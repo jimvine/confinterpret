@@ -243,7 +243,7 @@ knitr::kable(tabulate_interpretation_set(practical_superiority,
 ```
 
 ## Using a new `interpretation_set` object
-The newly-created `interpretation_set` object can be used as with any of the provided ones, although natrually this will only be via the main `confinterpret()` function rather than being able to rely on a helper variant, unless you write one of those too.
+The newly-created `interpretation_set` object can be used as with any of the provided ones, although naturally this will only be via the main `confinterpret()` function rather than being able to rely on a helper variant, unless you write one of those too.
 
 The following example shows how the new object can be used to interpret and visualise results of a randomised controlled trial. The data provided are from [@vine_effects_2016]. Briefly, in this study, alternative letter variants were tested using a randomised controlled trial (RCT) approach, to see whether the new letter resulted in more participants engaging with a free support service than the existing standard letter. The relative effectiveness of the letters was assessed at two stages, a triage stage ('gateway') and then at engagement with a specialist advisor. These were binary / dichotomous outcomes, and the effect size measure was prevalence difference: the difference between the proportion of participants who engaged with the new letter and the old letter. Confidence intervals for these prevalence differences were calculated at the 95% level. The resulting estimates and confidence intervals were:
 
