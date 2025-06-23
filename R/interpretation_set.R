@@ -110,7 +110,7 @@ new_interpretation_set <- function(boundary_names,
                                    interpretations) {
   stopifnot(is.list(interpretations),
             (is.atomic(boundary_names) || is.list(boundary_names)),
-            (is.atomic(placeholders) || is.list(placeholders)))
+            (is.null(placeholders) || is.atomic(placeholders) || is.list(placeholders)))
   structure(
     list(
       boundary_names = boundary_names,
