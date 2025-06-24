@@ -4,7 +4,9 @@
 \name{interpretations_equivalence}
 \alias{interpretations_equivalence}
 \title{Interpretation set for equivalence tests}
-\format{An object of class \code{interpretation_set} of length 3.}
+\format{
+An object of class \code{interpretation_set} of length 3.
+}
 \usage{
 interpretations_equivalence
 }

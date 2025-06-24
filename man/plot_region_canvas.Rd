@@ -4,11 +4,21 @@
 \alias{plot_region_canvas}
 \title{Plot a canvas backed with regions defined by a set of boundaries}
 \usage{
-plot_region_canvas(boundaries, extra_boundaries = NULL, values,
-  interpretations = NULL, boundary_values = FALSE,
-  boundary_label_pos = "below", interpretation_label_pos = "right",
-  x_axis_pos = "none", y_axis_pos = "none", inner_margin = c(0, 0.05, 0,
-  0.05), edge_margin = c(0, 0.02, 0, 0.02), edge_type = "gradient", ...)
+plot_region_canvas(
+  boundaries,
+  extra_boundaries = NULL,
+  values,
+  interpretations = NULL,
+  boundary_values = FALSE,
+  boundary_label_pos = "below",
+  interpretation_label_pos = "right",
+  x_axis_pos = "none",
+  y_axis_pos = "none",
+  inner_margin = c(0, 0.05, 0, 0.05),
+  edge_margin = c(0, 0.02, 0, 0.02),
+  edge_type = "gradient",
+  ...
+)
 }
 \arguments{
 \item{boundaries}{Named vector of numerical values of where boundaries should be drawn.}

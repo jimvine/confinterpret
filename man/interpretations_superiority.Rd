@@ -4,7 +4,9 @@
 \name{interpretations_superiority}
 \alias{interpretations_superiority}
 \title{Interpretation set for superiority tests}
-\format{An object of class \code{interpretation_set} of length 3.}
+\format{
+An object of class \code{interpretation_set} of length 3.
+}
 \usage{
 interpretations_superiority
 }

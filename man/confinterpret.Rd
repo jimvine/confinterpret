@@ -4,8 +4,13 @@
 \alias{confinterpret}
 \title{Descriptive interpretations of confidence intervals.}
 \usage{
-confinterpret(ci, interpretation_set, boundaries, comparison_labels = NULL,
-  low_to_high = TRUE)
+confinterpret(
+  ci,
+  interpretation_set,
+  boundaries,
+  comparison_labels = NULL,
+  low_to_high = TRUE
+)
 }
 \arguments{
 \item{ci}{A single row from a matrix of the type returned by \code{confint()},

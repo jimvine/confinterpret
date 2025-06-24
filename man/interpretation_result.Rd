@@ -4,9 +4,15 @@
 \alias{interpretation_result}
 \title{Interpretation result}
 \usage{
-interpretation_result(interpretation, ci, interpretation_set,
+interpretation_result(
+  interpretation,
+  ci,
+  interpretation_set,
   interpretation_set_name = deparse(substitute(interpretation_set)),
-  boundaries, comparison_labels, low_to_high)
+  boundaries,
+  comparison_labels,
+  low_to_high
+)
 }
 \arguments{
 \item{interpretation}{A list object from a an \code{\link{interpretation_set}} providing the

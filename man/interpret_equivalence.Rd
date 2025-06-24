@@ -4,9 +4,13 @@
 \alias{interpret_equivalence}
 \title{Equivalence test interpretations of confidence intervals.}
 \usage{
-interpret_equivalence(ci, actual_null = 0, eq_margin = 0.1,
+interpret_equivalence(
+  ci,
+  actual_null = 0,
+  eq_margin = 0.1,
   groups = c("Control intervention", "Test intervention"),
-  beneficial_outcome = TRUE)
+  beneficial_outcome = TRUE
+)
 }
 \arguments{
 \item{ci}{A single row from a matrix of the type returned by \code{confint()},

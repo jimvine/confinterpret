@@ -143,7 +143,7 @@ validate_interpretation_result <- function(x) {
 
   # Check that an item is a valid result as should come from confinterpret()
 
-  if(class(x) != "interpretation_result") {
+  if(!inherits(x, "interpretation_result")) {
     stop("Not an object of class interpretation_result.")
   }
 

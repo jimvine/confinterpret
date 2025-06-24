@@ -1,14 +1,15 @@
 ---
 title: "Extending confinterpret: defining new `interpretation_set` objects"
 author: "Jim Vine"
-date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
+date: "2018-06-22"
+format: 
+  html:
     toc: true
+    html-math-method: mathjax
 bibliography: confinterpret.bib
 vignette: >
   %\VignetteIndexEntry{Extending confinterpret: defining new interpretation_set objects}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -34,12 +35,12 @@ tabulate_interpretation_set <- function(interpretation_set, name) {
   int_md
 }
 
-table_nums <- captioner::captioner(prefix = "Table")
-figure_nums <- captioner::captioner(prefix = "Figure")
+#table_nums <- captioner::captioner(prefix = "Table")
+#figure_nums <- captioner::captioner(prefix = "Figure")
 ```
 
 
-As a framework for interpreting range-based results, one of the stengths of the confinterpret package is that it is extensible. The extensibility is primarily provided in the form of being able to systematically define new `interpretation_set` objects. The following example is provided to demonstrate how users can make use of this extensibility.
+As a framework for interpreting range-based results, one of the strengths of the confinterpret package is that it is extensible. The extensibility is primarily provided in the form of being able to systematically define new `interpretation_set` objects. The following example is provided to demonstrate how users can make use of this extensibility.
 
 ## Motivating example: 'Practical superiority'
 
@@ -73,9 +74,13 @@ which equals:
 
 $$n_r (n_r + 1) / 2$$
 
-An interpretation needs to be provided for each of these combinations. For likely (i.e., small) numbers of boundaries, the numbers of regions and interpretations are as shown in `r table_nums(name = "numbers_b_r_i", display = "cite")`.
+An interpretation needs to be provided for each of these combinations. For likely (i.e., small) numbers of boundaries, the numbers of regions and interpretations are as shown in @tbl-numbers-b-r-i.
 
-```{r echo=FALSE, results="asis"}
+```{r}
+#| label: tbl-numbers-b-r-i
+#| echo: FALSE
+#| results: "asis"
+#| tbl-cap: "Number of regions and interpretations for each number of boundaries."
 
 number_boundaries <- 1 : 5
 number_regions <- number_boundaries + 1L
@@ -89,17 +94,23 @@ colnames(numbers) <- c("Number of boundaries, $n_b$",
                        "Number of regions, $n_r$",
                        "Number of interpretations")
 
-knitr::kable(numbers,
-             caption = table_nums(name = "numbers_b_r_i", 
-                                  caption = "Number of regions and interpretations for each number of boundaries."))
+knitr::kable(numbers)
+# knitr::kable(numbers,
+#              caption = table_nums(name = "numbers_b_r_i", 
+#                                   caption = "Number of regions and interpretations for each number of boundaries."))
 
 ```
 
 Since the `interpretation_set()` function calls a validator function, if you make an error in setting up the correct number of interpretations it will be caught and an error reported.
 
-The order in which interpretations should be provided is well-defined. The order is based on first specifying all the cases where the lower confidence limit is in the bottom region, and each of the regions for the upper confidence limit (again, starting from the bottom and increasing to the top); next come all of the cases where the lower confidence limit is in the second-from-bottom region (in this case the valid regions for the upper confidence limit will start at the second-from-bottom and go up to the top region); and so on. So for a 2 region (1 boundary) situation, the interpretations should be provided in the order in `r table_nums(name = "order_2", display = "cite")`.
+The order in which interpretations should be provided is well-defined. The order is based on first specifying all the cases where the lower confidence limit is in the bottom region, and each of the regions for the upper confidence limit (again, starting from the bottom and increasing to the top); next come all of the cases where the lower confidence limit is in the second-from-bottom region (in this case the valid regions for the upper confidence limit will start at the second-from-bottom and go up to the top region); and so on. So for a 2 region (1 boundary) situation, the interpretations should be provided in the order in @tbl-order-2.
 
-```{r echo=FALSE, results="asis"}
+```{r}
+#| label: tbl-order-2
+#| echo: FALSE
+#| results: "asis"
+#| tbl-cap: "Order of interpretations with two regions."
+
 
 region_orders <- function(number_regions) {
   
@@ -119,29 +130,39 @@ region_orders <- function(number_regions) {
 
 boundary_2 <- region_orders(2)
 
-knitr::kable(boundary_2, 
-             caption = table_nums(name = "order_2", 
-                                  caption = "Order of interpretations with two regions."))
+knitr::kable(boundary_2)
+
+#knitr::kable(boundary_2, 
+#             caption = table_nums(name = "order_2", 
+#                                  caption = "Order of interpretations with two regions."))
 
 ```
 
-For a 3 region (2 boundary) situation, the interpretations should be provided in the order in `r table_nums(name = "order_3", display = "cite")`.
+For a 3 region (2 boundary) situation, the interpretations should be provided in the order in @tbl-order-3.
 
-```{r echo=FALSE, results="asis"}
+```{r}
+#| label: tbl-order-3
+#| echo: FALSE
+#| results: "asis"
+#| tbl-cap: "Order of interpretations with three regions."
+
 boundary_3 <- region_orders(3)
 
-knitr::kable(boundary_3,
-             caption = table_nums(name = "order_3", 
-                                  caption = "Order of interpretations with three regions."))
+knitr::kable(boundary_3)
+#knitr::kable(boundary_3,
+#             caption = table_nums(name = "order_3", 
+#                                  caption = "Order of interpretations with three regions."))
 ```
 
-Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your `interpretation_set` object with the progression of letters through the alphabet (`r figure_nums("dummy-interpretation-set-plot", display = "cite")`).
+Rather than trying to match interpretations to these descriptions from scratch, an easier approach may be to instead first create and plot a dummy version of your `interpretation_set` object with the progression of letters through the alphabet @fig-dummy-interpretation-set-plot.
 
 ```{r echo=FALSE}
-dummy_i_s_label <- figure_nums("dummy-interpretation-set-plot", "Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations.")
+#dummy_i_s_label <- figure_nums("dummy-interpretation-set-plot", "Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations.")
 ```
 
-```{r dummy-interpretation-set-plot, fig.cap=dummy_i_s_label}
+
+```{r build-dummy-interpretation-set, echo=FALSE}
+
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
   placeholders = c(comparison_intervention = "$comp",
@@ -172,6 +193,12 @@ practical_superiority <- interpretation_set(
          interpretation       = "F",
          interpretation_md    = "F")))
 
+```
+
+```{r}
+#| label: fig-dummy-interpretation-set-plot
+#| fig-cap: "Plot of a 'dummy' `interpretation_set` object, providing visual support for use while drafting interpretations."
+
 # Set a nice colour scheme
 grDevices::palette(RColorBrewer::brewer.pal(3,"RdYlBu"))
 
@@ -187,60 +214,74 @@ Once you have a visualisation of the labelled `interpretation_set` in front of y
 Values for `placeholders` can be specified to enable sections of text in interpretations to be replaced automatically. This can be used, for example, to allow names or descriptions of interventions to be passed to `confinterpret`, so that these can be returned in the final interpretation rather than a generic description. `confinterpret` uses `gsub()` with `fixed=TRUE` to do substitutions for `placeholders` entries, so values should be selected that will match accordingly (and will not match extra items). Use of a non-alphanumeric character within a placeholder can help to reduce accidental matches.
 
 ```{r echo=FALSE}
-new_i_s_label <- figure_nums("new-interpretation-set-plot", "Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations.")
+#new_i_s_label <- figure_nums("new-interpretation-set-plot", "Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations.")
 ```
 
 
-```{r new-interpretation-set-plot, fig.cap=new_i_s_label}
+```{r build-new-interpretation-set, echo=FALSE}
+
 practical_superiority <- interpretation_set(
   boundary_names =c("Actual null", "Practical null"),
-  placeholders = c(comparison_intervention = "$comp",
-                   tested_intervention = "$test"),
+  placeholders = c(comparison_intervention = "!comp",
+                   tested_intervention = "!test"),
     interpretations = list(
       # A
       list(interpretation_short = "Inferior",
-           interpretation       = "$test inferior to $comp",
-           interpretation_md    = "$test **inferior** to $comp"),
+           interpretation       = "!test inferior to !comp ",
+           interpretation_md    = "!test **inferior** to !comp "),
       # B
       list(interpretation_short = "Not practically superior",
-           interpretation       = "$test not practically superior to $comp",
-           interpretation_md    = "$test **not practically superior** to $comp"),
+           interpretation       = "!test not practically superior to !comp ",
+           interpretation_md    = "!test **not practically superior** to !comp "),
       # C
       list(interpretation_short = "Inconclusive",
-           interpretation       = paste("Inconclusive: $test not shown to",
-                                        "be inferior or superior to $comp"),
-           interpretation_md    = paste("**Inconclusive**: $test not shown to",
-                                        "be inferior or superior to $comp")),
+           interpretation       = paste("Inconclusive: !test not shown to",
+                                        "be inferior or superior to !comp "),
+           interpretation_md    = paste("**Inconclusive**: !test not shown to",
+                                        "be inferior or superior to !comp ")),
       # D
       list(interpretation_short = "Not practically superior",
-           interpretation       = "$test not practically superior to $comp",
-           interpretation_md    = "$test **not practically superior** to $comp"),
+           interpretation       = "!test not practically superior to !comp ",
+           interpretation_md    = "!test **not practically superior** to !comp "),
       # E
       list(interpretation_short = "Inconclusive",
-           interpretation       = paste("Inconclusive: $test not inferior",
-                                        "to $comp, but not shown to be", 
+           interpretation       = paste("Inconclusive: !test not inferior",
+                                        "to !comp, but not shown to be", 
                                         "practically superior"),
-           interpretation_md    = paste("**Inconclusive**: $test not inferior",
-                                        "to $comp, but not shown to be", 
+           interpretation_md    = paste("**Inconclusive**: !test not inferior",
+                                        "to !comp, but not shown to be", 
                                         "practically superior")),
       # F
       list(interpretation_short = "Superior",
-           interpretation       = paste("$test superior to $comp, to a",
-                                        "practically relevant extent"),
-           interpretation_md    = paste("$test **superior** to $comp, to a",
-                                        "practically relevant extent"))))
+           interpretation       = paste("!test superior to !comp, to a",
+                                        "practically relevant extent "),
+           interpretation_md    = paste("!test **superior** to !comp, to a",
+                                        "practically relevant extent "))))
+```
+
+
+```{r}
+#| label: fig-new-interpretation-set-plot
+#| fig-cap: "Plot of the newly-defined `interpretation_set` object, showing short versions of the drafted interpretations."
 
 plot(practical_superiority)
 ```
 
 As noted before, the function building the `interpretation_set` will run it through the validator, so errors may be picked up if they have been introduced.
 
-```{r echo=FALSE, results="asis"}
+```{r}
+#| label: tbl-prac-sup-interps
+#| echo: FALSE
+#| results: "asis"
+#| tbl-cap: "Practical superiority interpretations."
 
 knitr::kable(tabulate_interpretation_set(practical_superiority,
                                          "Practical superiority interpretations."),
-             caption = "Practical superiority interpretations.")
+             escape = FALSE)
+
 ```
+
+
 
 ## Using a new `interpretation_set` object
 The newly-created `interpretation_set` object can be used as with any of the provided ones, although naturally this will only be via the main `confinterpret()` function rather than being able to rely on a helper variant, unless you write one of those too.
@@ -260,13 +301,17 @@ ci_specialist <- matrix(c(0.0296644, 0.1767746),
 
 ```
 
-Suppose, using the data from the study introduced above, that our analysis plan had specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in `r figure_nums("re-interpret-plot", display = "cite")`.
+Suppose, using the data from the study introduced above, that our analysis plan had specified that we needed to see a 5% improvement before declaring that the new letter was of practically significant superiority. The interpretation could be conducted as follows, and plotted as shown in @fig-re-interpret-plot.
 
 ```{r echo=FALSE}
-re_int_label <- figure_nums("re-interpret-plot", "Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object.")
+#re_int_label <- figure_nums("re-interpret-plot", "Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object.")
 ```
 
-```{r re-interpret-plot, fig.height=5.5, fig.cap=re_int_label}
+```{r}
+#| label: fig-re-interpret-plot
+#| fig-cap: "Plot showing a study result, re-interpreted using the newly-defined `interpretation_set` object."
+#| fig-height: 5.5
+
 specialist_prac_sup <- confinterpret(ci_specialist,
                                      practical_superiority,
                                      boundaries = c(0, 0.05),

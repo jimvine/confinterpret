@@ -1,3 +1,13 @@
+# confinterpret 1.1.0
+
+## Add vignette
+
+* Now features a vignette on extending confinterpret.
+
+## Fix to work with R v4.4.0 and above
+
+* Minor fix due to R change in behaviour of is.atomic(). Fixes use of `interpretation_set()` in cases where there are no placeholders.
+
 # confinterpret 1.0.0
 
 ## S3 class for interpretation_result

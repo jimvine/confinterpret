@@ -4,13 +4,25 @@
 \alias{plot_interpretation_result_list}
 \title{Plotting function for collection of interpretation_result objects}
 \usage{
-plot_interpretation_result_list(x, extra_boundaries = NULL,
-  estimates = NULL, boundary_values = TRUE, boundary_label_pos = "below",
-  interpretation_label_pos = "right", x_axis_pos = "below",
-  y_axis_pos = "none", inner_margin = c(-0.1, 0.05, -0.1, 0.05),
-  edge_margin = c(0, 0.02, 0, 0.02), edge_type = "gradient",
-  interval_type = "norm", y_scale = 0.75, interval_value_labels = TRUE,
-  estimate_value_labels = TRUE, plot_estimate_marks = TRUE, ...)
+plot_interpretation_result_list(
+  x,
+  extra_boundaries = NULL,
+  estimates = NULL,
+  boundary_values = TRUE,
+  boundary_label_pos = "below",
+  interpretation_label_pos = "right",
+  x_axis_pos = "below",
+  y_axis_pos = "none",
+  inner_margin = c(-0.1, 0.05, -0.1, 0.05),
+  edge_margin = c(0, 0.02, 0, 0.02),
+  edge_type = "gradient",
+  interval_type = "norm",
+  y_scale = 0.75,
+  interval_value_labels = TRUE,
+  estimate_value_labels = TRUE,
+  plot_estimate_marks = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A list of \code{interpretation_result} objects, length at least 2. The

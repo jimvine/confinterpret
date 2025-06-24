@@ -4,14 +4,25 @@
 \alias{plot.interpretation_result}
 \title{Plot an interpretation_result, as returned by confinterpret()}
 \usage{
-\method{plot}{interpretation_result}(x, extra_boundaries = NULL,
-  estimate = NULL, boundary_values = TRUE, boundary_label_pos = "below",
-  interpretation_label_pos = "right", x_axis_pos = "below",
-  y_axis_pos = "none", inner_margin = c(-0.1, 0.05, -0.1, 0.05),
-  edge_margin = c(0, 0.02, 0, 0.02), edge_type = "gradient",
-  interval_type = "norm", interval_value_labels = TRUE,
-  estimate_value_labels = TRUE, plot_estimate_marks = TRUE,
-  estimate_mark_points = c(0, 0.05, 0, -0.05), ...)
+\method{plot}{interpretation_result}(
+  x,
+  extra_boundaries = NULL,
+  estimate = NULL,
+  boundary_values = TRUE,
+  boundary_label_pos = "below",
+  interpretation_label_pos = "right",
+  x_axis_pos = "below",
+  y_axis_pos = "none",
+  inner_margin = c(-0.1, 0.05, -0.1, 0.05),
+  edge_margin = c(0, 0.02, 0, 0.02),
+  edge_type = "gradient",
+  interval_type = "norm",
+  interval_value_labels = TRUE,
+  estimate_value_labels = TRUE,
+  plot_estimate_marks = TRUE,
+  estimate_mark_points = c(0, 0.05, 0, -0.05),
+  ...
+)
 }
 \arguments{
 \item{x}{An \code{interpretation_result} object, of the type returned by

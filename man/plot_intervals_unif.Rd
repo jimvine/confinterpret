@@ -4,12 +4,18 @@
 \alias{plot_intervals_unif}
 \title{Plot intervals as uniform (box) areas}
 \usage{
-plot_intervals_unif(intervals, estimates = NULL,
-  interval_value_labels = FALSE, estimate_value_labels = FALSE,
-  interval_labels_offset = c(0, 0, box_halfheight + 0.1, box_halfheight +
-  0.1), estimate_labels_offset = c(0, box_halfheight + 0.1),
-  plot_estimate_marks = FALSE, estimate_mark_points = c(1.2 *
-  graphics::strheight("M"), 0.05, -1.2 * graphics::strheight("M"), -0.05), ...)
+plot_intervals_unif(
+  intervals,
+  estimates = NULL,
+  interval_value_labels = FALSE,
+  estimate_value_labels = FALSE,
+  interval_labels_offset = c(0, 0, box_halfheight + 0.1, box_halfheight + 0.1),
+  estimate_labels_offset = c(0, box_halfheight + 0.1),
+  plot_estimate_marks = FALSE,
+  estimate_mark_points = c(1.2 * graphics::strheight("M"), 0.05, -1.2 *
+    graphics::strheight("M"), -0.05),
+  ...
+)
 }
 \arguments{
 \item{intervals}{The interval(s) to be plotted. Two column matrix.}

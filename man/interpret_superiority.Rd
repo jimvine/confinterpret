@@ -4,8 +4,12 @@
 \alias{interpret_superiority}
 \title{Superiority test interpretations of confidence intervals.}
 \usage{
-interpret_superiority(ci, null_value = 0, groups = c("Control intervention",
-  "Test intervention"), beneficial_outcome = TRUE)
+interpret_superiority(
+  ci,
+  null_value = 0,
+  groups = c("Control intervention", "Test intervention"),
+  beneficial_outcome = TRUE
+)
 }
 \arguments{
 \item{ci}{A single row from a matrix of the type returned by \code{confint()},

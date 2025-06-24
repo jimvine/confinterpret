@@ -4,7 +4,9 @@
 \name{interpretations_noninferiority}
 \alias{interpretations_noninferiority}
 \title{Interpretation set for non-inferiority tests}
-\format{An object of class \code{interpretation_set} of length 3.}
+\format{
+An object of class \code{interpretation_set} of length 3.
+}
 \usage{
 interpretations_noninferiority
 }
